@@ -50,8 +50,6 @@
     "import/no-unresolved": "off"
   },
   "plugins": [
-    // Flow type linting rules for ESLint
-    "flowtype",
     // Static AST checker for accessibility rules on JSX elements
     "jsx-a11y",
     // React specific linting rules for ESLint
@@ -61,9 +59,6 @@
     "import"
   ],
   "settings": {
-    "flowtype": {
-      "onlyFilesWithFlowAnnotation": true
-    },
     "import/resolve": {
       "moduleDirectory": [
         "node_modules",
@@ -82,7 +77,6 @@
     "__SERVER__": true,
     "__DISABLE_SSR__": true,
     "__DEVTOOLS__": true,
-    "__DLLS__": true,
-    "socket": true
+    "__DLLS__": true
   }
 }

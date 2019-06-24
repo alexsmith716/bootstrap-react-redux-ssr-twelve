@@ -1,5 +1,3 @@
-// @flow
-
 // // flow-disable-next-line
 // function square(n: number): number {
 //   return n * n;
