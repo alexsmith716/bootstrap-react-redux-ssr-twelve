@@ -9,11 +9,11 @@ yarn.lock
 
 dist/
 build/analyzers/
-build/public/assets/
-build/static/dist/
-build/static/assets/
+build/assets/
+build/dist/
+build/assets/
 build/server/
-build/static/dlls/
+build/dlls/
 webpack/dlls/
 coverage/
 api/**/*.nedb
