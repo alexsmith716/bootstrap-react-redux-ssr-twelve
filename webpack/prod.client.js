@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 // const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -39,7 +39,7 @@ module.exports = {
   name: 'client',
   target: 'web',
   mode: 'production',
-  devtool: 'hidden-source-map', // SourceMap without reference in original file
+  // devtool: 'hidden-source-map', // SourceMap without reference in original file
   // devtool: 'source-map', // most detailed at the expense of build speed
   // enhance debugging by adding meta info for the browser devtools
 
@@ -383,15 +383,15 @@ module.exports = {
     //   cacheId: ,
     // }),
 
-    // new BundleAnalyzerPlugin({
-    //   analyzerMode: 'static',
-    //   reportFilename: '../../analyzers/bundleAnalyzer/client-production.html',
-    //   // analyzerMode: 'server',
-    //   // analyzerPort: 8888,
-    //   // defaultSizes: 'parsed',
-    //   openAnalyzer: false,
-    //   generateStatsFile: false
-    // }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: '../../analyzers/bundleAnalyzer/client-production.html',
+      // analyzerMode: 'server',
+      // analyzerPort: 8888,
+      // defaultSizes: 'parsed',
+      openAnalyzer: false,
+      generateStatsFile: false
+    }),
 
     // https://webpack.js.org/plugins/provide-plugin/
     // Use modules without having to use import/require
