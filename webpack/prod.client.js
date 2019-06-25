@@ -10,6 +10,10 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 // const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const externals = require('./node-externals');
+
+const { DuplicatesPlugin } = require('inspectpack/plugin');
+
 const rootPath = path.resolve(__dirname, '..');
 const assetsPath = path.resolve(rootPath, './build/dist');
 
@@ -38,6 +42,7 @@ module.exports = {
 
   name: 'client',
   target: 'web',
+  externals,
   mode: 'production',
   // devtool: 'hidden-source-map', // SourceMap without reference in original file
   // devtool: 'source-map', // most detailed at the expense of build speed
@@ -385,12 +390,22 @@ module.exports = {
 
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      reportFilename: '../../analyzers/bundleAnalyzer/client-production.html',
+      reportFilename: '../../analyzers/bundleAnalyzer/prod.clientXXX.html',
       // analyzerMode: 'server',
       // analyzerPort: 8888,
       // defaultSizes: 'parsed',
       openAnalyzer: false,
       generateStatsFile: false
+    }),
+
+    new DuplicatesPlugin({
+      // Emit compilation warning or error? (Default: `false`)
+      emitErrors: false,
+      // Handle all messages with handler function (`(report: string)`)
+      // Overrides `emitErrors` output.
+      emitHandler: undefined,
+      // Display full duplicates information? (Default: `false`)
+      verbose: true
     }),
 
     // https://webpack.js.org/plugins/provide-plugin/

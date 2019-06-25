@@ -7,6 +7,8 @@ const WriteFilePlugin = require('write-file-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
+const { DuplicatesPlugin } = require('inspectpack/plugin');
+
 const rootPath = path.resolve(__dirname, '..');
 const assetsPath = path.resolve(__dirname, '../build/dist');
 
@@ -298,12 +300,22 @@ const webpackConfig = {
 
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      reportFilename: '../../analyzers/bundleAnalyzer/client-development.html',
+      reportFilename: '../../analyzers/bundleAnalyzer/dev.client.html',
       // analyzerMode: 'server',
       // analyzerPort: 8888,
       // defaultSizes: 'parsed',
       openAnalyzer: false,
       generateStatsFile: false
+    }),
+
+    new DuplicatesPlugin({
+      // Emit compilation warning or error? (Default: `false`)
+      emitErrors: false,
+      // Handle all messages with handler function (`(report: string)`)
+      // Overrides `emitErrors` output.
+      emitHandler: undefined,
+      // Display full duplicates information? (Default: `false`)
+      verbose: true
     }),
 
     // This plugin enables more fine grained control of source map generation.
