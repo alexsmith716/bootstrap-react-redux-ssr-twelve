@@ -37,9 +37,10 @@ module.exports = {
 
   name: 'server',
   target: 'node',
-  externals,
+  // externals,
   mode: 'production',
   // devtool: 'hidden-source-map',
+  // devtool: 'source-map',
 
   // entry: './server/server.js',
   entry: './src/server.js',
@@ -215,7 +216,8 @@ module.exports = {
       __CLIENT__: false,
       __SERVER__: true,
       __DEVELOPMENT__: false,
-      __DEVTOOLS__: false
+      __DEVTOOLS__: false,
+      __DLLS__: false
     }),
     new webpack.HashedModuleIdsPlugin()
   ]
