@@ -5,6 +5,9 @@ const webpack = require('webpack');
 const externals = require('./node-externals');
 
 // const loaderUtils = require('loader-utils').stringifyRequest;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+const { DuplicatesPlugin } = require('inspectpack/plugin');
 
 const rootPath = path.resolve(__dirname, '..');
 const WriteFilePlugin = require('write-file-webpack-plugin');
@@ -231,6 +234,25 @@ module.exports = {
       __SERVER__: true,
       __DEVELOPMENT__: true,
       __DEVTOOLS__: true
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: '../../analyzers/bundleAnalyzer/dev.server.html',
+      // analyzerMode: 'server',
+      // analyzerPort: 8888,
+      // defaultSizes: 'parsed',
+      openAnalyzer: false,
+      generateStatsFile: false
+    }),
+
+    new DuplicatesPlugin({
+      // Emit compilation warning or error? (Default: `false`)
+      emitErrors: false,
+      // Handle all messages with handler function (`(report: string)`)
+      // Overrides `emitErrors` output.
+      emitHandler: undefined,
+      // Display full duplicates information? (Default: `false`)
+      verbose: true
     }),
   ]
 };
