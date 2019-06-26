@@ -10,8 +10,6 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 // const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const externals = require('./node-externals');
-
 const { DuplicatesPlugin } = require('inspectpack/plugin');
 
 const rootPath = path.resolve(__dirname, '..');
@@ -42,7 +40,6 @@ module.exports = {
 
   name: 'client',
   target: 'web',
-  externals,
   mode: 'production',
   // devtool: 'hidden-source-map', // SourceMap without reference in original file
   // devtool: 'source-map', // most detailed at the expense of build speed
