@@ -30,6 +30,12 @@ const handler = (percentage, message, ...args) => {
 // https://github.com/bholloway/resolve-url-loader/blob/master/packages/resolve-url-loader/README.md#configure-webpack
 // source-maps required for loaders preceding resolve-url-loader (regardless of devtool)
 
+// https://webpack.js.org/api/node/
+// https://webpack.js.org/configuration/stats/
+
+// https://webpack.js.org/plugins/split-chunks-plugin/
+// https://github.com/webpack/webpack/blob/master/examples/many-pages/README.md
+
 // ==============================================================================================
 
 module.exports = {
@@ -37,7 +43,6 @@ module.exports = {
   context: path.resolve(__dirname, '..'),
   // the home directory for webpack
   // the entry and module.rules.loader option is resolved relative to this directory
-
   name: 'client',
   target: 'web',
   mode: 'production',
@@ -216,112 +221,36 @@ module.exports = {
     minimizer: [
       // minify javascript 
       new TerserPlugin({
+        terserOptions: {
+          output: {
+            comments: false,
+          },
+        },
         cache: true,
         parallel: true,
-        sourceMap: true
+        // sourceMap: true
       }),
       // minify css (default: cssnano)
       new OptimizeCSSAssetsPlugin({
         cssProcessorOptions: {
-          map: { 
-            inline: false, 
-            annotation: true
-          }
+          preset: ['default', { discardComments: { removeAll: true } }],
+          // map: { 
+          //   inline: false, 
+          //   annotation: true
+          // }
         }
       })
     ],
-    // Code Splitting: Prevent Duplication: Use the SplitChunksPlugin to dedupe and split chunks.
+    // Code Splitting: Prevent Duplication: Use the SplitChunksPlugin to dedupe and split chunks. 127k
     splitChunks: {
-      // 'splitChunks.cacheGroups' inherits and/or overrides any options from splitChunks
-      // 'test', 'priority' and 'reuseExistingChunk' can only be configured on 'splitChunks.cacheGroups'
-      // following config objects to 'name' are defaults
-      chunks: 'async',
-      minSize: 30000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '.',
-      name: true,
       cacheGroups: {
-        // no difference between the builds of below 'optimization.splitChunks.cacheGroups' objects
-        // going with the default for now and moving on
-        // ------------------------------------
-        // "modified config":
-        // vendors: {
-        //   name: 'vendors',
-        //   reuseExistingChunk: true,
-        //   chunks: chunk => ['main',].includes(chunk.name),
-        //   test: module => /[\\/]node_modules[\\/]/.test(module.context),
-        //   chunks: 'async',
-        //   // chunks: 'initial',
-        //   // chunks: 'all',
-        //   // minSize: 0,
-        //   minSize: 30000,
-        //   maxSize: 0,
-        //   minChunks: 1,
-        //   maxAsyncRequests: 5,
-        //   maxInitialRequests: 3,
-        //   // priority: -10
-        //   // priority: 10,
-        // }
-        // ------------------------------------
-        // "webpack's default config":
-        // default config loads all css on SSR
-        // that's a main difference compared to 'faceyspacey/universal-demo'
-        // 'faceyspacey/universal-demo' loads css on-demand
-        // tried many configs but so far default config works
         vendors: {
-          test: /[\\/]node_modules[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom|react-universal-component|react-hot-loader)[\\/]/,
           name: 'vendors',
-          priority: -10
+          chunks: 'all',
         },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        },
-        // vendor: {
-        //   test: /(node_modules|vendors).+(?<!css)$/,
-        //   name: 'vendor',
-        //   chunks: 'all',
-        // },
-        // Extracting CSS based on entry (builds a global && local css file)
-        // >>>>>>>> GOOD TO KNOW NOT TO NAME A 'cacheGroups' AFTER A ENTRY POINT <<<<<<<<
-        // builds a 'main.css' for all the globals and a 'mainStyles.css' for all locals
-        // https://github.com/webpack-contrib/mini-css-extract-plugin#extracting-css-based-on-entry
-        // mainStyles: {
-        //   name: 'mainStyles',
-        //   test: (m,c,entry = 'main') => m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-        //   chunks: 'async',
-        //   // chunks: 'all',
-        //   // chunks: 'initial',
-        //   enforce: true
-        // },
-        // Extracting all CSS in a single file
-        // https://github.com/webpack-contrib/mini-css-extract-plugin#extracting-all-css-in-a-single-file
-        // 'cacheGroups' could be named:
-        //    * following 'routes.js' component names 
-        //       * ("/" route exact >>>>>>> container/component 'Home.js')
-        //    * following the container/component where they are referenced
-        //       * ('App.js')
-        //    * following CSS Modules global/local scoping 
-        // scopedLocal: {
-        //   name: 'scopedLocal',
-        //   test: /\.(css|scss)$/,
-        //   // chunks: 'all',
-        //   chunks: 'async',
-        //   // chunks: 'initial',
-        //   enforce: true
-        // }
-        // ------------------------------------
       }
     },
-    // adds an additional chunk to each entrypoint containing only the runtime
-    // runtimeChunk: true
-    // creates a runtime file to be shared for all generated chunks
-    // runtimeChunk: {
-    //   name: 'bootstrap'
-    // }
   },
 
   resolve: {
@@ -395,16 +324,6 @@ module.exports = {
       generateStatsFile: false
     }),
 
-    new DuplicatesPlugin({
-      // Emit compilation warning or error? (Default: `false`)
-      emitErrors: false,
-      // Handle all messages with handler function (`(report: string)`)
-      // Overrides `emitErrors` output.
-      emitHandler: undefined,
-      // Display full duplicates information? (Default: `false`)
-      verbose: true
-    }),
-
     // https://webpack.js.org/plugins/provide-plugin/
     // Use modules without having to use import/require
     // ProvidePlugin: Whenever the identifier is encountered as free variable in a module, 
@@ -429,6 +348,15 @@ module.exports = {
       Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
       Util: "exports-loader?Util!bootstrap/js/dist/util",
     }),
-    new webpack.HashedModuleIdsPlugin()
+    new webpack.HashedModuleIdsPlugin(),
+    new DuplicatesPlugin({
+      // Emit compilation warning or error? (Default: `false`)
+      emitErrors: true,
+      // Handle all messages with handler function (`(report: string)`)
+      // Overrides `emitErrors` output.
+      emitHandler: undefined,
+      // Display full duplicates information? (Default: `false`)
+      verbose: true
+    }),
   ]
 };
