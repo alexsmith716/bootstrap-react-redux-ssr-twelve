@@ -247,6 +247,8 @@ server.on('listening', () => {
 // https://webpack.js.org/configuration/stats/
 // https://webpack.js.org/api/node/#multicompiler
 
+// MultiCompiler > stats.hasErrors() > Compilation errors (missing modules)
+
 // start socket and 'listen' for connections (requests)
 // method: 'app.listen(path, [callback])' <<< is identical to Node's 'http.Server.listen()'
 const done = () => !isBuilt
