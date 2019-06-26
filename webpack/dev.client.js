@@ -272,7 +272,7 @@ const webpackConfig = {
   plugins: [
 
     // new webpack.ProgressPlugin(handler),
-    // new WriteFilePlugin(),
+    new WriteFilePlugin(),
 
     // by default [name].css is used when process.env.NODE_ENV === 'development' and [name].[contenthash].css during production, 
     //    so you can likely forget about having to pass anything.
@@ -300,7 +300,7 @@ const webpackConfig = {
 
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      reportFilename: '../../analyzers/bundleAnalyzer/dev.client.html',
+      reportFilename: '../../analyzers/bundleAnalyzer/dev.clientAA.html',
       // analyzerMode: 'server',
       // analyzerPort: 8888,
       // defaultSizes: 'parsed',

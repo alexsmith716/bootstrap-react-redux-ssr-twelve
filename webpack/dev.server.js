@@ -213,7 +213,7 @@ module.exports = {
   },
 
   plugins: [
-    // new WriteFilePlugin(),
+    new WriteFilePlugin(),
     // new webpack.ProgressPlugin(handler),
     // https://webpack.js.org/plugins/module-concatenation-plugin/
     // new webpack.optimize.ModuleConcatenationPlugin(),
@@ -237,7 +237,7 @@ module.exports = {
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      reportFilename: '../../analyzers/bundleAnalyzer/dev.server.html',
+      reportFilename: '../../analyzers/bundleAnalyzer/dev.serverAA.html',
       // analyzerMode: 'server',
       // analyzerPort: 8888,
       // defaultSizes: 'parsed',

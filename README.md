@@ -2,7 +2,79 @@
 
 ## Overview:
 
-App builds off 'bootstrap-react-redux-webpack-ssr-ten'. This app utilizes custom async middleware for response to Redux actions.
+App builds off 'bootstrap-react-redux-webpack-ssr-eleven'. This app utilizes custom async middleware for response to Redux actions.
+
+=============================================================
+=============================================================
+
+Removing 'lodash.debounce' duplication gives Client: (main.js: 2.14 MB) Server: 847.35 KB
+Leaving 'lodash.debounce' duplication and dev.server gives Client: (main.js: 2.14 MB) Server: 847.35 KB
+
+Removing 'externals' from prod.server gives sever.js: 2.01 MB
+Adding 'externals' to prod.server gives server.js: 686.35 KB
+
+'externals' required in dev.server
+
+=============================================================
+=============================================================
+
+## DuplicatesPlugin (inspectpack/plugin) Warning Report on Diagnosing duplicates
+
+WARNING in Duplicate Sources / Packages - Duplicates found! ⚠️
+
+* Duplicates: Found 2 similar files across 2 code sources (both identical + similar)
+  accounting for 17843 bundled bytes.
+* Packages: Found 1 packages with 2 resolved, 2 installed, and 2 depended versions.
+
+### main.js
+lodash.debounce (Found 2 resolved, 2 installed, 2 depended. Latest 4.0.8.)
+  3.1.1
+    ~/react-dock/~/lodash.debounce
+      * Dependency graph
+        bootstrap-react-redux-ssr-twelve@0.0.1 -> redux-devtools-dock-monitor@^1.1.3 -> react-dock@^0.2.4 -> lodash.debounce@^3.1.1
+      * Duplicated files in main.js
+        lodash.debounce/index.js (S, 7059)
+
+  4.0.8
+    ~/lodash.debounce
+      * Dependency graph
+        bootstrap-react-redux-ssr-twelve@0.0.1 -> redux-devtools-log-monitor@^1.4.0 -> lodash.debounce@^4.0.4
+      * Duplicated files in main.js
+        lodash.debounce/index.js (S, 10784)
+
+
+WARNING in Duplicate Sources / Packages - Duplicates found! ⚠️
+
+* Duplicates: Found 2 similar files across 2 code sources (both identical + similar)
+  accounting for 4960 bundled bytes.
+* Packages: Found 1 packages with 2 resolved, 2 installed, and 6 depended versions.
+
+## main.js
+hoist-non-react-statics (Found 2 resolved, 2 installed, 6 depended. Latest 3.3.0.)
+  2.5.5
+    ~/react-universal-component/~/hoist-non-react-statics
+      * Dependency graph
+        bootstrap-react-redux-ssr-twelve@0.0.1 -> react-universal-component@^4.0.0 -> hoist-non-react-statics@^2.2.1
+      * Duplicated files in main.js
+        hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js (S, 2073)
+
+  3.3.0
+    ~/hoist-non-react-statics
+      * Dependency graph
+        bootstrap-react-redux-ssr-twelve@0.0.1 -> react-hot-loader@^4.11.1 -> hoist-non-react-statics@^3.3.0
+        bootstrap-react-redux-ssr-twelve@0.0.1 -> react-redux@^7.1.0 -> hoist-non-react-statics@^3.3.0
+        bootstrap-react-redux-ssr-twelve@0.0.1 -> react-router-dom@^5.0.1 -> react-router@5.0.1 -> hoist-non-react-statics@^3.1.0
+        bootstrap-react-redux-ssr-twelve@0.0.1 -> react-router@^5.0.1 -> hoist-non-react-statics@^3.1.0
+        bootstrap-react-redux-ssr-twelve@0.0.1 -> react-universal-component@^4.0.0 -> react-hot-loader@^4.3.6 -> hoist-non-react-statics@^3.3.0
+      * Duplicated files in main.js
+        hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js (S, 2887)
+
+=============================================================
+=============================================================
+
+ALSO > FROM > ./bin/start.js:
+
+ >>>>>>>> BIN > START > WEBPACK COMPILE > PROD > stats.hasWarnings:
 
 =============================================================
 =============================================================
