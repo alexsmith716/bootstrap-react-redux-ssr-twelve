@@ -238,20 +238,13 @@ module.exports = {
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       reportFilename: '../../analyzers/bundleAnalyzer/dev.serverAA.html',
-      // analyzerMode: 'server',
-      // analyzerPort: 8888,
-      // defaultSizes: 'parsed',
       openAnalyzer: false,
       generateStatsFile: false
     }),
 
     new DuplicatesPlugin({
-      // Emit compilation warning or error? (Default: `false`)
       emitErrors: false,
-      // Handle all messages with handler function (`(report: string)`)
-      // Overrides `emitErrors` output.
       emitHandler: undefined,
-      // Display full duplicates information? (Default: `false`)
       verbose: true
     }),
   ]

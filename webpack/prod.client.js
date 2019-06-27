@@ -228,7 +228,7 @@ module.exports = {
         },
         cache: true,
         parallel: true,
-        // sourceMap: true
+        sourceMap: true
       }),
       // minify css (default: cssnano)
       new OptimizeCSSAssetsPlugin({
@@ -241,7 +241,7 @@ module.exports = {
         }
       })
     ],
-    // Code Splitting: Prevent Duplication: Use the SplitChunksPlugin to dedupe and split chunks. 127k
+    // Code Splitting: Prevent Duplication: Use the SplitChunksPlugin to dedupe and split chunks!
     splitChunks: {
       cacheGroups: {
         vendors: {
@@ -316,10 +316,6 @@ module.exports = {
 
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      reportFilename: '../../analyzers/bundleAnalyzer/prod.clientXXX.html',
-      // analyzerMode: 'server',
-      // analyzerPort: 8888,
-      // defaultSizes: 'parsed',
       openAnalyzer: false,
       generateStatsFile: false
     }),
@@ -350,12 +346,8 @@ module.exports = {
     }),
     new webpack.HashedModuleIdsPlugin(),
     new DuplicatesPlugin({
-      // Emit compilation warning or error? (Default: `false`)
-      emitErrors: true,
-      // Handle all messages with handler function (`(report: string)`)
-      // Overrides `emitErrors` output.
+      emitErrors: false,
       emitHandler: undefined,
-      // Display full duplicates information? (Default: `false`)
       verbose: true
     }),
   ]
