@@ -7,6 +7,17 @@ App builds off 'bootstrap-react-redux-webpack-ssr-eleven'. This app utilizes cus
 =============================================================
 =============================================================
 
+Aware of Errors:
+
+error "eslint-config-airbnb#eslint@^4.19.1 || ^5.3.0" doesn't satisfy found match of "eslint@6.0.1"
+error "eslint-loader#eslint@>=1.6.0 <6.0.0" doesn't satisfy found match of "eslint@6.0.1"
+error "eslint-plugin-jsx-a11y#eslint@^3 || ^4 || ^5" doesn't satisfy found match of "eslint@6.0.1"
+error "redux-devtools#react-redux@^4.0.0 || ^5.0.0 || ^6.0.0" doesn't satisfy found match of "react-redux@7.1.0"
+error "eslint-config-airbnb#eslint-config-airbnb-base#eslint@^4.19.1 || ^5.3.0" doesn't satisfy found match of "eslint@6.0.1"
+
+=============================================================
+=============================================================
+
 webpack 'MultiCompiler' initiates separate Compiler instances. These compiler have no data shared between
 the compilers instance also run separately without sharing data
 the only thing these compilers share is the 'Stats' instance they produce and merge into a 'MultiStats'

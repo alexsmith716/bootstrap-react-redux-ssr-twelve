@@ -21,7 +21,7 @@ import routes from './routes';
 import apiClient from './helpers/apiClient';
 import configureStore from './redux/configureStore';
 import isOnline from './utils/isOnline';
-// import NProgress from 'nprogress';
+import NProgress from 'nprogress';
 import './js/app';
 
 // =====================================================================
@@ -93,7 +93,7 @@ const providers = {
   // ======================================================================================
 
   const triggerHooks = async (_routes, pathname) => {
-    // NProgress.start();
+    NProgress.start();
 
     const { components, match, params } = await asyncMatchRoutes(_routes, pathname);
     
@@ -122,7 +122,7 @@ const providers = {
     // Fetch deferred, client-only data dependencies
     await trigger('defer', components, triggerLocals);
 
-    // NProgress.done();
+    NProgress.done();
   };
 
   // ======================================================================================

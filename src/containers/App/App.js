@@ -85,7 +85,6 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // #################### XXXXXXXXxxxxxxxXXXXXXXzzzzzzzzXXXXXXX ##################
     console.log('>>>>>>>>>>>>>>>> APP > componentDidMount() <<<<<<<<<<<<<<');
   }
 
