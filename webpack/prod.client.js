@@ -36,6 +36,11 @@ const handler = (percentage, message, ...args) => {
 // https://webpack.js.org/plugins/split-chunks-plugin/
 // https://github.com/webpack/webpack/blob/master/examples/many-pages/README.md
 
+// https://cssnano.co/guides/
+// https://cssnano.co/guides/presets/
+
+// Combining gzip compression with minification leads to the best reduction in file size
+
 // ==============================================================================================
 
 module.exports = {
@@ -231,13 +236,15 @@ module.exports = {
         sourceMap: true
       }),
       // minify css (default: cssnano)
+      // preset:[] : cssnanoOpts
+      // map:{} :    postcssOpts
       new OptimizeCSSAssetsPlugin({
         cssProcessorOptions: {
           preset: ['default', { discardComments: { removeAll: true } }],
-          // map: { 
-          //   inline: false, 
-          //   annotation: true
-          // }
+          map: { 
+            inline: false, 
+            annotation: true
+          }
         }
       })
     ],
@@ -314,12 +321,6 @@ module.exports = {
     //   cacheId: ,
     // }),
 
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      openAnalyzer: false,
-      generateStatsFile: false
-    }),
-
     // https://webpack.js.org/plugins/provide-plugin/
     // Use modules without having to use import/require
     // ProvidePlugin: Whenever the identifier is encountered as free variable in a module, 
@@ -344,11 +345,20 @@ module.exports = {
       Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
       Util: "exports-loader?Util!bootstrap/js/dist/util",
     }),
+
     new webpack.HashedModuleIdsPlugin(),
+
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: '../../analyzers/bundleAnalyzer/prod.clientXXX2.html',
+      openAnalyzer: false,
+      generateStatsFile: false
+    }),
+
     new DuplicatesPlugin({
       emitErrors: false,
       emitHandler: undefined,
       verbose: true
     }),
-  ]
+  ],
 };
