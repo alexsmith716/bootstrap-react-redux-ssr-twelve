@@ -5,12 +5,12 @@ const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 // const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const { DuplicatesPlugin } = require('inspectpack/plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { DuplicatesPlugin } = require('inspectpack/plugin');
 
 const rootPath = path.resolve(__dirname, '..');
 const assetsPath = path.resolve(rootPath, './build/dist');
@@ -194,7 +194,7 @@ module.exports = {
           limit: 10240,
           mimetype: 'application/font-woff'
         }
-      }, 
+      },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader',
@@ -202,11 +202,11 @@ module.exports = {
           limit: 10240,
           mimetype: 'application/octet-stream'
         }
-      }, 
+      },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'file-loader',
-      }, 
+      },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader',
@@ -348,17 +348,17 @@ module.exports = {
 
     new webpack.HashedModuleIdsPlugin(),
 
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      reportFilename: '../../analyzers/bundleAnalyzer/prod.clientXXX2.html',
-      openAnalyzer: false,
-      generateStatsFile: false
-    }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    //   reportFilename: '../../analyzers/bundleAnalyzer/prod.clientXXX2.html',
+    //   openAnalyzer: false,
+    //   generateStatsFile: false
+    // }),
 
-    new DuplicatesPlugin({
-      emitErrors: false,
-      emitHandler: undefined,
-      verbose: true
-    }),
+    // new DuplicatesPlugin({
+    //   emitErrors: false,
+    //   emitHandler: undefined,
+    //   verbose: true
+    // }),
   ],
 };
