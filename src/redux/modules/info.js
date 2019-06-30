@@ -4,7 +4,7 @@ const LOAD = 'redux-example/info/LOAD';
 const LOAD_SUCCESS = 'redux-example/info/LOAD_SUCCESS';
 const LOAD_FAIL = 'redux-example/info/LOAD_FAIL';
 
-import { mockAPI, getDateNow, getRandomInt } from '../../utils/mockAPI';
+import { mockAPI, getDateNow, getRandomInt, getMetaWeather } from '../../utils/mockAPI';
 
 import initialState from '../initial-state';
 
@@ -51,19 +51,28 @@ export function isLoaded(globalState) {
   return globalState.info && globalState.info.loaded;
 }
 
+// export function load() {
+//   console.log('>>>>>>>>>>>>>>>> info > redux > Action > load() <<<<<<<<<<<<<<<<<<');
+//   return {
+//     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+//     promise: () => mockAPI(() => getDateNow(), 1000 )
+//   };
+// };
+
 export function load() {
   console.log('>>>>>>>>>>>>>>>> info > redux > Action > load() <<<<<<<<<<<<<<<<<<');
+  let location = 'https://www.metaweather.com/api/location/2459115/';
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: () => mockAPI(() => getDateNow(), 1000 )
+    promise: () => mockAPI(() => getMetaWeather(location))
   };
 };
 
 // export function load(value) {
 //   console.log('>>>>>>>>>>>>>>>> info > redux > Action > load() <<<<<<<<<<<<<<<<<<');
-//   let v = 'https://www.metaweather.com/api/location/2459115/';
+//   let w = 'https://www.metaweather.com/api/location/2459115/';
 //   return {
 //     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-//     promise: ({ client }) => client.get(v)
+//     promise: ({ client }) => client.get(w)
 //   };
 // };

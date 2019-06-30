@@ -4,9 +4,8 @@ const webpack = require('webpack');
 // const config = require('../config/config');
 const externals = require('./node-externals');
 
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-
-const { DuplicatesPlugin } = require('inspectpack/plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { DuplicatesPlugin } = require('inspectpack/plugin');
 
 const rootPath = path.resolve(__dirname, '..');
 
@@ -171,7 +170,7 @@ module.exports = {
           limit: 10240,
           mimetype: 'application/font-woff'
         }
-      }, 
+      },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader',
@@ -179,11 +178,11 @@ module.exports = {
           limit: 10240,
           mimetype: 'application/octet-stream'
         }
-      }, 
+      },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'file-loader'
-      }, 
+      },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader',
@@ -230,17 +229,17 @@ module.exports = {
 
     new webpack.HashedModuleIdsPlugin(),
 
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      reportFilename: '../../analyzers/bundleAnalyzer/prod.serverXXX2.html',
-      openAnalyzer: false,
-      generateStatsFile: false
-    }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    //   reportFilename: '../../analyzers/bundleAnalyzer/prod.serverXXX2.html',
+    //   openAnalyzer: false,
+    //   generateStatsFile: false
+    // }),
 
-    new DuplicatesPlugin({
-      emitErrors: false,
-      emitHandler: undefined,
-      verbose: true
-    }),
+    // new DuplicatesPlugin({
+    //   emitErrors: false,
+    //   emitHandler: undefined,
+    //   verbose: true
+    // }),
   ],
 };
