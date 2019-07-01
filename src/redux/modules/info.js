@@ -22,7 +22,7 @@ export default function info(state = initialState.info, action = {}) {
       };
 
     case LOAD_SUCCESS:
-      console.log('>>>>>>>>>>>>>>>> info > redux > SWITCH > action.type > LOAD_SUCCESS > action.result: ', action.result);
+      console.log('>>>>>>>>>>>>>>>> info > redux > SWITCH > action.type > LOAD_SUCCESS > action.result: ', action);
       return {
         ...state,
         isLoading: false,
@@ -31,7 +31,7 @@ export default function info(state = initialState.info, action = {}) {
       };
 
     case LOAD_FAIL:
-      console.log('>>>>>>>>>>>>>>>> info > redux > SWITCH > action.type > LOAD_FAIL > action.result: ', action.result);
+      console.log('>>>>>>>>>>>>>>>> info > redux > SWITCH > action.type > LOAD_FAIL > action.error: ', action);
       return {
         ...state,
         isLoading: false,

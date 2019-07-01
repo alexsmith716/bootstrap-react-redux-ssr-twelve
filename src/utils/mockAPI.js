@@ -55,15 +55,23 @@ function mostBasicPromiseResolveRejectPending(v) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (v === 'json') {
+        console.log('################### mockAPI() > vvvvvvvvvvvvvvv 1: ', v);
         resolve({
           city: 'New York, NY',
           forecast: 'JSON',
           PromiseStatus: 'resolved'
-        })
+        });
       } else {
-        reject('The forecast for New York, NY is Stringy and the PromiseStatus rejected.');
+        console.log('################### mockAPI() > vvvvvvvvvvvvvvv 2: ', v);
+        // reject('The forecast for New York, NY is Stringy and the PromiseStatus rejected.');
+        // reject(new Error(`waitFile: timeout (${timeout}ms): ${path}`));
+        reject({
+          city: 'reject',
+          forecast: 'reject',
+          PromiseStatus: 'reject'
+        });
       }
-    }, 4500);
+    }, 1000);
   });
 }
 
@@ -81,24 +89,30 @@ function startATask() {
 // add all the promises to an array
 // pass the promises array to Promise.all (this returns a single promise to use await on)
 
+// couldn't see the forest because of all the tree's in the way!!!!!
+
+// 2nd promise is rejected but being resolved and returned on 1st promise from reducer load action
+
 export async function getMetaWeather(location) {
   try {
 
     // const response = await axios.get(location);
     // const e = awaitForReturnValueOfAFunction(response.data);
-    console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > e: ', e);
-    // const z = await startATask();
-    const z = startATask();
-    console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > z: ', z);
-    const a = await awaitForReturnValueOfAFunction(response.data);
-    console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > a: ', a);
-    const k = mostBasicPromiseResolveRejectPending('json');
+    // console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > e: ', e);
+    // // const z = await startATask();
+    // const z = startATask();
+    // console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > z: ', z);
+    // const a = await awaitForReturnValueOfAFunction(response.data);
+    // console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > a: ', a);
+
+    const k = await mostBasicPromiseResolveRejectPending('jsonX');
     console.log('################### mockAPI() > getMetaWeather() > mostBasicPromiseResolveRejectPending > k: ', k);
 
-    // return both 
-    return k;
+    return  k;
+
   } catch (error) {
-    console.error(error);
+    console.log('################### mockAPI() > getMetaWeather() > CATCH > ERROR: ', error);
+    return error;
   }
 }
 
