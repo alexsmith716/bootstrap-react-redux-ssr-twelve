@@ -59,10 +59,6 @@ export function isLoaded(globalState) {
 //   };
 // };
 
-// create a promise for each async call
-// add all the promises to an array
-// pass the promises array to Promise.all (this returns a single promise to use await on)
-
 export function load() {
   console.log('>>>>>>>>>>>>>>>> info > redux > Action > load() <<<<<<<<<<<<<<<<<<');
   let location = 'https://api.github.com/feeds';

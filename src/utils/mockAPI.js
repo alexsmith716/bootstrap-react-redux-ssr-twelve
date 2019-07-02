@@ -19,16 +19,17 @@ import axios from 'axios';
 //   .finally( onFinally )
 
 export function getRandomInt() {
-  return Math.floor(Math.random() * (100 - 1)) + 1
+  return Math.floor(Math.random() * (100 - 1)) + 1;
 }
 
-// export function getDateNow(){
-//   return Date.now()
-// }
+export function getDateNow() {
+  return Date.now();
+}
 
-export async function getDateNow(){
-  const d = await Date.now();
-  console.log('################### mockAPI() > getDateNow() > d: ', d);
+function getDateNow2(dn) {
+  const d = Date.now();
+  const nd = d - dn;
+  console.log('################### mockAPI() > getDateNow: ', nd);
   return d;
 }
 
@@ -79,52 +80,67 @@ function awaitForReturnValueOfAFunction(r) {
   return r;
 }
 
-function startATask(delay) {
+function startATask(dn, delay) {
+  // setTimeout(() => getDateNowAsync(dn), delay);
+  setTimeout(() => getDateNow2(dn), delay);
+}
+
+function startATaskPromise(delay) {
   return new Promise(resolve => {
     setTimeout(() => resolve( getDateNow() ), delay);
   });
 }
 
-// create a promise for each async call
-// add all the promises to an array
-// pass the promises array to Promise.all (this returns a single promise to use await on)
-
-// couldn't see the forest because of all the tree's in the way!!!!!
-
 // 2nd promise is rejected but being resolved and returned on 1st promise from reducer load action
+
+// await: blocks next lines of code
+// await: does not block execution of (previous) promises
 
 export async function getMetaWeather(location) {
   try {
 
-    // const response = await axios.get(location);
-    // const e = awaitForReturnValueOfAFunction(response.data);
-    // console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > e: ', e);
+    const dn = Date.now();
 
-    const startATaskArrayAwait = [];
+    const startATaskArrayLong = [];
+    startATaskArrayLong.push(startATaskPromise(2500));
+    startATaskArrayLong.push(startATaskPromise(2250));
 
-    startATaskArrayAwait.push(startATask(1000));
-    startATaskArrayAwait.push(startATask(500));
+    const startATaskArrayFast = [];
+    startATaskArrayFast.push(startATaskPromise(100));
+    startATaskArrayFast.push(startATaskPromise(300));
 
-    const startATaskArrayNoAwait = [];
+    startATask(dn, 20000);
 
-    startATaskArrayNoAwait.push(startATask(500));
-    startATaskArrayNoAwait.push(startATask(1250));
+    const g = await startATaskPromise(4000);
+    console.log('################### mockAPI() > getMetaWeather() > startATaskPromise(4000): ', (g-dn) );
 
-    const paa = await Promise.all(startATaskArrayAwait);
-    console.log('################### mockAPI() > getMetaWeather() > startATask > paa: ', paa);
+    const pAf1 = await Promise.all(startATaskArrayFast);
+    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayFast1-0: ', (pAf1[0]-dn) );
+    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayFast1-1: ', (pAf1[1]-dn) );
 
-    const z = startATask(2000);
-    // const z = await startATask(2000);
-    console.log('################### mockAPI() > getMetaWeather() > startATask > z: ', z);
+    const p = await startATaskPromise(1500);
+    console.log('################### mockAPI() > getMetaWeather() > startATaskPromise(1500): ', (p-dn) );
+
+    const pAl = await Promise.all(startATaskArrayLong);
+    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayLong1-0 > await: ', (pAl[0]-dn) );
+    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayLong1-1 > await: ', (pAl[1]-dn) );
+
+    const b = await startATaskPromise(100);
+    console.log('################### mockAPI() > getMetaWeather() > startATaskPromise(100): ', (b-dn) );
+
+    const z = await startATaskPromise(4000);
+    // const z = await startATaskPromise(2000);
+    console.log('################### mockAPI() > getMetaWeather() > startATaskPromise(4000): ', (z-dn) );
 
     // const a = await awaitForReturnValueOfAFunction(response.data);
     // console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > a: ', a);
 
     const k = await mostBasicPromiseResolveRejectPending('json');
-    console.log('################### mockAPI() > getMetaWeather() > mostBasicPromiseResolveRejectPending > k: ', k);
+    console.log('################### mockAPI() > getMetaWeather() > mostBasicPromiseResolveRejectPending: ', k);
 
-    const pana = await Promise.all(startATaskArrayNoAwait);
-    console.log('################### mockAPI() > getMetaWeather() > startATask > pana: ', pana);
+    const pAf2 = await Promise.all(startATaskArrayFast);
+    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayFast2-0: ', (pAf2[0]-dn) );
+    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayFast2-1: ', (pAf2[1]-dn) );
 
     return  k;
 
@@ -140,9 +156,3 @@ export function mockAPI(doWhat, delay) {
     setTimeout( () => resolve( doWhat() ), delay);
   });
 }
-
-// export function mockAPI(delay) {
-//   return new Promise(( resolve ) => {
-//     setTimeout( () => resolve(), delay);
-//   });
-// }
