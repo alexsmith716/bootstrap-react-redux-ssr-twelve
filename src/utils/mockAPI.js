@@ -79,9 +79,9 @@ function awaitForReturnValueOfAFunction(r) {
   return r;
 }
 
-function startATask() {
+function startATask(delay) {
   return new Promise(resolve => {
-    setTimeout(() => resolve( getDateNow() ), 5000);
+    setTimeout(() => resolve( getDateNow() ), delay);
   });
 }
 
@@ -99,14 +99,32 @@ export async function getMetaWeather(location) {
     // const response = await axios.get(location);
     // const e = awaitForReturnValueOfAFunction(response.data);
     // console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > e: ', e);
-    // // const z = await startATask();
-    // const z = startATask();
-    // console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > z: ', z);
+
+    const startATaskArrayAwait = [];
+
+    startATaskArrayAwait.push(startATask(1000));
+    startATaskArrayAwait.push(startATask(500));
+
+    const startATaskArrayNoAwait = [];
+
+    startATaskArrayNoAwait.push(startATask(500));
+    startATaskArrayNoAwait.push(startATask(1250));
+
+    const paa = await Promise.all(startATaskArrayAwait);
+    console.log('################### mockAPI() > getMetaWeather() > startATask > paa: ', paa);
+
+    const z = startATask(2000);
+    // const z = await startATask(2000);
+    console.log('################### mockAPI() > getMetaWeather() > startATask > z: ', z);
+
     // const a = await awaitForReturnValueOfAFunction(response.data);
     // console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > a: ', a);
 
-    const k = await mostBasicPromiseResolveRejectPending('jsonX');
+    const k = await mostBasicPromiseResolveRejectPending('json');
     console.log('################### mockAPI() > getMetaWeather() > mostBasicPromiseResolveRejectPending > k: ', k);
+
+    const pana = await Promise.all(startATaskArrayNoAwait);
+    console.log('################### mockAPI() > getMetaWeather() > startATask > pana: ', pana);
 
     return  k;
 
