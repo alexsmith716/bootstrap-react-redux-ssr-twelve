@@ -29,7 +29,7 @@ export function getDateNow() {
 function getDateNow2(dn) {
   const d = Date.now();
   const nd = d - dn;
-  console.log('################### mockAPI() > getDateNow: ', nd);
+  console.log('###### mockAPI() > getDateNow: ', nd);
   return d;
 }
 
@@ -44,7 +44,7 @@ function mostBasicPromiseResolveRejectImmediate(p) {
 }
 
 function mostBasicPromiseResolvePending() {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     setTimeout(() => resolve( {
       city: 'New York',
       forecast: 'partly cloudy'
@@ -52,44 +52,22 @@ function mostBasicPromiseResolvePending() {
   });
 }
 
-function mostBasicPromiseResolveRejectPending(v) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (v === 'json') {
-        resolve({
-          city: 'New York, NY',
-          forecast: 'JSON',
-          PromiseStatus: 'resolved'
-        });
-      } else {
-        // reject('The forecast for New York, NY is Stringy and the PromiseStatus rejected.');
-        // reject(new Error(`waitFile: timeout (${timeout}ms): ${path}`));
-        reject({
-          city: 'reject',
-          forecast: 'reject',
-          PromiseStatus: 'reject'
-        });
-      }
-    }, 1000);
-  });
-}
-
 function awaitForReturnValueOfAFunction(r) {
   return r;
 }
 
-function startATask(dn, delay) {
+function startSetTimeout(dn, delay) {
   // setTimeout(() => getDateNowAsync(dn), delay);
   setTimeout(() => getDateNow2(dn), delay);
 }
 
-function startATaskPromise(delay) {
+function startResolvedPromise(delay) {
   return new Promise(resolve => {
     setTimeout(() => resolve( getDateNow() ), delay);
   });
 }
 
-function basicResolveReject(v, delay) {
+function startResolvedRejectedPromise(v, delay) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (v === 'foober') {
@@ -110,99 +88,139 @@ function basicResolveReject(v, delay) {
 }
 
 // 2nd promise is rejected but being resolved and returned on 1st promise from reducer load action
-
 // promise.all: rejects with reason of 1st promise that rejects
-// await: blocks next lines of code
-// await: does not block execution of (previous) promises
+// async always return a promise
+// await suspends execution until the promise is settled
+// async/await: take advantage of the generator pattern and make code behave synchronously
+
+// sequence (there is a pattern there)
+
+// ###### mockAPI() > getMetaWeather() > startResolvedPromise(4000):  4001
+// ###### mockAPI() > getMetaWeather() > startSetTimeoutArrayFast1-0:  102
+// ###### mockAPI() > getMetaWeather() > startSetTimeoutArrayFast1-1:  302
+// ###### mockAPI() > getMetaWeather() > startResolvedPromise(1500):  5502
+// ###### mockAPI() > getDateNow:  10002
+// ###### mockAPI() > getMetaWeather() > startSetTimeoutArrayLong1-0:  2502
+// ###### mockAPI() > getMetaWeather() > startSetTimeoutArrayLong1-1:  22252
+// ###### mockAPI() > getMetaWeather() > startResolvedPromise(100):  22355
+// ###### mockAPI() > getMetaWeather() > startResolvedPromise(4000):  26359
+// ###### mockAPI() > getMetaWeather() > startSetTimeoutArrayFast2-0:  102
+// ###### mockAPI() > getMetaWeather() > startSetTimeoutArrayFast2-1:  302
+// ###### mockAPI() > getMetaWeather() > startResolvedRejectedPromise > a > resolve:  { resolved: 'RESOLVED', value: 'foober', delay: '500' }
+// ###### mockAPI() > getMetaWeather() > startResolvedRejectedPromise > aa > reject:  { reject: 'REJECTED', value: 'json', delay: '600' }
+// ###### mockAPI() > getMetaWeather() > startResolvedRejectedPromise > k catch > error:  { reject: 'REJECTED', value: 'foob', delay: '1200' }
+// ###### mockAPI() > getMetaWeather() > startResolvedRejectedPromise > aaa > reject:  { reject: 'REJECTED', value: 'fooberrrrr', delay: '15000' }
 
 export async function getMetaWeather(location) {
+
+  // >>>>>>>>>>>>>>>>>>>>>>>>>> RE-CAP | RE-FOCUS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>> test area only! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  // >>>>>>>> 'mockAPI' is returned promise to load() action
+  // >>>>>>>> original use case here for 'async' function was an API request
+  // >>>>>>>> 'awaiting' the AXIOS/FETCH api request
+  // getting things a bit conflated mixing in promise testing in an 'async/awaited' function
+  // >>>>>>>> ultimately, not passing a promise here, just a resolved value (last await)
+
   try {
 
     // const response = await axios.get(location);
-    // const e = awaitForReturnValueOfAFunction(response.data);
-    // console.log('################### mockAPI() > getMetaWeather() > awaitForReturnValueOfAFunction > e: ', e);
-
-    const dn = Date.now();
-
-    const startATaskArrayLong = [];
-    startATaskArrayLong.push(startATaskPromise(2500));
-    startATaskArrayLong.push(startATaskPromise(2250));
-
-    const startATaskArrayFast = [];
-    startATaskArrayFast.push(startATaskPromise(100));
-    startATaskArrayFast.push(startATaskPromise(300));
-
-    // -------------------------
-
-    startATask(dn, 20000);
-
-    // -------------------------
-
-    const g = await startATaskPromise(4000);
-    console.log('################### mockAPI() > getMetaWeather() > startATaskPromise(4000): ', (g-dn) );
-
-    // -------------------------
-
-    const pAf1 = await Promise.all(startATaskArrayFast);
-    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayFast1-0: ', (pAf1[0]-dn) );
-    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayFast1-1: ', (pAf1[1]-dn) );
-
-    // -------------------------
-
-    const p = await startATaskPromise(1500);
-    console.log('################### mockAPI() > getMetaWeather() > startATaskPromise(1500): ', (p-dn) );
-
-    // -------------------------
-
-    const pAl = await Promise.all(startATaskArrayLong);
-    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayLong1-0: ', (pAl[0]-dn) );
-    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayLong1-1: ', (pAl[1]-dn) );
-
-    // -------------------------
-
-    const b = await startATaskPromise(100);
-    console.log('################### mockAPI() > getMetaWeather() > startATaskPromise(100): ', (b-dn) );
-
-    const z = await startATaskPromise(4000);
-    // const z = await startATaskPromise(2000);
-    console.log('################### mockAPI() > getMetaWeather() > startATaskPromise(4000): ', (z-dn) );
-
-    // -------------------------
-
-    try {
-      const a = await basicResolveReject('foober', 500);
-      console.log('################### mockAPI() > getMetaWeather() > basicResolveReject: ', a);
-
-      const aa = await basicResolveReject('json', 600);
-      console.log('################### mockAPI() > getMetaWeather() > basicResolveReject: ', aa);
-
-    } catch (error) {
-      console.log('################### mockAPI() > getMetaWeather() > basicResolveReject > catch > error: ', error);
-    }
-
-    // -------------------------
-
-    const k = await mostBasicPromiseResolveRejectPending('jsonX');
-    console.log('################### mockAPI() > getMetaWeather() > mostBasicPromiseResolveRejectPending: ', k);
-
-    // -------------------------
-
-    const pAf2 = await Promise.all(startATaskArrayFast);
-    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayFast2-0: ', (pAf2[0]-dn) );
-    console.log('################### mockAPI() > getMetaWeather() > startATaskArrayFast2-1: ', (pAf2[1]-dn) );
-
-    // -------------------------
-
-    return  k;
+    // const e = await awaitForReturnValueOfAFunction(response.data);
+    // return e;
 
   } catch (error) {
-    console.log('################### mockAPI() > getMetaWeather() > catch > error: ', error);
+    console.log('###### mockAPI() > getMetaWeather() > axios.get(location) > catch > error: ', error);
+    return error;
+  }
+
+  const dn = Date.now();
+
+  const startSetTimeoutArrayLong = [];
+  startSetTimeoutArrayLong.push(startResolvedPromise(2500));
+  startSetTimeoutArrayLong.push(startResolvedPromise(22250));
+
+  const startSetTimeoutArrayFast = [];
+  startSetTimeoutArrayFast.push(startResolvedPromise(100));
+  startSetTimeoutArrayFast.push(startResolvedPromise(300));
+
+  // -------------------------
+
+  startSetTimeout(dn, 10000);
+
+  // -------------------------
+
+  const g = await startResolvedPromise(4000);
+  console.log('###### mockAPI() > getMetaWeather() > startResolvedPromise(4000): ', (g-dn) );
+
+  // -------------------------
+
+  const pAf1 = await Promise.all(startSetTimeoutArrayFast);
+  console.log('###### mockAPI() > getMetaWeather() > startSetTimeoutArrayFast1-0: ', (pAf1[0]-dn) );
+  console.log('###### mockAPI() > getMetaWeather() > startSetTimeoutArrayFast1-1: ', (pAf1[1]-dn) );
+
+  // -------------------------
+
+  const p = await startResolvedPromise(1500);
+  console.log('###### mockAPI() > getMetaWeather() > startResolvedPromise(1500): ', (p-dn) );
+
+  // -------------------------
+
+  const pAl = await Promise.all(startSetTimeoutArrayLong);
+  console.log('###### mockAPI() > getMetaWeather() > startSetTimeoutArrayLong1-0: ', (pAl[0]-dn) );
+  console.log('###### mockAPI() > getMetaWeather() > startSetTimeoutArrayLong1-1: ', (pAl[1]-dn) );
+
+  // -------------------------
+
+  const b = await startResolvedPromise(100);
+  console.log('###### mockAPI() > getMetaWeather() > startResolvedPromise(100): ', (b-dn) );
+
+  const z = await startResolvedPromise(4000);
+  console.log('###### mockAPI() > getMetaWeather() > startResolvedPromise(4000): ', (z-dn) );
+
+  // -------------------------
+
+  const a = startResolvedRejectedPromise('foober', 500);
+
+  a.then(
+    (val) => { console.log('###### mockAPI() > getMetaWeather() > startResolvedRejectedPromise > a > resolve: ', val ) },
+    (error) => { console.log('###### mockAPI() > getMetaWeather() > startResolvedRejectedPromise > a > reject: ', error ) }
+  );
+
+  const aa = startResolvedRejectedPromise('json', 600);
+
+  aa.then(
+    (val) => { console.log('###### mockAPI() > getMetaWeather() > startResolvedRejectedPromise > aa > resolve: ', val ) },
+    (error) => { console.log('###### mockAPI() > getMetaWeather() > startResolvedRejectedPromise > aa > reject: ', error ) }
+  );
+
+  const aaa = startResolvedRejectedPromise('fooberrrrr', 15000);
+
+  aaa.then(
+    (val) => { console.log('###### mockAPI() > getMetaWeather() > startResolvedRejectedPromise > aaa > resolve: ', val ) },
+    (error) => { console.log('###### mockAPI() > getMetaWeather() > startResolvedRejectedPromise > aaa > reject: ', error ) }
+  );
+
+  // -------------------------
+
+  const pAf2 = await Promise.all(startSetTimeoutArrayFast);
+  console.log('###### mockAPI() > getMetaWeather() > startSetTimeoutArrayFast2-0: ', (pAf2[0]-dn) );
+  console.log('###### mockAPI() > getMetaWeather() > startSetTimeoutArrayFast2-1: ', (pAf2[1]-dn) );
+
+  // -------------------------
+
+  try {
+
+    const k = await startResolvedRejectedPromise('foob', 1200);
+    return k;
+
+  } catch (error) {
+
+    console.log('###### mockAPI() > getMetaWeather() > startResolvedRejectedPromise > k catch > error: ', error);
     return error;
   }
 }
 
 export function mockAPI(doWhat, delay) {
-  console.log('################### mockAPI() > mockAPI <<<<<<<<<<<<<<<<<<<<<<<');
+  console.log('###### mockAPI() > mockAPI <<<<<<<<<<<<<<<<<<<<<<<');
   return new Promise(( resolve ) => {
     setTimeout( () => resolve( doWhat() ), delay);
   });
