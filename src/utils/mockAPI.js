@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import TimeElapsed from './timeElapsed';
 
 // A simple function ------------------------
@@ -45,12 +44,12 @@ function awaitForReturnValueOfAFunction(r) {
 }
 
 function startSetTimeout(delay) {
-  setTimeout(() => Date.now(), delay);
+  setTimeout(() => console.log('###### mockAPI > startSetTimeout > secondsElapsed: ', TimeElapsed.secondsElapsed), delay);
 }
 
 function startResolvedPromise(delay) {
   return new Promise(resolve => {
-    setTimeout(() => resolve( Date.now() ), delay);
+    setTimeout(() => resolve( TimeElapsed.secondsElapsed ), delay);
   });
 }
 
@@ -61,14 +60,14 @@ function startResolvedRejectedPromise(v, delay) {
         resolve({
           resolved: 'RESOLVED',
           value: `${v}`,
-          time: Date.now(),
+          time: TimeElapsed.secondsElapsed,
           delay: `${delay}`
         });
       } else {
         reject({
           reject: 'REJECTED',
           value: `${v}`,
-          time: Date.now(),
+          time: TimeElapsed.secondsElapsed,
           delay: `${delay}`
         });
       }
@@ -90,7 +89,7 @@ function startResolvedRejectedPromise(v, delay) {
 
 async function doSomeAsyncSyncLikeOperations() {
 
-  //console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > timeElapsed 1: ', timeElapsed(Date.now()) );
+  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > secondsElapsed 1: ${TimeElapsed.secondsElapsed}`);
 
   const startSetTimeoutArrayLong = [];
   startSetTimeoutArrayLong.push(startResolvedPromise(2500));
@@ -103,20 +102,16 @@ async function doSomeAsyncSyncLikeOperations() {
   // -------------------------
 
   const p = await startResolvedPromise(1500);
-  console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > startResolvedPromise(1500): ', p);
+  console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > startResolvedPromise(1500) > secondsElapsed p: ', p);
 
   // -------------------------
 
-  //console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > timeElapsed 2: ', timeElapsed(Date.now()) );
-
   startSetTimeout(10000);
-
-  //console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > timeElapsed 3: ', timeElapsed(Date.now()) );
 
   // -------------------------
 
   const g = await startResolvedPromise(4000);
-  console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > startResolvedPromise(4000): ', g);
+  console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > startResolvedPromise(4000) > secondsElapsed g: ', g);
 
   // -------------------------
 
@@ -133,12 +128,10 @@ async function doSomeAsyncSyncLikeOperations() {
   // -------------------------
 
   const b = await startResolvedPromise(100);
-  console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > startResolvedPromise(100): ', b);
+  console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > startResolvedPromise(100) > secondsElapsed b: ', b);
 
   const z = await startResolvedPromise(4000);
-  console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > startResolvedPromise(4000): ', z);
-
-  // console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > timeElapsed 4: ', timeElapsed(Date.now()) );
+  console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > startResolvedPromise(4000) > secondsElapsed z: ', z);
 
   // -------------------------
 
@@ -179,8 +172,8 @@ async function doSomeAsyncSyncLikeOperations() {
   //   return error;
   // }
 
-  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > TimeElapsed.secondsElapsed: ${TimeElapsed.secondsElapsed}`);
-  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > TimeElapsed.secondsElapsedX: ${TimeElapsed.secondsElapsedX(Date.now())}`);
+  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > secondsElapsed 2: ${TimeElapsed.secondsElapsed}`);
+  // console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > secondsElapsedX: ${TimeElapsed.secondsElapsedX(Date.now())}`);
 }
 
 export async function getSomeAsyncData(location) {
@@ -190,20 +183,21 @@ export async function getSomeAsyncData(location) {
   // initiate counter startTime
   TimeElapsed.startTime = Date.now();
 
+  console.log(`###### mockAPI > getSomeAsyncData > secondsElapsed 1: ${TimeElapsed.secondsElapsed}`);
+
   // doSomeAsyncSyncLikeOperations();
   await doSomeAsyncSyncLikeOperations();
 
-  //console.log('###### mockAPI > getSomeAsyncData > timeElapsed3: ', timeElapsed(Date.now()) );
+  console.log(`###### mockAPI > getSomeAsyncData > secondsElapsed 2: ${TimeElapsed.secondsElapsed}`);
 
   try {
 
     const k = await startResolvedRejectedPromise('foober', 1200);
-    //console.log('###### mockAPI > getSomeAsyncData > timeElapsed 4: ', timeElapsed(Date.now()) );
+    console.log('###### mockAPI > getSomeAsyncData > startResolvedRejectedPromise(1200) k: ', k);
     return k;
 
   } catch (error) {
     console.log('###### mockAPI > getSomeAsyncData > k > catch > error: ', error);
-    //console.log('###### mockAPI > getSomeAsyncData > timeElapsed 5: ', timeElapsed(Date.now()) );
     return error;
   }
 
