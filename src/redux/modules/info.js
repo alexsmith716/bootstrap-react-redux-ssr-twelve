@@ -4,7 +4,7 @@ const LOAD = 'redux-example/info/LOAD';
 const LOAD_SUCCESS = 'redux-example/info/LOAD_SUCCESS';
 const LOAD_FAIL = 'redux-example/info/LOAD_FAIL';
 
-import { mockAPI, getDateNow, getRandomInt, getMetaWeather } from '../../utils/mockAPI';
+import { mockAPI, getRandomInt, getSomeAsyncData } from '../../utils/mockAPI';
 
 import initialState from '../initial-state';
 
@@ -55,7 +55,7 @@ export function isLoaded(globalState) {
 //   console.log('>>>>>>>>>>>>>>>> info > redux > Action > load() <<<<<<<<<<<<<<<<<<');
 //   return {
 //     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-//     promise: () => mockAPI(() => getDateNow(), 1000 )
+//     promise: () => mockAPI(() => getRandomInt(), 1000 )
 //   };
 // };
 
@@ -65,7 +65,7 @@ export function load() {
   // let location = 'https://www.metaweather.com/api/location/2459115/';
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: () => mockAPI(() => getMetaWeather(location))
+    promise: () => mockAPI(() => getSomeAsyncData(location))
   };
 };
 
