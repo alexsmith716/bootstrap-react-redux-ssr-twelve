@@ -180,7 +180,7 @@ export async function getSomeAsyncData(location) {
 
   // console.log('###### mockAPI > Object.getOwnPropertyDescriptor(TimeElapsed): ', Object.getOwnPropertyDescriptor(TimeElapsed));
 
-  // initiate counter startTime
+  // set TimeElapsed startTime
   TimeElapsed.startTime = Date.now();
 
   console.log(`###### mockAPI > getSomeAsyncData > secondsElapsed 1: ${TimeElapsed.secondsElapsed}`);
