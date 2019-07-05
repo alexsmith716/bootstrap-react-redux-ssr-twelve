@@ -30,6 +30,7 @@ module.exports = {
 
       '@babel/runtime-corejs3/core-js/array/from.js',
       '@babel/runtime-corejs3/core-js/array/is-array.js',
+      '@babel/runtime-corejs3/core-js/date/now.js',
       '@babel/runtime-corejs3/core-js/get-iterator.js',
       '@babel/runtime-corejs3/core-js/instance/bind.js',
       '@babel/runtime-corejs3/core-js/instance/concat.js',

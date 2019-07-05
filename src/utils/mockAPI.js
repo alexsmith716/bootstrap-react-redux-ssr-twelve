@@ -1,5 +1,6 @@
 import axios from 'axios';
 import TimeElapsed from './timeElapsed';
+import timeElapsedModule from './timeElapsedModule';
 
 // A simple function ------------------------
 // var simple = (a) => {return a}
@@ -8,6 +9,23 @@ import TimeElapsed from './timeElapsed';
 // A simple method ------------------------
 // var obj = {simple : (a) => {return a} } 
 // obj.simple(5) // called by its name along with its associated object
+
+// var obj = {
+//   simple : (a) => {
+//     return a
+//   } 
+// } 
+// obj.simple(5)
+
+// let myObj = {
+//   name: 'fancy',
+//   operation: () => {
+//     return console.log(this);
+//   } 
+// }
+// myObj.operation();
+
+// ===========================================================
 
 export function getRandomInt() {
   return Math.floor(Math.random() * (100 - 1)) + 1;
@@ -174,16 +192,30 @@ async function doSomeAsyncSyncLikeOperations() {
 
   console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > secondsElapsed 2: ${TimeElapsed.secondsElapsed}`);
   // console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > secondsElapsedX: ${TimeElapsed.secondsElapsedX(Date.now())}`);
+
+  console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule.secondsElapsed(): ', timeElapsedModule.secondsElapsed());
 }
 
 export async function getSomeAsyncData(location) {
 
+  // ES2017
   // console.log('###### mockAPI > Object.getOwnPropertyDescriptor(TimeElapsed): ', Object.getOwnPropertyDescriptor(TimeElapsed));
 
-  // set TimeElapsed startTime
+  // initiate TimeElapsed startTime
   TimeElapsed.startTime = Date.now();
 
-  console.log(`###### mockAPI > getSomeAsyncData > secondsElapsed 1: ${TimeElapsed.secondsElapsed}`);
+  console.log(`###### mockAPI > getSomeAsyncData > TimeElapsed.startTime: ${TimeElapsed.startTime}`);
+
+  TimeElapsed.secondsElapsedX(Date.now())
+
+  // =========================================================================
+  // =========================================================================
+
+  console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule.startTime(): ', timeElapsedModule.startTime());
+
+  
+  // =========================================================================
+  // =========================================================================
 
   // doSomeAsyncSyncLikeOperations();
   await doSomeAsyncSyncLikeOperations();
