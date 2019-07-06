@@ -1,31 +1,21 @@
 import axios from 'axios';
-import TimeElapsed from './timeElapsed';
+import TimeElapsedClass from './timeElapsedClass';
 import timeElapsedModule from './timeElapsedModule';
 
-// A simple function ------------------------
-// var simple = (a) => {return a}
-// simple(5) // called by its name
+// --------------------------
 
-// A simple method ------------------------
-// var obj = {simple : (a) => {return a} } 
-// obj.simple(5) // called by its name along with its associated object
+// closure: the combination of a function and the lexical environment within which that function was declared
+// lexical environment: consists of any local variables that were in-scope at the time the closure was created
+// closures are useful because they let you associate some data (lexical environment) with a function that operates on that data
+// use a closure anywhere an object with only a single method might be used
+// functions in JS form closures
+function closureFuncDemo1(lexicalEnvVar) {
+  return function(y) {
+    return `${lexicalEnvVar}-${y}`;
+  };
+}
 
-// var obj = {
-//   simple : (a) => {
-//     return a
-//   } 
-// } 
-// obj.simple(5)
-
-// let myObj = {
-//   name: 'fancy',
-//   operation: () => {
-//     return console.log(this);
-//   } 
-// }
-// myObj.operation();
-
-// ===========================================================
+// --------------------------
 
 export function getRandomInt() {
   return Math.floor(Math.random() * (100 - 1)) + 1;
@@ -62,12 +52,12 @@ function awaitForReturnValueOfAFunction(r) {
 }
 
 function startSetTimeout(delay) {
-  setTimeout(() => console.log('###### mockAPI > startSetTimeout > secondsElapsed: ', TimeElapsed.secondsElapsed), delay);
+  setTimeout(() => console.log('###### mockAPI > startSetTimeout > secondsElapsed: ', TimeElapsedClass.secondsElapsed), delay);
 }
 
 function startResolvedPromise(delay) {
   return new Promise(resolve => {
-    setTimeout(() => resolve( TimeElapsed.secondsElapsed ), delay);
+    setTimeout(() => resolve( timeElapsedModule.secondsElapsed() ), delay);
   });
 }
 
@@ -78,14 +68,14 @@ function startResolvedRejectedPromise(v, delay) {
         resolve({
           resolved: 'RESOLVED',
           value: `${v}`,
-          time: TimeElapsed.secondsElapsed,
+          time: TimeElapsedClass.secondsElapsed,
           delay: `${delay}`
         });
       } else {
         reject({
           reject: 'REJECTED',
           value: `${v}`,
-          time: TimeElapsed.secondsElapsed,
+          time: TimeElapsedClass.secondsElapsed,
           delay: `${delay}`
         });
       }
@@ -107,7 +97,7 @@ function startResolvedRejectedPromise(v, delay) {
 
 async function doSomeAsyncSyncLikeOperations() {
 
-  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > secondsElapsed 1: ${TimeElapsed.secondsElapsed}`);
+  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > TimeElapsedClass.secondsElapsed 1: ${TimeElapsedClass.secondsElapsed}`);
 
   const startSetTimeoutArrayLong = [];
   startSetTimeoutArrayLong.push(startResolvedPromise(2500));
@@ -190,37 +180,43 @@ async function doSomeAsyncSyncLikeOperations() {
   //   return error;
   // }
 
-  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > secondsElapsed 2: ${TimeElapsed.secondsElapsed}`);
-  // console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > secondsElapsedX: ${TimeElapsed.secondsElapsedX(Date.now())}`);
+  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > TimeElapsedClass.secondsElapsed 2: ${TimeElapsedClass.secondsElapsed}`);
+  // console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > secondsElapsedX: ${TimeElapsedClass.secondsElapsedX(Date.now())}`);
 
-  console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule.secondsElapsed(): ', timeElapsedModule.secondsElapsed());
+  console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > timeElapsedModule.secondsElapsed(): ', timeElapsedModule.secondsElapsed());
 }
 
 export async function getSomeAsyncData(location) {
 
   // ES2017
-  // console.log('###### mockAPI > Object.getOwnPropertyDescriptor(TimeElapsed): ', Object.getOwnPropertyDescriptor(TimeElapsed));
+  // console.log('###### mockAPI > Object.getOwnPropertyDescriptor(TimeElapsedClass): ', Object.getOwnPropertyDescriptor(TimeElapsedClass));
 
-  // initiate TimeElapsed startTime
-  TimeElapsed.startTime = Date.now();
+  // initiate TimeElapsedClass startTime
+  TimeElapsedClass.startTime = Date.now();
 
-  console.log(`###### mockAPI > getSomeAsyncData > TimeElapsed.startTime: ${TimeElapsed.startTime}`);
+  console.log(`###### mockAPI > getSomeAsyncData > TimeElapsedClass.startTime: ${TimeElapsedClass.startTime}`);
 
-  TimeElapsed.secondsElapsedX(Date.now())
-
-  // =========================================================================
-  // =========================================================================
+  TimeElapsedClass.secondsElapsedX(Date.now())
 
   console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule.startTime(): ', timeElapsedModule.startTime());
 
-  
-  // =========================================================================
+  // --------------------------
+
+  const closureFuncDemo1Closure1 = closureFuncDemo1('foo');
+  const closureFuncDemo1Closure2 = closureFuncDemo1('fooooooo');
+
+  console.log('###### mockAPI > closureFuncDemo1 > closureFuncDemo1Closure1(): ', closureFuncDemo1Closure1('berrr'));
+  console.log('###### mockAPI > closureFuncDemo1 > closureFuncDemo1Closure2(): ', closureFuncDemo1Closure2('bbbeeerrrr'));
+
   // =========================================================================
 
   // doSomeAsyncSyncLikeOperations();
   await doSomeAsyncSyncLikeOperations();
 
-  console.log(`###### mockAPI > getSomeAsyncData > secondsElapsed 2: ${TimeElapsed.secondsElapsed}`);
+  // =========================================================================
+
+  console.log(`###### mockAPI > getSomeAsyncData > TimeElapsedClass.secondsElapsed: ${TimeElapsedClass.secondsElapsed}`);
+  console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule.secondsElapsed(): ', timeElapsedModule.secondsElapsed());
 
   try {
 
