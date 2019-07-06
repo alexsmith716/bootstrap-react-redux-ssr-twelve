@@ -1,7 +1,7 @@
 
 // accessor properties: getters and setters
 
-class TimeElapsed {
+class TimeElapsedClass {
 
   constructor() {}
   // constructor(startTime) {
@@ -28,4 +28,4 @@ class TimeElapsed {
 
 }
 
-export default new TimeElapsed();
+export default new TimeElapsedClass();

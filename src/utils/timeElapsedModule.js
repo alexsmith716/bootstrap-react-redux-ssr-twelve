@@ -30,3 +30,14 @@ const timeElapsedModule = (() => {
 })();
 
 export default timeElapsedModule;
+
+// 3 closure scopes:
+// ----------------------------
+// * local scope (own scope)
+// * outer function scope
+// * global scope
+
+
+// console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule.secondsElapsed(): ', timeElapsedModule.secondsElapsed());
+
+// console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule.startTime(): ', timeElapsedModule.startTime());
