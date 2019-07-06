@@ -1,5 +1,6 @@
 import axios from 'axios';
-import TimeElapsedClass from './timeElapsedClass';
+// import TimeElapsedClass from './timeElapsedClass';
+import TimeElapsedClass from './timeElapsedClassTwo';
 import timeElapsedModule from './timeElapsedModule';
 
 // --------------------------
@@ -52,12 +53,13 @@ function awaitForReturnValueOfAFunction(r) {
 }
 
 function startSetTimeout(delay) {
-  setTimeout(() => console.log('###### mockAPI > startSetTimeout > secondsElapsed: ', TimeElapsedClass.secondsElapsed), delay);
+  setTimeout(() => console.log('###### mockAPI > startSetTimeout > secondsElapsed: ', TimeElapsedClass.getSecondsElapsed()), delay);
 }
 
 function startResolvedPromise(delay) {
   return new Promise(resolve => {
-    setTimeout(() => resolve( timeElapsedModule.secondsElapsed() ), delay);
+    // setTimeout(() => resolve( timeElapsedModule.secondsElapsed() ), delay);
+    setTimeout(() => resolve( TimeElapsedClass.getSecondsElapsed() ), delay);
   });
 }
 
@@ -68,14 +70,14 @@ function startResolvedRejectedPromise(v, delay) {
         resolve({
           resolved: 'RESOLVED',
           value: `${v}`,
-          time: TimeElapsedClass.secondsElapsed,
+          time: TimeElapsedClass.getSecondsElapsed(),
           delay: `${delay}`
         });
       } else {
         reject({
           reject: 'REJECTED',
           value: `${v}`,
-          time: TimeElapsedClass.secondsElapsed,
+          time: TimeElapsedClass.getSecondsElapsed(),
           delay: `${delay}`
         });
       }
@@ -97,7 +99,7 @@ function startResolvedRejectedPromise(v, delay) {
 
 async function doSomeAsyncSyncLikeOperations() {
 
-  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > TimeElapsedClass.secondsElapsed 1: ${TimeElapsedClass.secondsElapsed}`);
+  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > TimeElapsedClass.getSecondsElapsed 1: ${TimeElapsedClass.getSecondsElapsed()}`);
 
   const startSetTimeoutArrayLong = [];
   startSetTimeoutArrayLong.push(startResolvedPromise(2500));
@@ -180,8 +182,7 @@ async function doSomeAsyncSyncLikeOperations() {
   //   return error;
   // }
 
-  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > TimeElapsedClass.secondsElapsed 2: ${TimeElapsedClass.secondsElapsed}`);
-  // console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > secondsElapsedX: ${TimeElapsedClass.secondsElapsedX(Date.now())}`);
+  console.log(`###### mockAPI > doSomeAsyncSyncLikeOperations > TimeElapsedClass.getSecondsElapsed 2: ${TimeElapsedClass.getSecondsElapsed()}`);
 
   console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > timeElapsedModule.secondsElapsed(): ', timeElapsedModule.secondsElapsed());
 }
@@ -192,11 +193,9 @@ export async function getSomeAsyncData(location) {
   // console.log('###### mockAPI > Object.getOwnPropertyDescriptor(TimeElapsedClass): ', Object.getOwnPropertyDescriptor(TimeElapsedClass));
 
   // initiate TimeElapsedClass startTime
-  TimeElapsedClass.startTime = Date.now();
+  TimeElapsedClass.setStartTime();
 
-  console.log(`###### mockAPI > getSomeAsyncData > TimeElapsedClass.startTime: ${TimeElapsedClass.startTime}`);
-
-  TimeElapsedClass.secondsElapsedX(Date.now())
+  console.log(`###### mockAPI > getSomeAsyncData > TimeElapsedClass.getStartTime: ${TimeElapsedClass.getStartTime()}`);
 
   console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule.startTime(): ', timeElapsedModule.startTime());
 
@@ -215,7 +214,7 @@ export async function getSomeAsyncData(location) {
 
   // =========================================================================
 
-  console.log(`###### mockAPI > getSomeAsyncData > TimeElapsedClass.secondsElapsed: ${TimeElapsedClass.secondsElapsed}`);
+  console.log(`###### mockAPI > getSomeAsyncData > TimeElapsedClass.getSecondsElapsed: ${TimeElapsedClass.getSecondsElapsed()}`);
   console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule.secondsElapsed(): ', timeElapsedModule.secondsElapsed());
 
   try {
