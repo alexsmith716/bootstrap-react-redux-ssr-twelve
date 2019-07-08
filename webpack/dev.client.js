@@ -52,27 +52,8 @@ const handler = (percentage, message, ...args) => {
 
 // ==============================================================================================
 
-// https://github.com/bholloway/resolve-url-loader/blob/master/packages/resolve-url-loader/README.md#configure-webpack
-// source-maps required for loaders preceding resolve-url-loader (regardless of devtool)
-
-// https://webpack.js.org/guides/caching/#module-identifiers
-
-// ==============================================================================================
-
-// Other Configuration Options Supported by webpack
-//  -----------------------------------------------------------------------------------------------
-//  cache: false        * Cache the generated webpack modules and chunks to improve build speed
-//                      * Caching is enabled by default while in watch mode
-
-//  cache: SharedCache  * If an object is passed, webpack will use this object for cachin
-//                      * Keeping a reference to this object will allow one to share the same cache between compiler calls
-
-// Watch and WatchOptions (webpack can watch files and recompile whenever they change)
-//  ----------------------------------------------------------------------------------------------
-//  watch: true         * after the initial build, webpack will continue to watch for changes in any of the resolved files
-//                      * In 'webpack-dev-server' and 'webpack-dev-middleware' watch mode is enabled by default
-// ==============================================================================================
-
+// client bundle targeting 'web'
+// entry point to client bundle ('client.js') renders to DOM
 const webpackConfig = {
 
   context: path.resolve(__dirname, '..'),

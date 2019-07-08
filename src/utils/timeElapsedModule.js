@@ -1,8 +1,12 @@
 
 // es6 module > closures
+// emulate private methods with closures
+// private methods: manage global namespace by controlling exposure of API methods
 
-const timeElapsedModule = (() => {
+// create an anonymous function and assign to var 'timeElapsedModule'
+const timeElapsedModule = () => {
 
+  // private functions and variables
   let startedTime = 0;
   let elapsedTime = 0;
 
@@ -11,33 +15,30 @@ const timeElapsedModule = (() => {
   }
 
   function timeElapsed() {
-    elapsedTime = (Date.now() - startedTime) / 1000;
+    return elapsedTime = (Date.now() - startedTime) / 1000;
   }
 
+  // ------------------------------------------------------
+
+  // DON'T FORGET THE COMMA SEPERATING THE 
+
+  // single lexical environment shared by public functions
+  // these functions have access to above private items through JS's lexical scoping
   return {
 
-    secondsElapsed: () => {
-      timeElapsed();
-      return elapsedTime;
+    setStartTime: () => {
+      timeSet();
     },
 
-    startTime: () => {
-      timeSet();
+    getStartTime: () => {
       return startedTime;
     },
 
+    getSecondsElapsed: () => {
+      return timeElapsed();
+    },
+
   };
-})();
+};
 
 export default timeElapsedModule;
-
-// 3 closure scopes:
-// ----------------------------
-// * local scope (own scope)
-// * outer function scope
-// * global scope
-
-
-// console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule.secondsElapsed(): ', timeElapsedModule.secondsElapsed());
-
-// console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule.startTime(): ', timeElapsedModule.startTime());
