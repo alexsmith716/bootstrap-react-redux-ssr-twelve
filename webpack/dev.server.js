@@ -36,8 +36,9 @@ const handler = (percentage, message, ...args) => {
 // }
 
 // ==============================================================================================
-// https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime
 
+// server bundle targeting 'node'
+// entry point to server bundle ('server.js') renders to string
 module.exports = {
 
   context: path.resolve(__dirname, '..'),

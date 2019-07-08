@@ -19,11 +19,11 @@ class TimeElapsedClass {
   // -----------------------------
 
   get secondsElapsed() {
-    return (Date.now() - this.startTime) / 1000;
+    return (Date.now() - this._startTime) / 1000;
   }
 
   secondsElapsedX(elapsed) {
-    return (elapsed - this.startTime) / 1000;
+    return (elapsed - this._startTime) / 1000;
   }
 
 }

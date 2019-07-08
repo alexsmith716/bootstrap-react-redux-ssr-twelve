@@ -14,14 +14,14 @@
     "prod": "concurrently \"yarn prod:bin:server\" \"yarn prod:bin:api\"",
     "prod:bin:server": "NODE_PATH=src NODE_ENV=production PORT=8080 APIPORT=3030 WEBPACK_DLLS=0 node --trace-deprecation ./bin/server.js",
     "prod:bin:api": "NODE_PATH=api NODE_ENV=production APIPORT=3030 BABEL_DISABLE_CACHE=1 node ./bin/api.js",
-    "prod:build:client": "NODE_ENV=production webpack --display-error-details --config ./webpack/prod.client.js",
     "dlls": "webpack --display-error-details --config webpack/dllplugin.vendor.config.js",
     "clean:all": "npm-run-all --parallel clean clean:dlls",
     "clean": "rimraf build/dist build/server build/analyzers",
     "clean:dlls": "rimraf build/dlls  webpack/dlls",
     "prettier": "prettier-eslint --write --eslint-config-path .eslintrc './+(bin)/**/*.js'",
     "lint": "eslint -c .eslintrc bin",
-    "test": "NODE_PATH=client jest client"
+    "test": "NODE_PATH=client jest client",
+    "prod:build:client": "NODE_ENV=production webpack --display-error-details --config ./webpack/prod.client.js"
   },
   "dependencies": {
     "@babel/register": "^7.4.4",
