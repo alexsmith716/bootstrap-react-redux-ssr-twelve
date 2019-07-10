@@ -3,10 +3,6 @@ import Helmet from 'react-helmet';
 
 class StickyFooter extends Component {
 
-  UNSAFE_componentWillMount() {
-    console.log('>>>>>>>>>>>>>>>> STICKYFOOTER > UNSAFE_componentWillMount() <<<<<<<<<<<<<<');
-  }
-
   componentDidMount() {
     console.log('>>>>>>>>>>>>>>>> STICKYFOOTER > componentDidMount() <<<<<<<<<<<<<<');
   }
