@@ -31,12 +31,6 @@ const config = {
   port: process.env.PORT
 };
 
-const clientConfigDev = require('../webpack/dev.client');
-const serverConfigDev = require('../webpack/dev.server');
-
-const clientConfigProd = require('../webpack/prod.client');
-const serverConfigProd = require('../webpack/prod.server');
-
 // const outputPath = clientConfigDev.output.path;
 
 // Map will grow and shrink over time,
@@ -115,19 +109,6 @@ app.use('/manifest.json', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'build', 'manifest.json'));
 });
 
-app.use('/dist/service-worker.js', (req, res, next) => {
-  console.log('>>>>>>>>>>>>>>>>> START > app.use > service-worker <<<<<<<<<<<<<<<<<<<<<<<');
-  res.setHeader('Service-Worker-Allowed', '/');
-  res.setHeader('Cache-Control', 'no-store');
-  return next();
-});
-
-app.use('/dlls/:dllName.js', (req, res, next) => {
-  console.log('>>>>>>>>>>>>>>>>> START > app.use > DLLs <<<<<<<<<<<<<<<<<<<<<<<');
-  /* eslint-disable max-len */
-  fs.access(path.join(__dirname, '..', 'build', 'dlls', `${req.params.dllName}.js`), fs.constants.R_OK, err => err ? res.send(`################## NO DLL !!! (${req.originalUrl})') ##################`) : next());
-});
-
 // app.use((req, res, next) => {
 //   console.log('>>>>>>>>>>>>>>>>> START > app.use(res.setHeader(X-Forwarded-For) <<<<<<<<<<<<<<<<<<<<<<<');
 //   res.setHeader('X-Forwarded-For', req.ip);
@@ -185,31 +166,6 @@ console.log('>>>>>>>> BIN > START > COMMON > CONFIG >>>>>>>>>>>>>>>>>>>>>>>>: ',
 const portNum = Number(config.port);
 const port = normalizePort(__DEVELOPMENT__ ? portNum : portNum);
 
-// https://github.com/webpack/webpack.js.org/blob/master/src/content/configuration/dev-server.md
-// https://github.com/webpack/webpack-dev-middleware
-// https://webpack.js.org/configuration/stats/#stats
-// https://webpack.js.org/concepts/hot-module-replacement/
-// https://github.com/gaearon/react-hot-loader
-// https://github.com/webpack/webpack-dev-server
-// https://github.com/webpack-contrib/webpack-hot-middleware
-
-// logLevel: 'silent',
-// watchOptions: {
-//   aggregateTimeout: 300,
-//   ignored: /node_modules/,
-//   poll: false
-// },
-// hot: true,
-
-const { publicPath } = clientConfigDev.output;
-
-const serverOptions = {
-  lazy: false,
-  stats: { colors: true },
-  serverSideRender: true,
-  publicPath
-};
-
 // #########################################################################
 
 let isBuilt = false;
@@ -247,6 +203,8 @@ server.on('listening', () => {
 // https://webpack.js.org/configuration/stats/
 // https://webpack.js.org/api/node/#multicompiler
 
+// MultiCompiler > stats.hasErrors() > Compilation errors (missing modules)
+
 // start socket and 'listen' for connections (requests)
 // method: 'app.listen(path, [callback])' <<< is identical to Node's 'http.Server.listen()'
 const done = () => !isBuilt
@@ -267,6 +225,39 @@ if (portNum) {
   app.use(express.static(path.join(__dirname, '..', 'build')));
 
   if (__DEVELOPMENT__) {
+    const clientConfigDev = require('../webpack/dev.client');
+    const serverConfigDev = require('../webpack/dev.server');
+    // https://github.com/webpack/webpack.js.org/blob/master/src/content/configuration/dev-server.md
+    // https://github.com/webpack/webpack-dev-middleware
+    // https://webpack.js.org/configuration/stats/#stats
+    // https://webpack.js.org/concepts/hot-module-replacement/
+    // https://github.com/gaearon/react-hot-loader
+    // https://github.com/webpack/webpack-dev-server
+    // https://github.com/webpack-contrib/webpack-hot-middleware
+
+    // logLevel: 'silent',
+    // watchOptions: {
+    //   aggregateTimeout: 300,
+    //   ignored: /node_modules/,
+    //   poll: false
+    // },
+    // hot: true,
+
+    const { publicPath } = clientConfigDev.output;
+
+    const serverOptions = {
+      lazy: false,
+      stats: { colors: true },
+      serverSideRender: true,
+      publicPath
+    };
+
+    app.use('/dlls/:dllName.js', (req, res, next) => {
+      console.log('>>>>>>>>>>>>>>>>> START > app.use > DLLs <<<<<<<<<<<<<<<<<<<<<<<');
+      /* eslint-disable max-len */
+      fs.access(path.join(__dirname, '..', 'build', 'dlls', `${req.params.dllName}.js`), fs.constants.R_OK, err => err ? res.send(`################## NO DLL !!! (${req.originalUrl})') ##################`) : next());
+    });
+
     const compiler = webpack([clientConfigDev, serverConfigDev]);
 
     const clientCompiler = compiler.compilers[0];
@@ -280,13 +271,36 @@ if (portNum) {
     // // devMiddleware: 'function middleware(req, res, next) {}'
 
     app.use(devMiddleware);
+
+    // add hot reloading into server
     app.use(webpackHotMiddleware(clientCompiler));
+
+    // hot update webpack bundles on the server
+    // ensures server bundle is the latest compilation without a restart
+    // allows client and server bundle to share same Webpack cache for faster builds
+    // uses an in-memory bundle on the server to avoid hitting the disk
+    // alternate option: nodemon
+    // nodemon: monitor for changes in app and automatically restart the server (for development)
     app.use(webpackHotServerMiddleware(compiler));
+
+    // execute callback when compiler bundle is valid, typically after compilation
+    // callback is executed when the bundle becomes valid
+    // if bundle is valid at the time of calling, callback is executed immediately
     devMiddleware.waitUntilValid(done);
   } else {
+    const clientConfigProd = require('../webpack/prod.client');
+    const serverConfigProd = require('../webpack/prod.server');
+    app.use('/dist/service-worker.js', (req, res, next) => {
+      console.log('>>>>>>>>>>>>>>>>> START > app.use > service-worker <<<<<<<<<<<<<<<<<<<<<<<');
+      res.setHeader('Service-Worker-Allowed', '/');
+      res.setHeader('Cache-Control', 'no-store');
+      return next();
+    });
+    // production: using 'express.static' instead of 'webpack-dev-server'
+    // production: also using a pre-built server bundle instead of 'webpack-hot-server-middleware'
+    // -------------------------
     // webpack provides a Node.js API which can be used directly in Node.js runtime
-    // the Node.js API is useful in scenarios in which you need to customize the build or development process
-    // all the reporting and error handling must be done manually and webpack only does the compiling part
+    // Node.js API: all the reporting and error handling must be done manually and webpack only does the compiling part
     // For this reason the stats configuration options will not have any effect (no stats about module builds)
     webpack([clientConfigProd, serverConfigProd]).run((err, stats) => {
       if (err) {
