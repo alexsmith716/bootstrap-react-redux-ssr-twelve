@@ -65,6 +65,7 @@ module.exports = {
       '@babel/runtime-corejs3/core-js/set-timeout.js',
       '@babel/runtime-corejs3/core-js/symbol.js',
       '@babel/runtime-corejs3/core-js/symbol/iterator.js',
+      '@babel/runtime-corejs3/core-js/weak-map.js',
       '@babel/runtime-corejs3/helpers/arrayWithHoles.js',
       '@babel/runtime-corejs3/helpers/arrayWithoutHoles.js',
       '@babel/runtime-corejs3/helpers/assertThisInitialized.js',

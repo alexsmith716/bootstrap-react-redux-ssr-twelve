@@ -2,7 +2,15 @@
 // 'this': placeholder for a specific instance
 // 'this': (will be known by the time the method is invoked)
 
-// dynamic properties are called accessor properties
+// anonymous class expression
+// constructor property is optional
+// object properties:
+// data property ('key: value' - set in constructor, not on the prototype)
+// dynamic properties also called accessor properties (getter and a setter)
+// function properties (methods)
+
+// defining a method or property on an instance override's version in the prototype
+// JS first checks instance before checking prototype
 
 const data = new WeakMap();
 

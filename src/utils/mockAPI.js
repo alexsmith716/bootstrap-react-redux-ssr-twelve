@@ -223,12 +223,12 @@ export async function getSomeAsyncData(location) {
   console.log('###### mockAPI > closureFuncDemo1 > closureFuncDemo1Closure1(): ', closureFuncDemo1Closure1('berrr'));
   console.log('###### mockAPI > closureFuncDemo1 > closureFuncDemo1Closure2(): ', closureFuncDemo1Closure2('bbbeeerrrr'));
 
-  // =========================================================================
+  // --------------------------
 
   // doSomeAsyncSyncLikeOperations();
   await doSomeAsyncSyncLikeOperations();
 
-  // =========================================================================
+  // --------------------------
 
   console.log(`###### mockAPI > getSomeAsyncData > timeElapsedClass1.getSecondsElapsed(): ${timeElapsedClass1.getSecondsElapsed()}`);
   console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule1.getSecondsElapsed(): ', timeElapsedModule1.getSecondsElapsed());
