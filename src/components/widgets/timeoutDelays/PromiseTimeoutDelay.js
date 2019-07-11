@@ -1,11 +1,10 @@
 import React from 'react';
 
-const PromiseTimeoutDelay = (delay) => (
-
-);
+const PromiseTimeoutDelay = (delay) => ();
 
 export default PromiseTimeoutDelay;
 
+// ===================================================================
 // ===================================================================
 
 // const PromiseTimeoutDelay = milliseconds => value => new Promise (resolve =>
@@ -70,6 +69,10 @@ alert(curriedAdd(3));   //8
 
 // SIMPLE FUNCTION: "const add = (x,y) => x + y;"
 
+// =======================================================
+      ({ clientStats }) => async (req, res) => {
+        //
+      }
 // =======================================================
 
       function doFilter(query) {
