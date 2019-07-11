@@ -31,10 +31,6 @@ const config = {
   port: process.env.PORT
 };
 
-// const outputPath = clientConfigDev.output.path;
-
-// Map will grow and shrink over time,
-// reflecting rejections that start unhandled and then become handled
 const unhandledRejections = new Map();
 
 process.on('unhandledRejection', (reason, promise) => {
@@ -191,19 +187,13 @@ server.on('listening', () => {
   //   mongooseOptions,
   //   err => {
   //     if (err) {
-  //       console.error('>>>>>>>> BIN > START > Please make sure Mongodb is installed and running!');
+  //       console.erro r('>>>>>>>> BIN > START > Please make sure Mongodb is installed and running!');
   //     } else {
   //       console.error('>>>>>>>> BIN > START > Mongodb is installed and running!');
   //     }
   //   }
   // );
 });
-
-// https://webpack.js.org/api/node/
-// https://webpack.js.org/configuration/stats/
-// https://webpack.js.org/api/node/#multicompiler
-
-// MultiCompiler > stats.hasErrors() > Compilation errors (missing modules)
 
 // start socket and 'listen' for connections (requests)
 // method: 'app.listen(path, [callback])' <<< is identical to Node's 'http.Server.listen()'
@@ -229,7 +219,8 @@ if (portNum) {
     const serverConfigDev = require('../webpack/dev.server');
     // https://github.com/webpack/webpack.js.org/blob/master/src/content/configuration/dev-server.md
     // https://github.com/webpack/webpack-dev-middleware
-    // https://webpack.js.org/configuration/stats/#stats
+    // https://webpack.js.org/configuration/stats/
+    // https://webpack.js.org/api/node/#multicompiler
     // https://webpack.js.org/concepts/hot-module-replacement/
     // https://github.com/gaearon/react-hot-loader
     // https://github.com/webpack/webpack-dev-server
@@ -258,17 +249,13 @@ if (portNum) {
       fs.access(path.join(__dirname, '..', 'build', 'dlls', `${req.params.dllName}.js`), fs.constants.R_OK, err => err ? res.send(`################## NO DLL !!! (${req.originalUrl})') ##################`) : next());
     });
 
+    // webpack compiler instance (no cb passed)
     const compiler = webpack([clientConfigDev, serverConfigDev]);
 
     const clientCompiler = compiler.compilers[0];
     // const serverCompiler = compiler.compilers[1];
 
     const devMiddleware = webpackDevMiddleware(compiler, serverOptions);
-
-    // // console.error('>>>>>>>> BIN > START > WEBPACK COMPILE > DEV > compiler: ', compiler);
-    // // console.error('>>>>>>>> BIN > START > WEBPACK COMPILE > DEV > devMiddleware: ', devMiddleware);
-    // // compiler: 'MultiCompiler {}'
-    // // devMiddleware: 'function middleware(req, res, next) {}'
 
     app.use(devMiddleware);
 
@@ -281,6 +268,7 @@ if (portNum) {
     // uses an in-memory bundle on the server to avoid hitting the disk
     // alternate option: nodemon
     // nodemon: monitor for changes in app and automatically restart the server (for development)
+    // 'run' method is then used to kickstart all compilation work
     app.use(webpackHotServerMiddleware(compiler));
 
     // execute callback when compiler bundle is valid, typically after compilation
@@ -302,6 +290,7 @@ if (portNum) {
     // webpack provides a Node.js API which can be used directly in Node.js runtime
     // Node.js API: all the reporting and error handling must be done manually and webpack only does the compiling part
     // For this reason the stats configuration options will not have any effect (no stats about module builds)
+    // 'run' method is then used to kickstart all compilation work
     webpack([clientConfigProd, serverConfigProd]).run((err, stats) => {
       if (err) {
         console.error('>>>>>>>> BIN > START > WEBPACK COMPILE > PROD > err: ', err.stack || err);
@@ -323,12 +312,15 @@ if (portNum) {
       }
 
       // Done processing ---------------------------------------------------------------------
-      const render = require('../build/server/server.js').default;
+      const serverRender = require('../build/server/server.js').default;
 
       // app.use(express.static(outputPath));
 
-      app.use(render({ clientStats }));
+      // express > use(middleware) > serverRender({clientStats})
+      // SERVER: export default ({ clientStats }) => async (req, res) => {}
+      app.use(serverRender({ clientStats }));
 
+      // done processing
       done();
     });
   }
