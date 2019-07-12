@@ -205,7 +205,6 @@ async function doSomeAsyncSyncLikeOperations() {
 
 export async function getSomeAsyncData(location) {
 
-  // ES2017
   // console.log('###### mockAPI > Object.getOwnPropertyDescriptor(timeElapsedClass1): ', Object.getOwnPropertyDescriptor(timeElapsedClass1));
 
   // initiate TimeElapsed setStartTime
