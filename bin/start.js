@@ -12,12 +12,8 @@ const http = require('http');
 const favicon = require('serve-favicon');
 // const mongoose = require('mongoose');
 const webpack = require('webpack');
-// express-style dev middleware for use with webpack bundles
-// allows for serving of the files emitted from webpack
 const webpackDevMiddleware = require('webpack-dev-middleware');
-// connect a browser client to a webpack server & receive updates
 const webpackHotMiddleware = require('webpack-hot-middleware');
-// hot update Webpack bundles on the server
 const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
 
 console.log('>>>>>>>>>>>>>>>>> START > __CLIENT__ ?: ', __CLIENT__);
@@ -162,10 +158,6 @@ console.log('>>>>>>>> BIN > START > COMMON > CONFIG >>>>>>>>>>>>>>>>>>>>>>>>: ',
 const portNum = Number(config.port);
 const port = normalizePort(__DEVELOPMENT__ ? portNum : portNum);
 
-// #########################################################################
-
-let isBuilt = false;
-
 server.on('error', err => {
   if (err.code === 'EADDRINUSE') {
     console.log('Address in use, retrying...');
@@ -195,7 +187,8 @@ server.on('listening', () => {
   // );
 });
 
-// start socket and 'listen' for connections (requests)
+let isBuilt = false;
+
 // method: 'app.listen(path, [callback])' <<< is identical to Node's 'http.Server.listen()'
 const done = () => !isBuilt
   && server.listen(port, config.host, err => {
@@ -226,20 +219,12 @@ if (portNum) {
     // https://github.com/webpack/webpack-dev-server
     // https://github.com/webpack-contrib/webpack-hot-middleware
 
-    // logLevel: 'silent',
-    // watchOptions: {
-    //   aggregateTimeout: 300,
-    //   ignored: /node_modules/,
-    //   poll: false
-    // },
-    // hot: true,
-
     const { publicPath } = clientConfigDev.output;
 
     const serverOptions = {
-      lazy: false,
+      // lazy: false,
       stats: { colors: true },
-      serverSideRender: true,
+      // serverSideRender: true,
       publicPath
     };
 
@@ -249,14 +234,14 @@ if (portNum) {
       fs.access(path.join(__dirname, '..', 'build', 'dlls', `${req.params.dllName}.js`), fs.constants.R_OK, err => err ? res.send(`################## NO DLL !!! (${req.originalUrl})') ##################`) : next());
     });
 
-    // webpack compiler instance (no cb passed)
+    // webpack compiler instance
     const compiler = webpack([clientConfigDev, serverConfigDev]);
 
     const clientCompiler = compiler.compilers[0];
     // const serverCompiler = compiler.compilers[1];
 
+    // allows for serving of the files emitted from webpack
     const devMiddleware = webpackDevMiddleware(compiler, serverOptions);
-
     app.use(devMiddleware);
 
     // add hot reloading into server
@@ -266,9 +251,7 @@ if (portNum) {
     // ensures server bundle is the latest compilation without a restart
     // allows client and server bundle to share same Webpack cache for faster builds
     // uses an in-memory bundle on the server to avoid hitting the disk
-    // alternate option: nodemon
     // nodemon: monitor for changes in app and automatically restart the server (for development)
-    // 'run' method is then used to kickstart all compilation work
     app.use(webpackHotServerMiddleware(compiler));
 
     // execute callback when compiler bundle is valid, typically after compilation
@@ -290,6 +273,7 @@ if (portNum) {
     // webpack provides a Node.js API which can be used directly in Node.js runtime
     // Node.js API: all the reporting and error handling must be done manually and webpack only does the compiling part
     // For this reason the stats configuration options will not have any effect (no stats about module builds)
+    // call the 'run' method on the compiler instance
     // 'run' method is then used to kickstart all compilation work
     webpack([clientConfigProd, serverConfigProd]).run((err, stats) => {
       if (err) {
@@ -300,10 +284,12 @@ if (portNum) {
         return;
       }
 
+      // done processing now have stats object
       const clientStats = stats.toJson().children[0];
 
       // console.error('>>>>>>>> BIN > START > WEBPACK COMPILE > PROD > clientStats: ', clientStats);
 
+      // errors and warnings (stats object)
       if (stats.hasErrors()) {
         console.error('>>>>>>>> BIN > START > WEBPACK COMPILE > PROD > stats.hasErrors: ', clientStats.errors);
       }
@@ -316,11 +302,13 @@ if (portNum) {
 
       // app.use(express.static(outputPath));
 
+      // provide stats object (module and chunk information) to 'webpack-flush-chunks' && 'react-universal-component'
+      // 'webpack-flush-chunks':      (server-to-client chunk discovery + transportation)
+      // 'react-universal-component': (simultaneous SSR + Code Splitting)
       // express > use(middleware) > serverRender({clientStats})
       // SERVER: export default ({ clientStats }) => async (req, res) => {}
       app.use(serverRender({ clientStats }));
 
-      // done processing
       done();
     });
   }
