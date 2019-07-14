@@ -221,10 +221,11 @@ if (portNum) {
 
     const { publicPath } = clientConfigDev.output;
 
+    // serverSideRender: true, // needed?
     const serverOptions = {
       // lazy: false,
       stats: { colors: true },
-      // serverSideRender: true,
+      serverSideRender: true,
       publicPath
     };
 
@@ -241,6 +242,7 @@ if (portNum) {
     // const serverCompiler = compiler.compilers[1];
 
     // allows for serving of the files emitted from webpack
+    // passing both client and server compiles
     const devMiddleware = webpackDevMiddleware(compiler, serverOptions);
     app.use(devMiddleware);
 
@@ -251,7 +253,12 @@ if (portNum) {
     // ensures server bundle is the latest compilation without a restart
     // allows client and server bundle to share same Webpack cache for faster builds
     // uses an in-memory bundle on the server to avoid hitting the disk
+    // --------------------------
+    // chokidar.watch(): wrapper around node.js fs.watch / fs.watchFile / FSEvents
     // nodemon: monitor for changes in app and automatically restart the server (for development)
+    // --------------------------
+    // webpackHotServerMiddleware: hot update webpack bundles on the server
+    // webpackHotServerMiddleware: expects client/server array compiler instance
     app.use(webpackHotServerMiddleware(compiler));
 
     // execute callback when compiler bundle is valid, typically after compilation
@@ -307,6 +314,7 @@ if (portNum) {
       // 'react-universal-component': (simultaneous SSR + Code Splitting)
       // express > use(middleware) > serverRender({clientStats})
       // SERVER: export default ({ clientStats }) => async (req, res) => {}
+      // ... curried - test ...
       app.use(serverRender({ clientStats }));
 
       done();
