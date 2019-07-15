@@ -23,6 +23,7 @@ const timeElapsedModule = () => {
   // DON'T FORGET THE COMMA SEPERATING THE 
 
   // single lexical environment shared by public functions
+  // lexical environment: consists of any local variables that were in-scope at the time the closure was created
   // these functions have access to above private items through JS's lexical scoping
   return {
 
