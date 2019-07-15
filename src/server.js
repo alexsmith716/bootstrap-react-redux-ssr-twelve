@@ -16,7 +16,7 @@ import { getUserAgent, isBot } from './utils/device';
 
 import { flushChunkNames } from 'react-universal-component/server';
 import flushChunks from 'webpack-flush-chunks';
-import { flushFiles } from 'webpack-flush-chunks';
+// import { flushFiles } from 'webpack-flush-chunks';
 
 import Html from './helpers/Html';
 import config from '../config/config';
@@ -35,19 +35,21 @@ const getRandomInt = (min, max) => (
 // ------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------
 
-// HOF is a function which returns a function
-// ---------------------------------------------------------------
-// const render = require('../build/server/SERVER').default;
-// app.use(render({ clientStats }));
-// ---------------------------------------------------------------
-// app.use(function render({ clientStats }) {
-//   return function async (req, res) {
-//     return ...;
-//   }
-// })
+// function binding: creating a function that calls another function with a specific 'this' value and with specific arguments
+// function binding: technique used in conjunction with callbacks and event handlers
+// function binding: used to preserve code execution context while passing functions around as variables
 
+// HOF is a function which returns a function
+// function currying: create a function that has arguments already set
+// basic approach: use a closure to return a new function ()
+// closure: 
+//    * the combination of a function (return async function(req, res)) 
+//    * and the lexical environment within which that function was DECLARED ({ clientStats })
+// --------------------------
+// export default ({ clientStats }) => (req, res) => {
 export default function({ clientStats }) {
 
+  // anonymous wrapper that creates a closure with access to above lexical env var '{ clientStats }'
   // returned as express middleware
   return async function(req, res) {
 
