@@ -242,11 +242,15 @@ if (portNum) {
     // const serverCompiler = compiler.compilers[1];
 
     // allows for serving of the files emitted from webpack
-    // passing both client and server compiles
+    // passing both client and server compilations
     const devMiddleware = webpackDevMiddleware(compiler, serverOptions);
     app.use(devMiddleware);
 
     // add hot reloading into server
+    // connects browser to server and receives updates
+    // subscribes to changes from server and executes changes using webpack HMR
+    // ('webpack-hot-middleware'  <<<<<<<<< webpack hot reloading)
+    // ('react-hot-loader' <<<<<<<<<<<<<<<< app hot reloading)
     app.use(webpackHotMiddleware(clientCompiler));
 
     // hot update webpack bundles on the server
@@ -274,9 +278,7 @@ if (portNum) {
       res.setHeader('Cache-Control', 'no-store');
       return next();
     });
-    // production: using 'express.static' instead of 'webpack-dev-server'
-    // production: also using a pre-built server bundle instead of 'webpack-hot-server-middleware'
-    // -------------------------
+
     // webpack provides a Node.js API which can be used directly in Node.js runtime
     // Node.js API: all the reporting and error handling must be done manually and webpack only does the compiling part
     // For this reason the stats configuration options will not have any effect (no stats about module builds)
@@ -304,7 +306,7 @@ if (portNum) {
         console.warn('>>>>>>>> BIN > START > WEBPACK COMPILE > PROD > stats.hasWarnings: ', clientStats.warnings);
       }
 
-      // Done processing ---------------------------------------------------------------------
+      // built server.js
       const serverRender = require('../build/server/server.js').default;
 
       // app.use(express.static(outputPath));
@@ -314,7 +316,10 @@ if (portNum) {
       // 'react-universal-component': (simultaneous SSR + Code Splitting)
       // express > use(middleware) > serverRender({clientStats})
       // SERVER: export default ({ clientStats }) => async (req, res) => {}
-      // ... curried - test ...
+
+      // returned 'server.js' function 'return async function(req, res) {}'
+      // now express application-level middleware
+      // function executed every time the app receives a request
       app.use(serverRender({ clientStats }));
 
       done();

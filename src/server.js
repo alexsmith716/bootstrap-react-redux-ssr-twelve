@@ -46,10 +46,9 @@ const getRandomInt = (min, max) => (
 //   }
 // })
 
-// review the currying technique (return a function from a function)
-// express middleware is a function that returns a function
-// export default ({ clientStats }) => async (req, res) => {
 export default function({ clientStats }) {
+
+  // returned as express middleware
   return async function(req, res) {
 
     console.log('>>>>>>>>>>>>>>>>> SERVER > __CLIENT__ ?: ', __CLIENT__);
