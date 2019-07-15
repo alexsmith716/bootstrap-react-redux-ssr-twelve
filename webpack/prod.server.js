@@ -45,12 +45,16 @@ module.exports = {
   // devtool: 'hidden-source-map',
   // devtool: 'source-map',
 
-  // entry: './server/server.js',
-  entry: './src/server.js',
+  // entry: './src/server.js',
+  entry: {
+    server: './src/server.js',
+    serverTest: './src/serverTest.js'
+  },
 
   output: {
     path: path.resolve('./build/server'),
-    filename: 'server.js',
+    // filename: 'server.js',
+    filename: '[name].js',
     libraryTarget: 'commonjs2'
   },
 

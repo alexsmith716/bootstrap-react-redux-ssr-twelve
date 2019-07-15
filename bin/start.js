@@ -306,18 +306,17 @@ if (portNum) {
         console.warn('>>>>>>>> BIN > START > WEBPACK COMPILE > PROD > stats.hasWarnings: ', clientStats.warnings);
       }
 
-      // built server.js
       const serverRender = require('../build/server/server.js').default;
 
       // app.use(express.static(outputPath));
 
+      const serverRenderTest = require('../build/server/serverTest.js').default;
+      app.use(serverRenderTest({ clientStats }));
+
       // provide stats object (module and chunk information) to 'webpack-flush-chunks' && 'react-universal-component'
       // 'webpack-flush-chunks':      (server-to-client chunk discovery + transportation)
       // 'react-universal-component': (simultaneous SSR + Code Splitting)
-      // express > use(middleware) > serverRender({clientStats})
-      // SERVER: export default ({ clientStats }) => async (req, res) => {}
-
-      // returned 'server.js' function 'return async function(req, res) {}'
+      // server.js: export default ({ clientStats }) => async (req, res) => {}
       // now express application-level middleware
       // function executed every time the app receives a request
       app.use(serverRender({ clientStats }));

@@ -19,6 +19,13 @@ const timeElapsedModule2 = timeElapsedModule();
 // closures are useful because they let you associate some data (lexical environment) with a function that operates on that data
 // use a closure anywhere an object with only a single method might be used
 // functions in JS form closures
+
+// Closure Scope Chain (closures have 3 scopes):
+//  1) Local Scope (the closure's scope)
+//  2) Outer Functions Scope (lexical env)
+//  3) Global Scope (root)
+//  ***** all closures have access to all outer function scopes within which they were declared *****
+
 function closureFuncDemo1(lexicalEnvVar) {
   return function(y) {
     return `${lexicalEnvVar}-${y}`;
