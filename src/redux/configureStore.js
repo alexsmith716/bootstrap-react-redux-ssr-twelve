@@ -3,7 +3,6 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
  import { createPersistoid, persistCombineReducers, REGISTER } from 'redux-persist';
 import clientMiddleware from './clientMiddleware';
 import createRootReducer from './reducers';
-// import notify from 'redux-notify';
 
 // 'reduceRight()' works just like 'reduce()', 
 // except that it processes the array from highest index to lowest (right-to-left), 
