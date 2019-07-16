@@ -4,17 +4,28 @@ import { connect } from 'react-redux';
 import { load } from '../../redux/modules/info';
 
 @connect(
-  state => ({ info: state.info.data }),
+  (state) => ({ info: state.info.data }),
   { load }
 )
 
 class InfoBar extends Component {
 
+  // {
+  //   resolved: 'RESOLVED',
+  //   value: `${v}`,
+  //   // time: timeElapsedClass1.getSecondsElapsed(),
+  //   time: timeElapsedModule1.getSecondsElapsed(),
+  //   delay: `${delay}`
+  // }
+
   static propTypes = {
-    info: PropTypes.shape({
-      message: PropTypes.string,
-      time: PropTypes.number
-    }),
+    // info: PropTypes.shape({
+    //   // resolved: 'RESOLVED',
+    //   // value: `${v}`,
+    //   // // time: timeElapsedClass1.getSecondsElapsed(),
+    //   // time: timeElapsedModule1.getSecondsElapsed(),
+    //   // delay: `${delay}`
+    // }),
     load: PropTypes.func.isRequired
   };
 
@@ -38,7 +49,7 @@ class InfoBar extends Component {
 
           <div className="card-body bg-light">
 
-            <h5 className="card-title">InfoBar message: '<span className={styles.message}>{info ? info.message : 'no info!'}</span>'</h5>
+            <h5 className="card-title">InfoBar message: '<span className={styles.message}>{info ? info.resolved : 'no info!'}</span>'</h5>
 
             <p className="card-text">{info && new Date(info.time).toString()}</p>
             <p>{info && info.time}</p>

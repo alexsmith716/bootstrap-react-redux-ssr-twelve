@@ -3,8 +3,9 @@ import { renderIntoDocument, findRenderedDOMComponentWithTag, findRenderedDOMCom
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import createStore from '../../redux/createStore';
-import apiClient from '../../../server/utils/apiClient';
+import createStore from '../../redux/configureStore';
+// import apiClient from '../../utils/apiClient';
+import axiosClient from '../../utils/axiosClient';
 
 // components
 import { InfoBar } from '../index';
