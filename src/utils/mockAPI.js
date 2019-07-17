@@ -79,7 +79,7 @@ function startResolvedRejectedPromise(v, delay) {
       if (v === 'foober') {
         resolve({
           value: `${v}`,
-          // time: timeElapsedClass1.getSecondsElapsed(),
+          // timeElapsed: timeElapsedClass1.getSecondsElapsed(),
           timeElapsed: timeElapsedModule1.getSecondsElapsed(),
           time: Date.now(),
           delay: `${delay}`,
@@ -88,7 +88,7 @@ function startResolvedRejectedPromise(v, delay) {
       } else {
         reject({
           value: `${v}`,
-          // time: timeElapsedClass1.getSecondsElapsed(),
+          // timeElapsed: timeElapsedClass1.getSecondsElapsed(),
           timeElapsed: timeElapsedModule1.getSecondsElapsed(),
           time: Date.now(),
           delay: `${delay}`,
@@ -105,7 +105,6 @@ function startResolvedRejectedPromise(v, delay) {
 // await suspends execution until the promise is settled
 // async/await: take advantage of the generator pattern
 // async/await: make asynchronous operations with promises work in an synchronous manner
-
 
 // async returns a promise, which can be resolved to a value
 // await suspends the execution until the promise is settled
