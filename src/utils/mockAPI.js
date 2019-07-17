@@ -78,19 +78,21 @@ function startResolvedRejectedPromise(v, delay) {
     setTimeout(() => {
       if (v === 'foober') {
         resolve({
-          resolved: 'RESOLVED',
           value: `${v}`,
           // time: timeElapsedClass1.getSecondsElapsed(),
-          time: timeElapsedModule1.getSecondsElapsed(),
-          delay: `${delay}`
+          timeElapsed: timeElapsedModule1.getSecondsElapsed(),
+          time: Date.now(),
+          delay: `${delay}`,
+          message: 'RESOLVED! This came from the mock API.'
         });
       } else {
         reject({
-          reject: 'REJECTED',
           value: `${v}`,
           // time: timeElapsedClass1.getSecondsElapsed(),
-          time: timeElapsedModule1.getSecondsElapsed(),
-          delay: `${delay}`
+          timeElapsed: timeElapsedModule1.getSecondsElapsed(),
+          time: Date.now(),
+          delay: `${delay}`,
+          message: 'REJECTED! This came from the mock API.'
         });
       }
     }, delay);

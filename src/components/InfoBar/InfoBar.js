@@ -10,21 +10,13 @@ import { load } from '../../redux/modules/info';
 
 class InfoBar extends Component {
 
-  // {
-  //   resolved: 'RESOLVED',
-  //   value: `${v}`,
-  //   // time: timeElapsedClass1.getSecondsElapsed(),
-  //   time: timeElapsedModule1.getSecondsElapsed(),
-  //   delay: `${delay}`
-  // }
-
   static propTypes = {
     // info: PropTypes.shape({
-    //   // resolved: 'RESOLVED',
     //   // value: `${v}`,
-    //   // // time: timeElapsedClass1.getSecondsElapsed(),
+    //   // timeElapsed: timeElapsedModule1.getSecondsElapsed(),
     //   // time: timeElapsedModule1.getSecondsElapsed(),
-    //   // delay: `${delay}`
+    //   // delay: `${delay}`,
+    //   // message: 'RESOLVED! This came from the mock API.'
     // }),
     load: PropTypes.func.isRequired
   };
@@ -38,9 +30,6 @@ class InfoBar extends Component {
     const { info, load } = this.props;
     const styles = require('./scss/InfoBar.scss');
 
-    // console.log('>>>>>>>>>>>>>>>> InfoBar > render() > info:', info);
-    // console.log('>>>>>>>>>>>>>>>> InfoBar > render() > load:', load);
-
     return (
 
       <div className="container">
@@ -49,10 +38,11 @@ class InfoBar extends Component {
 
           <div className="card-body bg-light">
 
-            <h5 className="card-title">InfoBar message: '<span className={styles.message}>{info ? info.resolved : 'no info!'}</span>'</h5>
+            <h5 className="card-title">InfoBar message: '<span className={styles.message}>{info ? info.message : 'no message!'}</span>'</h5>
 
-            <p className="card-text">{info && new Date(info.time).toString()}</p>
-            <p>{info && info.time}</p>
+            <h6 className="card-text">{info && new Date(info.time).toString()}</h6>
+
+            <h6 className="card-text">{info && info.timeElapsed}</h6>
 
             <button type="button" className="btn btn-primary" onClick={load}>
               Reload from server

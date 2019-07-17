@@ -1,5 +1,9 @@
 import React from 'react';
-import { renderIntoDocument, findRenderedDOMComponentWithTag, findRenderedDOMComponentWithClass } from 'react-dom/test-utils';
+import { 
+  renderIntoDocument,
+  findRenderedDOMComponentWithTag,
+  findRenderedDOMComponentWithClass
+} from 'react-dom/test-utils';
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
@@ -7,7 +11,6 @@ import createStore from '../../redux/configureStore';
 // import apiClient from '../../utils/apiClient';
 import axiosClient from '../../utils/axiosClient';
 
-// components
 import { InfoBar } from '../index';
 
 // https://github.com/airbnb/enzyme
@@ -15,13 +18,11 @@ import { InfoBar } from '../index';
 // import { mount } from 'enzyme';    // Full DOM Rendering
 // import { render } from 'enzyme';   // Static Rendered Markup
 
-// renderIntoDocument(element): Render a React element into a detached DOM node in the document. This function requires a DOM.
+// renderIntoDocument(element): 
+//    Render a React element into a detached DOM node in the document. 
+//    This function requires a DOM.
 
 const client = apiClient();
-
-// ===============================================================
-// ========================= InfoBar =============================
-// ===============================================================
 
 describe('InfoBar', () => {
 
