@@ -10,7 +10,7 @@ import qs from 'qs';
 import { Link } from 'react-router-dom';
 
 import { isLoaded as isInfoLoaded, load as loadInfo } from '../../redux/modules/info';
-// import { Notifs, InfoBar } from '../../components';
+import { InfoBar } from '../../components'; //Notifs
 import config from '../../../config/config';
 
 // --------------------------------------------------------------------------
@@ -186,10 +186,10 @@ class App extends Component {
         </nav>
 
         <div className={styles.appContent}>
-
           {renderRoutes(route.routes)}
-
         </div>
+
+        <InfoBar />
 
         <div className={styles.footer}>
           <div className="container h-100">
