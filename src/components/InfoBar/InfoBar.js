@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { load } from '../../redux/modules/info';
+import Loading from '../Loading/Loading';
 
 @connect(
   (state) => ({ info: state.info.data }),
@@ -14,7 +15,7 @@ class InfoBar extends Component {
     // info: PropTypes.shape({
     //   // value: `${v}`,
     //   // timeElapsed: timeElapsedModule1.getSecondsElapsed(),
-    //   // time: timeElapsedModule1.getSecondsElapsed(),
+    //   // time: Date.now(),
     //   // delay: `${delay}`,
     //   // message: 'RESOLVED! This came from the mock API.'
     // }),
@@ -25,6 +26,38 @@ class InfoBar extends Component {
     info: null
   };
 
+  // ============================================================
+
+  componentDidMount() {
+    console.log('>>>>>>>>>>>>>>>> InfoBar > componentDidMount() <<<<<<<<<<<<<<<<<<<<<<');
+  };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('>>>>>>>>>>>>>>>> InfoBar > componentDidUpdate() <<<<<<<<<<<<<<<<<<<<<<');
+  };
+
+  componentWillUnmount() {
+    console.log('>>>>>>>>>>>>>>>> InfoBar > componentWillUnmount() <<<<<<<<<<<<<<<<<<<<<<');
+  };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // invoked before rendering when new props or state are being received
+    console.log('>>>>>>>>>>>>>>>> InfoBar > shouldComponentUpdate() > nextProps: ', nextProps);
+    console.log('>>>>>>>>>>>>>>>> InfoBar > shouldComponentUpdate() > nextState: ', nextState);
+    return nextProps;
+  };
+
+  // static getDerivedStateFromProps(props, state) {
+  //   console.log('>>>>>>>>>>>>>>>> InfoBar > getDerivedStateFromProps() <<<<<<<<<<<<<<<<<<<<<<');
+  //   return null;
+  // };
+
+  componentDidCatch(error, info) {
+    console.log('>>>>>>>>>>>>>>>> InfoBar > componentDidCatch() > info.componentStack: ', info.componentStack);
+  };
+
+  // ============================================================
+
   render() {
 
     const { info, load } = this.props;
@@ -32,7 +65,29 @@ class InfoBar extends Component {
 
     return (
 
-      <div className="container">
+      // <div>
+
+      //   {/* (>>>>>>>>>>>>>>>>>>>>>> LOADING >>>>>>>>>>>>>>>>>>>>>>>>) */}
+
+      //   {something && (
+
+      //       <div>
+      //         <br/>
+      //         <div className={`container-padding-border-radius-2`}>
+      //           <div className="container-padding-border-radius-1">
+
+      //             <Loading text="Loading..." />
+
+      //           </div>
+      //         </div>
+      //       </div>
+      //     )}
+
+      //   {/* (>>>>>>>>>>>>>>>>>>>>>>>> LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
+
+      //   {!something && (
+
+      <div className="containezr">
 
         <div className={`${styles.infoBar} card text-center`}>
 
@@ -51,6 +106,9 @@ class InfoBar extends Component {
           </div>
         </div>
       </div>
+      //     )}
+
+      // </div>
     );
   }
 }

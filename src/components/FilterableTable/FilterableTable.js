@@ -75,7 +75,7 @@ class FilterableTable extends Component {
     });
   };
 
-  // ================================================================================================
+  // ============================================================
 
   componentDidMount() {
     console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidMount() > props.description: ', this.props.description);
@@ -145,9 +145,7 @@ class FilterableTable extends Component {
     console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidCatch() > info.componentStack: ', info.componentStack);
   };
 
-  // ============================================
-  // ============================================
-  // ============================================
+  // ============================================================
 
   render() {
 
