@@ -3,7 +3,6 @@ const path = require('path');
 const webpack = require('webpack');
 const dllHelpers = require('./dllreferenceplugin');
 
-const WriteFilePlugin = require('write-file-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
@@ -251,10 +250,6 @@ const webpackConfig = {
   },
 
   plugins: [
-
-    // new webpack.ProgressPlugin(handler),
-    new WriteFilePlugin(),
-
     // by default [name].css is used when process.env.NODE_ENV === 'development' and [name].[contenthash].css during production, 
     //    so you can likely forget about having to pass anything.
     new ExtractCssChunks({

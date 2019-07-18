@@ -45,10 +45,9 @@ module.exports = {
   // devtool: 'hidden-source-map',
   // devtool: 'source-map',
 
-  // entry: './src/server.js',
   entry: {
     server: './src/server.js',
-    serverTest: './src/serverTest.js'
+    // serverTest: './src/serverTest.js'
   },
 
   output: {
