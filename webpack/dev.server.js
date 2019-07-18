@@ -10,7 +10,6 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { DuplicatesPlugin } = require('inspectpack/plugin');
 
 const rootPath = path.resolve(__dirname, '..');
-const WriteFilePlugin = require('write-file-webpack-plugin');
 
 const generatedIdent = (name, localName, lr) => {
   const r = Buffer.from(lr).toString('base64');
@@ -51,7 +50,10 @@ module.exports = {
   // devtool: false,
   devtool: 'source-map',
 
-  entry: './src/server.js',
+  entry: {
+    server: './src/server.js',
+    // serverTest: './src/serverTest.js'
+  },
 
   output: {
     path: path.resolve('./build/server'),
@@ -214,7 +216,6 @@ module.exports = {
   },
 
   plugins: [
-    new WriteFilePlugin(),
     // new webpack.ProgressPlugin(handler),
     // https://webpack.js.org/plugins/module-concatenation-plugin/
     // new webpack.optimize.ModuleConcatenationPlugin(),

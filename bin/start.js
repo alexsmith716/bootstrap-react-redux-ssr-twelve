@@ -222,11 +222,14 @@ if (portNum) {
     const { publicPath } = clientConfigDev.output;
 
     // serverSideRender: true, // needed?
+    // lazy: instructs module to operate in 'lazy' mode (recompiles when files change, not on each request)
     const serverOptions = {
       // lazy: false,
       stats: { colors: true },
       serverSideRender: true,
-      publicPath
+      publicPath,
+      writeToDisk: true
+      // headers: { 'Access-Control-Allow-Origin': '*' }
     };
 
     app.use('/dlls/:dllName.js', (req, res, next) => {
@@ -263,7 +266,7 @@ if (portNum) {
     // --------------------------
     // webpackHotServerMiddleware: hot update webpack bundles on the server
     // webpackHotServerMiddleware: expects client/server array compiler instance
-    app.use(webpackHotServerMiddleware(compiler));
+    app.use(webpackHotServerMiddleware(compiler, { chunkName: 'server' }));
 
     // execute callback when compiler bundle is valid, typically after compilation
     // callback is executed when the bundle becomes valid
@@ -310,8 +313,8 @@ if (portNum) {
 
       // app.use(express.static(outputPath));
 
-      const serverRenderTest = require('../build/server/serverTest.js').default;
-      app.use(serverRenderTest({ clientStats }));
+      // const serverRenderTest = require('../build/server/serverTest.js').default;
+      // app.use(serverRenderTest({ clientStats }));
 
       // provide stats object (module and chunk information) to 'webpack-flush-chunks' && 'react-universal-component'
       // 'webpack-flush-chunks':      (server-to-client chunk discovery + transportation)
