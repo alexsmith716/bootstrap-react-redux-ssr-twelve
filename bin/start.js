@@ -226,7 +226,7 @@ if (portNum) {
 
     // lazy: instructs module to operate in 'lazy' mode (recompiles when files change, not on each request)
     // serverSideRender: instructs the module to enable or disable the server-side rendering mode
-    // serverSideRender: enable access to stats > res.locals.webpackStats
+    // serverSideRender: enables access to stats > res.locals.webpackStats
     const serverOptions = {
       // lazy: false,
       stats: { colors: true },
@@ -255,9 +255,9 @@ if (portNum) {
 
     // the following middleware would not be invoked until the latest build is finished
     app.use((req, res, next) => {
-      const webpackStats = res.locals.webpackStats.toJson();
+      // const webpackStats = res.locals.webpackStats.toJson();
       // const clientStats = res.locals.webpackStats.toJson().children[0];
-      console.log('>>>>>>>>>>>>>>>>> START > webpackStats:', webpackStats);
+      // console.log('>>>>>>>>>>>>>>>>> START > webpackStats:', webpackStats);
       // console.log('>>>>>>>>>>>>>>>>> START > clientStats:', clientStats);
       next();
     });
