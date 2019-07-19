@@ -1,7 +1,5 @@
-
 import { flushChunkNames } from 'react-universal-component/server';
 import flushChunks from 'webpack-flush-chunks';
-
 
 export default function({ clientStats }) {
 
@@ -18,6 +16,6 @@ export default function({ clientStats }) {
 
     console.log(`>>>>>>>>>>>>>>>> serverTest > assets.scripts: ${assets.scripts}`);
 
-    return next();
+    next();
   }
 }

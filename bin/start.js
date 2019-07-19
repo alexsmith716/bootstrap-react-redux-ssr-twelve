@@ -93,7 +93,7 @@ app.use((req, res, next) => {
   // console.log('>>>>>>>>>>>>>>>>> START > REQ.params +++++++++: ', req.params);
   console.log('>>>>>>>>>>>>>>>>> START > REQ.originalUrl ++++: ', req.originalUrl);
   console.log('>>>>>>>>>>>>>>>>> START > REQUEST OUT <<<<<<<<<<<<<<<<<<<<<<<');
-  return next();
+  next();
 });
 
 app.use('/manifest.json', (req, res) => {
@@ -104,7 +104,7 @@ app.use('/manifest.json', (req, res) => {
 // app.use((req, res, next) => {
 //   console.log('>>>>>>>>>>>>>>>>> START > app.use(res.setHeader(X-Forwarded-For) <<<<<<<<<<<<<<<<<<<<<<<');
 //   res.setHeader('X-Forwarded-For', req.ip);
-//   return next();
+//   next();
 // });
 
 // // Proxy to API server
@@ -190,16 +190,19 @@ server.on('listening', () => {
 let isBuilt = false;
 
 // method: 'app.listen(path, [callback])' <<< is identical to Node's 'http.Server.listen()'
-const done = () => !isBuilt
-  && server.listen(port, config.host, err => {
-    isBuilt = true;
-    console.log('>>>>>>>> BIN > START > STATS COMPILER HAS COMPLETED BUILD !! WAIT IS OVER !');
-    if (err) {
-      console.error('>>>>>>>> BIN > START > ERROR:', err);
-    }
-    console.info('>>>>>>>> BIN > START > Express server Running on Host:', config.host);
-    console.info('>>>>>>>> BIN > START > Express server Running on Port:', port);
-  });
+const done = function () {
+  if (!isBuilt) {
+    server.listen(port, config.host, err => {
+      isBuilt = true;
+      console.log('>>>>>>>> BIN > START > STATS COMPILER HAS COMPLETED BUILD !! WAIT IS OVER !');
+      if (err) {
+        console.error('>>>>>>>> BIN > START > ERROR:', err);
+      }
+      console.info('>>>>>>>> BIN > START > Express server Running on Host:', config.host);
+      console.info('>>>>>>>> BIN > START > Express server Running on Port:', port);
+    });
+  }
+};
 
 if (portNum) {
   console.log('>>>>>>>> BIN > START > __DEVELOPMENT__ ?: ', __DEVELOPMENT__);
@@ -221,8 +224,9 @@ if (portNum) {
 
     const { publicPath } = clientConfigDev.output;
 
-    // serverSideRender: true, // needed?
     // lazy: instructs module to operate in 'lazy' mode (recompiles when files change, not on each request)
+    // serverSideRender: instructs the module to enable or disable the server-side rendering mode
+    // serverSideRender: enable access to stats > res.locals.webpackStats
     const serverOptions = {
       // lazy: false,
       stats: { colors: true },
@@ -248,6 +252,15 @@ if (portNum) {
     // passing both client and server compilations
     const devMiddleware = webpackDevMiddleware(compiler, serverOptions);
     app.use(devMiddleware);
+
+    // the following middleware would not be invoked until the latest build is finished
+    app.use((req, res, next) => {
+      const webpackStats = res.locals.webpackStats.toJson();
+      // const clientStats = res.locals.webpackStats.toJson().children[0];
+      console.log('>>>>>>>>>>>>>>>>> START > webpackStats:', webpackStats);
+      // console.log('>>>>>>>>>>>>>>>>> START > clientStats:', clientStats);
+      next();
+    });
 
     // add hot reloading into server
     // connects browser to server and receives updates
@@ -279,7 +292,7 @@ if (portNum) {
       console.log('>>>>>>>>>>>>>>>>> START > app.use > service-worker <<<<<<<<<<<<<<<<<<<<<<<');
       res.setHeader('Service-Worker-Allowed', '/');
       res.setHeader('Cache-Control', 'no-store');
-      return next();
+      next();
     });
 
     // webpack provides a Node.js API which can be used directly in Node.js runtime
