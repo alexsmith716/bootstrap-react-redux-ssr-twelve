@@ -31,10 +31,12 @@ class Loading extends Component {
   render() {
 
     const { text } = this.props;
+    const styles = require('./scss/Loading.scss');
+    // <div className={`alert alert-warning text-center mb-0 ${styles.loading}`} role="alert">{ text }</div>
 
     return (
 
-      <div className="alert alert-warning text-center mb-0" role="alert">{ text }</div>
+      <div className="alert alert-warning text-center mb-0" role="alert">{ text }<span className={styles.one}>.</span><span className={styles.two}>.</span><span className={styles.three}>.</span></div>
 
     );
   }

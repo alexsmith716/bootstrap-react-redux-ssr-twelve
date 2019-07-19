@@ -51,8 +51,7 @@ module.exports = {
   devtool: 'source-map',
 
   entry: {
-    server: './src/server.js',
-    // serverTest: './src/serverTest.js'
+    server: './src/server.js'
   },
 
   output: {
