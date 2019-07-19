@@ -5,7 +5,10 @@ import { load } from '../../redux/modules/info';
 import Loading from '../Loading/Loading';
 
 @connect(
-  (state) => ({ info: state.info.data }),
+  (state) => ({ 
+    info: state.info.data,
+    isLoading: state.info.isLoading
+  }),
   { load }
 )
 
@@ -17,7 +20,8 @@ class InfoBar extends Component {
     //   // timeElapsed: timeElapsedModule1.getSecondsElapsed(),
     //   // time: Date.now(),
     //   // delay: `${delay}`,
-    //   // message: 'RESOLVED! This came from the mock API.'
+    //   // message: 'RESOLVED! This came from the mock API.',
+    //      isLoading: PropTypes.bool,
     // }),
     load: PropTypes.func.isRequired
   };
@@ -60,55 +64,44 @@ class InfoBar extends Component {
 
   render() {
 
-    const { info, load } = this.props;
+    const { info, isLoading, load } = this.props;
     const styles = require('./scss/InfoBar.scss');
 
     return (
 
-      // <div>
+      <div className="container">
 
-      //   {/* (>>>>>>>>>>>>>>>>>>>>>> LOADING >>>>>>>>>>>>>>>>>>>>>>>>) */}
-
-      //   {something && (
-
-      //       <div>
-      //         <br/>
-      //         <div className={`container-padding-border-radius-2`}>
-      //           <div className="container-padding-border-radius-1">
-
-      //             <Loading text="Loading..." />
-
-      //           </div>
-      //         </div>
-      //       </div>
-      //     )}
-
-      //   {/* (>>>>>>>>>>>>>>>>>>>>>>>> LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
-
-      //   {!something && (
-
-      <div className="containezr">
-
-        <div className={`${styles.infoBar} card text-center`}>
+        <div className="card text-center">
 
           <div className="card-body bg-light">
 
-            <h5 className="card-title">InfoBar message: '<span className={styles.message}>{info ? info.message : 'no message!'}</span>'</h5>
+            {/* (>>>>>>>>>>>>>>>>>>>>>> LOADING >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
-            <h6 className="card-text">{info && new Date(info.time).toString()}</h6>
+            {isLoading && (
+                <Loading text="Loading..." />
+              )}
 
-            <h6 className="card-text">{info && info.timeElapsed}</h6>
+            {/* (>>>>>>>>>>>>>>>>>>>>>>>> LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
-            <button type="button" className="btn btn-primary" onClick={load}>
-              Reload from server
-            </button>
+            {info &&
+              !isLoading && (
+
+                <div className={`${styles.infoBar}`}>
+                  <h5 className="card-title">InfoBar message: '<span className={styles.message}>{info ? info.message : 'no message!'}</span>'</h5>
+                  
+                  <h6 className="card-text">{info && new Date(info.time).toString()}</h6>
+                  
+                  <h6 className="card-text">{info && info.timeElapsed}</h6>
+                  
+                  <button type="button" className="btn btn-primary" onClick={load}>
+                    Reload from server
+                  </button>
+                </div>
+              )}
 
           </div>
         </div>
       </div>
-      //     )}
-
-      // </div>
     );
   }
 }

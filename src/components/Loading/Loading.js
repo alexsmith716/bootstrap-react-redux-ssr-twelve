@@ -16,7 +16,6 @@ class Loading extends Component {
 
   componentDidMount() {
     console.log('>>>>>>>>>>>>>>>> Loading > componentDidMount() <<<<<<<<<<<<<<');
-    NProgress.configure({ trickleSpeed: 200 });
     NProgress.start();
   }
 
