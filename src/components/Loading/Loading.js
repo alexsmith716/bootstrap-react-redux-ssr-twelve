@@ -11,7 +11,7 @@ class Loading extends Component {
   };
 
   static defaultProps = {
-    text: 'Fetching Requested Data ...'
+    text: 'Loading'
   };
 
   componentDidMount() {
