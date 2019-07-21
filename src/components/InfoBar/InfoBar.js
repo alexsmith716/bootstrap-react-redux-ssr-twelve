@@ -88,12 +88,12 @@ class InfoBar extends Component {
                 <div>
                   <div className={`card-title ${styles.infoBar}`}>
                     <h5>InfoBar message: '<span className={styles.message}>{info ? info.message : 'no message!'}</span>'</h5>
-                    
+
                     <h6>{info && new Date(info.time).toString()}</h6>
-                    
+
                     <h6>{info && info.timeElapsed}</h6>
                   </div>
-                  
+
                   <button type="button" className="btn btn-primary" onClick={load}>
                     Reload from server
                   </button>
