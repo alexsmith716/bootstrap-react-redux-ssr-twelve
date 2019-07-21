@@ -11,9 +11,8 @@ const { DuplicatesPlugin } = require('inspectpack/plugin');
 
 const rootPath = path.resolve(__dirname, '..');
 
-const generatedIdent = (name, localName, lr) => {
-  const r = Buffer.from(lr).toString('base64');
-  return name + '__' + localName + '--' + r.substring( r.length-12, r.length-3 );
+const generatedIdent = (name, localName) => {
+  return name + '__' + localName;
 };
 
 const handler = (percentage, message, ...args) => {
@@ -79,7 +78,7 @@ module.exports = {
                   if (path.basename(loaderContext.resourcePath).indexOf('global.scss') !== -1) {
                     return localName;
                   } else {
-                    return generatedIdent(path.basename(loaderContext.resourcePath).replace(/\.[^/.]+$/, ""), localName, loaderContext.resourcePath);
+                    return generatedIdent(path.basename(loaderContext.resourcePath).replace(/\.[^/.]+$/, ""), localName);
                   }
                 },
                 mode: 'local',
@@ -137,7 +136,7 @@ module.exports = {
                   if (path.basename(loaderContext.resourcePath).indexOf('global.scss') !== -1) {
                     return localName;
                   } else {
-                    return generatedIdent(path.basename(loaderContext.resourcePath).replace(/\.[^/.]+$/, ""), localName, loaderContext.resourcePath);
+                    return generatedIdent(path.basename(loaderContext.resourcePath).replace(/\.[^/.]+$/, ""), localName);
                   }
                 },
                 mode: 'local',

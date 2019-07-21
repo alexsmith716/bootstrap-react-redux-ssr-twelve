@@ -38,9 +38,8 @@ if (process.env.WEBPACK_DLLS === '1' && validDLLs) {
 // 'Buffer.from('hello world', 'ascii')'
 // strings are immutable (will return new string, not modify)
 // ident unique based on scss directory
-const generatedIdent = (name, localName, lr) => {
-  const r = Buffer.from(lr).toString('base64');
-  return name + '__' + localName + '--' + r.substring( r.length-12, r.length-3 );
+const generatedIdent = (name, localName) => {
+  return name + '__' + localName;
   // substring args based on resourcePath length
 };
 
@@ -112,7 +111,7 @@ const webpackConfig = {
                   if (path.basename(loaderContext.resourcePath).indexOf('global.scss') !== -1) {
                     return localName;
                   } else {
-                    return generatedIdent(path.basename(loaderContext.resourcePath).replace(/\.[^/.]+$/, ""), localName, loaderContext.resourcePath);
+                    return generatedIdent(path.basename(loaderContext.resourcePath).replace(/\.[^/.]+$/, ""), localName);
                   }
                 },
                 mode: 'local',
@@ -175,7 +174,7 @@ const webpackConfig = {
                   if (path.basename(loaderContext.resourcePath).indexOf('global.scss') !== -1) {
                     return localName;
                   } else {
-                    return generatedIdent(path.basename(loaderContext.resourcePath).replace(/\.[^/.]+$/, ""), localName, loaderContext.resourcePath);
+                    return generatedIdent(path.basename(loaderContext.resourcePath).replace(/\.[^/.]+$/, ""), localName);
                   }
                 },
                 mode: 'local',
