@@ -25,6 +25,8 @@ module.exports = {
 
   entry: {
     vendor: [
+      'core-js/stable',
+      'regenerator-runtime/runtime',
 
       '@babel/runtime-corejs3/core-js/array/from.js',
       '@babel/runtime-corejs3/core-js/array/is-array.js',
@@ -85,9 +87,7 @@ module.exports = {
       '@babel/runtime-corejs3/helpers/slicedToArray.js',
       '@babel/runtime-corejs3/helpers/toConsumableArray.js',
       '@babel/runtime-corejs3/helpers/typeof.js',
-      '@babel/runtime-corejs3/node_modules/regenerator-runtime/runtime.js',
       '@babel/runtime-corejs3/regenerator/index.js',
-      '@babel/runtime-corejs3/~/regenerator-runtime',
 
       'jquery',
       'react',
