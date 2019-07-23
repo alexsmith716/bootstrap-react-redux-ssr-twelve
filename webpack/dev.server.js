@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const externals = require('./node-externals');
 
 // const loaderUtils = require('loader-utils').stringifyRequest;
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const { DuplicatesPlugin } = require('inspectpack/plugin');
 
@@ -235,12 +235,12 @@ module.exports = {
       __DEVELOPMENT__: true,
       __DEVTOOLS__: true
     }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      reportFilename: '../../analyzers/bundleAnalyzer/dev.serverAA.html',
-      openAnalyzer: false,
-      generateStatsFile: false
-    }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    //   reportFilename: '../../analyzers/bundleAnalyzer/dev.serverAA.html',
+    //   openAnalyzer: false,
+    //   generateStatsFile: false
+    // }),
 
     new DuplicatesPlugin({
       emitErrors: false,

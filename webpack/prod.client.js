@@ -291,11 +291,13 @@ module.exports = {
       __DLLS__: false
     }),
 
+    // built in /dist
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/pwa.js'
     }),
 
+    // Caching static resource "../bootstrap-react-redux-ssr-twelve/build/dist/aboutone.321178827546.js" (129 kB)
     new SWPrecacheWebpackPlugin({
       cacheId: 'bootstrap-react-redux-ssr-twelve',
       filename: 'service-worker.js',

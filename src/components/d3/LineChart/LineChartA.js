@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
-import LoadingTwo from '../../Loading/LoadingTwo';
+import Loading from '../../Loading/Loading';
 // import debounce from 'lodash.debounce';
 import drawVisualization from "../../../d3/drawLineChartBasic";
 
@@ -207,7 +207,7 @@ class LineChartA extends Component {
               {!error &&
                 isLoading && (
 
-                  <LoadingTwo text="LOADING" />
+                  <Loading text="Loading" />
 
                 )}
 
