@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const dllHelpers = require('./dllreferenceplugin');
 
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const { DuplicatesPlugin } = require('inspectpack/plugin');
 
@@ -273,12 +273,12 @@ const webpackConfig = {
       __DEVTOOLS__: true
     }),
 
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      reportFilename: '../../analyzers/bundleAnalyzer/dev.clientAA.html',
-      openAnalyzer: false,
-      generateStatsFile: false
-    }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    //   reportFilename: '../../analyzers/bundleAnalyzer/dev.clientAA.html',
+    //   openAnalyzer: false,
+    //   generateStatsFile: false
+    // }),
 
     new DuplicatesPlugin({
       emitErrors: false,

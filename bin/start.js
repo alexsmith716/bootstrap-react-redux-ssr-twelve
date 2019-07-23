@@ -6,9 +6,9 @@ const express = require('express');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-const http = require('http');
+// const http = require('http');
 // const httpProxy = require('http-proxy');
-// const https = require('https');
+const https = require('https');
 const favicon = require('serve-favicon');
 // const mongoose = require('mongoose');
 const webpack = require('webpack');
@@ -49,14 +49,19 @@ process.on('rejectionHandled', promise => {
 //   useNewUrlParser: true
 // };
 
-// const httpsOptions = {
-//   key: fs.readFileSync(path.join(__dirname, '../ssl/.key')),
-//   cert: fs.readFileSync(path.join(__dirname, '../ssl/.crt'))
-// }
+// https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener
+// https://nodejs.org/api/all.html#tls_tls_createserver_options_secureconnectionlistener
+const httpsOptions = {
+  key: fs.readFileSync(path.join(__dirname, '../ssl/.key')),
+  cert: fs.readFileSync(path.join(__dirname, '../ssl/.crt')),
+  // ca: fs.readFileSync('../ssl/ca.pem'),
+  requestCert: false,
+  rejectUnauthorized: false
+};
 
 const app = express();
-const server = http.createServer(app);
-// const server = https.createServer(httpsOptions, app);
+// const server = http.createServer(app);
+const server = https.createServer(httpsOptions, app);
 
 // app.set('port', port);
 app.use(morgan('dev'));
@@ -99,6 +104,13 @@ app.use((req, res, next) => {
 app.use('/manifest.json', (req, res) => {
   console.log('>>>>>>>>>>>>>>>>> START > app.use > manifest.json <<<<<<<<<<<<<<<<<<<<<<<');
   res.sendFile(path.join(__dirname, '..', 'build', 'manifest.json'));
+});
+
+app.use('/dist/service-worker.js', (req, res, next) => {
+  console.log('>>>>>>>>>>>>>>>>> START > app.use > service-worker <<<<<<<<<<<<<<<<<<<<<<<');
+  res.setHeader('Service-Worker-Allowed', '/');
+  res.setHeader('Cache-Control', 'no-store');
+  next();
 });
 
 // app.use((req, res, next) => {
@@ -289,12 +301,6 @@ if (portNum) {
   } else {
     const clientConfigProd = require('../webpack/prod.client');
     const serverConfigProd = require('../webpack/prod.server');
-    app.use('/dist/service-worker.js', (req, res, next) => {
-      console.log('>>>>>>>>>>>>>>>>> START > app.use > service-worker <<<<<<<<<<<<<<<<<<<<<<<');
-      res.setHeader('Service-Worker-Allowed', '/');
-      res.setHeader('Cache-Control', 'no-store');
-      next();
-    });
 
     // webpack provides a Node.js API which can be used directly in Node.js runtime
     // Node.js API: all the reporting and error handling must be done manually and webpack only does the compiling part

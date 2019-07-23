@@ -17,7 +17,7 @@
     "prod:build:client": "NODE_ENV=production webpack --display-error-details --config ./webpack/prod.client.js",
     "dlls": "webpack --display-error-details --config webpack/dllplugin.vendor.config.js",
     "clean:all": "npm-run-all --parallel clean clean:dlls",
-    "clean": "rimraf build/dist build/server build/analyzers",
+    "clean": "rimraf build/dist build/server ./analyzers",
     "clean:dlls": "rimraf build/dlls  webpack/dlls",
     "prettier": "prettier-eslint --write --eslint-config-path .eslintrc './+(bin)/**/*.js'",
     "lint": "eslint -c .eslintrc bin",

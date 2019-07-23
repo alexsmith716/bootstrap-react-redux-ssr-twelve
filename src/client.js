@@ -206,32 +206,34 @@ const providers = {
   if (!__DEVELOPMENT__ && 'serviceWorker' in navigator) {
     try {
       const registration = await navigator.serviceWorker.register('/dist/service-worker.js', { scope: '/dist/' });
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > !__DEVELOPMENT__ && serviceWorker in navigator YES!! <<<<<<<<<<<<<');
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker in navigator YES!! <<<<<<<<<<<<<');
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker in navigator YES!! > registration:', registration);
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         installingWorker.onstatechange = () => {
           switch (installingWorker.state) {
             case 'installed':
               if (navigator.serviceWorker.controller) {
-                console.log('New or updated content is available.');
+                // old content purged and fresh content added to cache
+                console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker > new or updated content is available <<<<<<<<<<<<<');
               } else {
-                console.log('Content is now available offline!');
+                // precaching complete
+                console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker > content cached for offline use <<<<<<<<<<<<<');
               }
               break;
             case 'redundant':
-              console.error('The installing service worker became redundant.');
+              console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker > installed service worker redundant <<<<<<<<<<<<<');
               break;
             default:
           }
         };
       };
     } catch (error) {
-      console.log('Error registering service worker: ', error);
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker > Error registering service worker: ', error);
     }
     await navigator.serviceWorker.ready;
-    console.log('Service Worker Ready');
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker > Service Worker Ready <<<<<<<<<<<<<');
   } else {
     console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > !__DEVELOPMENT__ && serviceWorker in navigator NO!! <<<<<<<<<<<<<');
   }
-
 })();
