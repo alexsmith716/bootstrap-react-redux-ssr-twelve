@@ -202,9 +202,15 @@ const providers = {
     console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker in navigator NO <<<<<<<<<<<<<');
   }
 
+  // const isLocalhost = Boolean(
+  //   window.location.hostname === 'localhost' ||
+  //   window.location.hostname === '[::1]' ||
+  //   window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+  // );
+
   if (!__DEVELOPMENT__ && 'serviceWorker' in navigator) {
     try {
-      const registration = await navigator.serviceWorker.register('/dist/service-worker.js', { scope: '/dist/' });
+      const registration = await navigator.serviceWorker.register('/dist/service-worker.js', { scope: '/' });
       console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker in navigator YES!! <<<<<<<<<<<<<');
       console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker in navigator YES!! > registration:', registration);
       registration.onupdatefound = () => {
@@ -224,6 +230,7 @@ const providers = {
               console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker > installed service worker redundant <<<<<<<<<<<<<');
               break;
             default:
+              // ignore
           }
         };
       };
