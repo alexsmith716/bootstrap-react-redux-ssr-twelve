@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom';
 import { Router } from 'react-router';
 import { renderRoutes } from 'react-router-config';
 import {createBrowserHistory} from 'history';
-import { Provider } from 'react-redux';
 import { trigger } from 'redial';
 
 // asynchronous offline local storage
@@ -16,7 +15,7 @@ import { getStoredState } from 'redux-persist';
 import { AppContainer as HotEnabler } from 'react-hot-loader';
 
 import asyncMatchRoutes from './utils/asyncMatchRoutes';
-import { RouterTrigger } from './components';
+import { RouterTrigger, Provider } from './components';
 import routes from './routes';
 import apiClient from './helpers/apiClient';
 import configureStore from './redux/configureStore';
@@ -178,19 +177,19 @@ const providers = {
 
   // ==============================================================================================
 
-  if (__DEVTOOLS__ && !window.__REDUX_DEVTOOLS_EXTENSION__) {
-    console.log('>>>>>>>>>>>>>>>>>>> CLIENT.JS > __DEVTOOLS__ <<<<<<<<<<<<<<<<<<<<<<');
-    const devToolsDest = document.createElement('div');
-    window.document.body.insertBefore(devToolsDest, null);
-    const DevTools = require('./containers/DevTools/DevTools').default;
+  // if (__DEVTOOLS__ && !window.__REDUX_DEVTOOLS_EXTENSION__) {
+  //   console.log('>>>>>>>>>>>>>>>>>>> CLIENT.JS > __DEVTOOLS__ <<<<<<<<<<<<<<<<<<<<<<');
+  //   const devToolsDest = document.createElement('div');
+  //   window.document.body.insertBefore(devToolsDest, null);
+  //   const DevTools = require('./containers/DevTools/DevTools').default;
 
-    ReactDOM.hydrate(
-      <Provider store={store}>
-        <DevTools />
-      </Provider>,
-      devToolsDest
-    );
-  }
+  //   ReactDOM.hydrate(
+  //     <Provider store={store}>
+  //       <DevTools />
+  //     </Provider>,
+  //     devToolsDest
+  //   );
+  // }
 
   if (!__DEVELOPMENT__) {
     console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > !__DEVELOPMENT__ NO <<<<<<<<<<<<<');
@@ -217,7 +216,7 @@ const providers = {
                 // old content purged and fresh content added to cache
                 console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker > new or updated content is available <<<<<<<<<<<<<');
               } else {
-                // precaching complete
+                // precaching complete **
                 console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker > content cached for offline use <<<<<<<<<<<<<');
               }
               break;

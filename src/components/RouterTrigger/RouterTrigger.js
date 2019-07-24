@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Route } from 'react-router';
 
+// Failure in RouterTrigger: Error: "Loading CSS chunk 5 failed. (/dist/abouttwo.1bbe1ce4a3a529f12753.css)"
+
 @withRouter
 
 class RouterTrigger extends Component {
