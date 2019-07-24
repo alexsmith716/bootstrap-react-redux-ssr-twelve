@@ -2,6 +2,7 @@ ssl/
 node_modules/
 log/
 logs/
+json-data/
 
 yarn-debug.log
 yarn-error.log

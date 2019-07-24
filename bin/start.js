@@ -52,9 +52,8 @@ process.on('rejectionHandled', promise => {
 // https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener
 // https://nodejs.org/api/all.html#tls_tls_createserver_options_secureconnectionlistener
 const httpsOptions = {
-  key: fs.readFileSync(path.join(__dirname, '../ssl/.key')),
-  cert: fs.readFileSync(path.join(__dirname, '../ssl/.crt')),
-  // ca: fs.readFileSync('../ssl/ca.pem'),
+  key: fs.readFileSync(path.join(__dirname, '../ssl/localhost.key')),
+  cert: fs.readFileSync(path.join(__dirname, '../ssl/localhost.crt')),
   requestCert: false,
   rejectUnauthorized: false
 };
@@ -101,17 +100,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/manifest.json', (req, res) => {
-  console.log('>>>>>>>>>>>>>>>>> START > app.use > manifest.json <<<<<<<<<<<<<<<<<<<<<<<');
-  res.sendFile(path.join(__dirname, '..', 'build', 'manifest.json'));
-});
-
-app.use('/dist/service-worker.js', (req, res, next) => {
-  console.log('>>>>>>>>>>>>>>>>> START > app.use > service-worker <<<<<<<<<<<<<<<<<<<<<<<');
-  res.setHeader('Service-Worker-Allowed', '/');
-  res.setHeader('Cache-Control', 'no-store');
-  next();
-});
+if (process.env.NODE_ENV === 'production') {
+  app.use('/dist/service-worker.js', (req, res, next) => {
+    console.log('>>>>>>>>>>>>>>>>> START > app.use > service-worker <<<<<<<<<<<<<<<<<<<<<<<');
+    res.setHeader('Service-Worker-Allowed', '/');
+    res.setHeader('Cache-Control', 'no-store');
+    next();
+  });
+}
 
 // app.use((req, res, next) => {
 //   console.log('>>>>>>>>>>>>>>>>> START > app.use(res.setHeader(X-Forwarded-For) <<<<<<<<<<<<<<<<<<<<<<<');

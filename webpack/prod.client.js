@@ -303,7 +303,7 @@ module.exports = {
       filename: 'service-worker.js',
       maximumFileSizeToCacheInBytes: 8388608,
 
-      staticFileGlobs: [`${path.dirname(assetsPath)}/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff,woff2}`],
+      staticFileGlobs: [`${path.dirname(assetsPath)}/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff,woff2,json}`],
       stripPrefix: path.dirname(assetsPath),
 
       directoryIndex: '/dist/',
