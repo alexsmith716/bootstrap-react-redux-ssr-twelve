@@ -287,7 +287,6 @@ if (portNum) {
     // --------------------------
     // webpackHotServerMiddleware: hot update webpack bundles on the server
     // webpackHotServerMiddleware: expects client/server array compiler instance
-    // app.use(webpackHotServerMiddleware(compiler, { chunkName: 'server' }));
     app.use(webpackHotServerMiddleware(compiler, { chunkName: 'server' }));
 
     // execute callback when compiler bundle is valid, typically after compilation
