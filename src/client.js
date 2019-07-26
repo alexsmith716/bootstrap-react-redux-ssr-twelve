@@ -191,17 +191,6 @@ const providers = {
   //   );
   // }
 
-  if (!__DEVELOPMENT__) {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > !__DEVELOPMENT__ NO <<<<<<<<<<<<<');
-  } else {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > !__DEVELOPMENT__ YES <<<<<<<<<<<<<');
-  }
-  if ('serviceWorker' in navigator) {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker in navigator YES <<<<<<<<<<<<<');
-  } else {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker in navigator NO <<<<<<<<<<<<<');
-  }
-
   // const isLocalhost = Boolean(
   //   window.location.hostname === 'localhost' ||
   //   window.location.hostname === '[::1]' ||
@@ -212,7 +201,6 @@ const providers = {
     try {
       const registration = await navigator.serviceWorker.register('/dist/service-worker.js', { scope: '/' });
       console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker in navigator YES!! <<<<<<<<<<<<<');
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker in navigator YES!! > registration:', registration);
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         installingWorker.onstatechange = () => {

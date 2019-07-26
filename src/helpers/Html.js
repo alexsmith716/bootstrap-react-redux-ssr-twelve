@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import serialize from 'serialize-javascript';
 import Helmet from 'react-helmet';
-import config from '../../config/config';
+// import config from '../../config/config';
 
 const Html = ({ assets, store, content }) => {
 

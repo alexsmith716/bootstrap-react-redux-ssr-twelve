@@ -2,6 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 // const config = require('../config/config');
 
+const WebpackBar = require('webpackbar');
+const WebpackAssetsManifest = require('webpack-assets-manifest');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
@@ -14,6 +16,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const rootPath = path.resolve(__dirname, '..');
 const assetsPath = path.resolve(rootPath, './build/dist');
+const publicPath = '/dist/';
+const data = Object.create(null);
 
 const generatedIdent = (name, localName, lr) => {
   const r = Buffer.from(lr).toString('base64');
@@ -67,7 +71,7 @@ module.exports = {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, '../build/dist'),
-    publicPath: '/dist/'
+    publicPath
   },
 
   module: {
@@ -258,6 +262,10 @@ module.exports = {
         },
       }
     },
+    // runtimeChunk: true,
+    // runtimeChunk: {
+    //   name: 'assetManifest',
+    // },
   },
 
   resolve: {
@@ -267,6 +275,8 @@ module.exports = {
 
   plugins: [
 
+    new WebpackBar({ name: 'Client' }),
+    new WebpackAssetsManifest({ publicPath }),
     // new webpack.ProgressPlugin(handler),
 
     new ExtractCssChunks({
@@ -297,7 +307,6 @@ module.exports = {
       template: 'src/pwa.js'
     }),
 
-    // Caching static resource "../bootstrap-react-redux-ssr-twelve/build/dist/aboutone.321178827546.js" (129 kB)
     new SWPrecacheWebpackPlugin({
       cacheId: 'bootstrap-react-redux-ssr-twelve',
       filename: 'service-worker.js',

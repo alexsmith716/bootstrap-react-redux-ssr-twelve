@@ -4,6 +4,7 @@ const webpack = require('webpack');
 // const config = require('../config/config');
 const externals = require('./node-externals');
 
+const WebpackBar = require('webpackbar');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const { DuplicatesPlugin } = require('inspectpack/plugin');
 
@@ -207,6 +208,7 @@ module.exports = {
 
   plugins: [
 
+    new WebpackBar({ name: 'Server' }),
     // new webpack.ProgressPlugin(handler),
     // https://webpack.js.org/plugins/module-concatenation-plugin/
     new webpack.optimize.ModuleConcatenationPlugin(),
