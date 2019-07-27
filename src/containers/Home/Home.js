@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
   state => ({ online: state.online })
 )
 
-
 class Home extends Component {
 
   static propTypes = {
