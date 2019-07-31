@@ -11,10 +11,6 @@ import Login from './containers/Login/Loadable';
 import Register from './containers/Register/Loadable';
 // import LoginSuccess from './containers/LoginSuccess/Loadable';
 
-// import ServiceWorkerOne from './containers/ServiceWorkerOne/ServiceWorkerOne';
-// import ServiceWorkerTwo from './containers/ServiceWorkerTwo/ServiceWorkerTwo';
-// import ServiceWorkerThree from './containers/ServiceWorkerThree/ServiceWorkerThree';
-
 import './theme/scss/bootstrap/bootstrap.global.scss';
 
 // const isAuthenticated = connectedReduxRedirect({
@@ -49,9 +45,6 @@ const routes = [{
     { path: '/boardgames', component: BoardGames },
     { path: '/login', component: Login },
     { path: '/register', component: Register },
-    // { path: '/serviceworkerone', component: ServiceWorkerOne },
-    // { path: '/serviceworkertwo', component: ServiceWorkerTwo },
-    // { path: '/serviceworkerthree', component: ServiceWorkerThree },
     // { path: '/login-success', component: isAuthenticated(LoginSuccess) },
     // { path: '/register', component: isNotAuthenticated(Register) },
     { component: NotFound }

@@ -17,6 +17,15 @@ import promiseGenerator from '../../utils/promiseGenerator';
 // UI bindings
 // @connect({mapStateToProps, mapDispatchToProps})
 // connect the view to the action creators
+// connect() Returns:
+// The return of connect() is a wrapper function
+// The return of connect() takes your component and returns a wrapper component with the additional props it injects
+// ....................................
+//    export default connect(
+//      mapStateToProps,
+//      mapDispatchToProps
+//    )(FilterableTable)
+// ....................................
 @connect(
   (state, { as }) => ({
     dropDownOptionSelected: state.filterableTableCollection[as].dropDownOptionSelected,

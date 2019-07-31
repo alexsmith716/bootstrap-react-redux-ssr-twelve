@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 
 @connect(
-  (state, { namespace }) => ({ 
-    notifs: state.notifs[namespace] || [] 
+  (state, { as }) => ({ 
+    notifs: state.notifs[as] || [] 
   })
 )
 

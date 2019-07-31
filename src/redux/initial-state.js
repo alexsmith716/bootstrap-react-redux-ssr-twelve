@@ -4,6 +4,10 @@ export default {
 
   notifs: {},
 
+  d3: {
+    loaded: false,
+  },
+
   device: {
     userAgent: null,
     isBot: null

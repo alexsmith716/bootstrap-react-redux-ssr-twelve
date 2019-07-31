@@ -210,7 +210,7 @@ const providers = {
                 // old content purged and fresh content added to cache
                 console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker > new or updated content is available <<<<<<<<<<<<<');
               } else {
-                // precaching complete **
+                // precaching complete
                 console.log('>>>>>>>>>>>>>>>>>>>>>>>> CLIENT.JS > serviceWorker > content cached for offline use <<<<<<<<<<<<<');
               }
               break;

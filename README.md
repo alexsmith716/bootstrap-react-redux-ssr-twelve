@@ -7,6 +7,22 @@ App builds off 'bootstrap-react-redux-webpack-ssr-eleven'. This app utilizes cus
 =============================================================
 =============================================================
 
+https://github.com/GoogleChrome/lighthouse
+
+https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle
+https://developers.google.com/web/tools/workbox/
+https://developers.google.com/web/fundamentals/primers/service-workers/
+your first pwa
+the offline cookbook
+https://developers.google.com/web/tools/workbox/guides/get-started
+https://developers.google.com/web/tools/workbox/modules/
+https://developers.google.com/web/tools/workbox/reference-docs/latest/
+https://developers.google.com/web/tools/workbox/modules/workbox-build
+https://developers.google.com/web/fundamentals/codelabs/offline/
+
+=============================================================
+=============================================================
+
 * DEV - compiler / PROD - compiler.run
 * DEV - compiler / PROD = CLI config
 

@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Loading from '../../Loading/Loading';
 // import debounce from 'lodash.debounce';
@@ -6,6 +7,16 @@ import drawVisualization from "../../../d3/drawLineChartBasic";
 
 import axiosClient from '../../../utils/axiosClient';
 // import axiosClientInstance from '../../../utils/axiosClientInstance';
+
+// the never ending review...
+
+// If you don't initialize state and don't bind methods, you don't need a constructor
+
+// When to Use Refs:
+//   There are a few good use cases for refs:
+//    * Managing focus, text selection, or media playback.
+//    * Triggering imperative animations.
+//    * Integrating with third-party DOM libraries.
 
 // Legacy API: String Refs 'this.refs.textInput': use either 'callback pattern' or 'createRef API'
 // https://reactjs.org/docs/refs-and-the-dom.html#callback-refs
@@ -28,25 +39,29 @@ import axiosClient from '../../../utils/axiosClient';
 // developer doesn't control how often DOM events are going to be emitted. It can vary.
 // Debounce technique allows grouping multiple sequential calls in a single one
 
+// <LineChartA request={'/json-data/lineChart1.json'} description='D3 LineChartA 1' />
+// <LineChartA request={'/json-data/lineChart2.json'} description='D3 LineChartA 2' />
+
+@connect(
+  (state) => ({ 
+    info: state.info.data,
+    isLoading: state.info.isLoading
+  }),
+  { load }
+)
+
 class LineChartA extends Component {
 
-  constructor(props){
-    super(props);
+  // this.state = {
+  //   responseData: null,
+  //   error: false,
+  //   isLoading: true,
+  //   newData: null,
+  // };
 
-    // this.handleUpdate = this.handleUpdate.bind(this);
-
-    this.state = {
-      responseData: null,
-      error: false,
-      isLoading: true,
-      newData: null,
-    };
-
-    this.containerRef = createRef();
-    this.inputXValueRef = createRef();
-    this.inputYValueRef = createRef();
-    console.log('>>>>>>>>>>>>>>>> LineChartA > constructor(props) <<<<<<<<<<<<<<<<<<<<<<');
-  }
+  // this.containerRef = createRef();
+  // this.inputXValueRef = createRef();
+  // this.inputYValueRef = createRef();
 
   static propTypes = {
     // responseData: PropTypes.object,
@@ -58,7 +73,7 @@ class LineChartA extends Component {
   }
 
   handleDataRequest = (req) => {
-    console.log('>>>>>>>>>> AboutTwo > handleDataRequest() > req: ', req)
+    console.log('>>>>>>>>>> LineChartA > handleDataRequest() > req: ', req)
     // axiosClientInstance(req).then(response => {
     axiosClient(req).then(response => {
       setTimeout( () => {
@@ -160,17 +175,11 @@ class LineChartA extends Component {
   // invoked right before calling the render method, both on the initial mount and on subsequent updates
   // --------------------------------------------------------------------------------
   static getDerivedStateFromProps(props, state) {
-    console.log('>>>>>>>>>>>>>>>> LineChart > getDerivedStateFromProps() <<<<<<<<<<<<<<<<<<<<<<');
+    console.log('>>>>>>>>>>>>>>>> LineChartA > getDerivedStateFromProps() <<<<<<<<<<<<<<<<<<<<<<');
     return null;
   };
 
   componentDidCatch(error, info) {
-    // Example "componentStack":
-    //   in ComponentThatThrows (created by App)
-    //   in ErrorBoundary (created by App)
-    //   in div (created by App)
-    //   in App
-    // logComponentStackToMyService(info.componentStack);
     console.log('>>>>>>>>>>>>>>>> LineChartA > componentDidCatch() > info.componentStack: ', info.componentStack);
   }
 
