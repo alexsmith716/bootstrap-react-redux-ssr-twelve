@@ -20,7 +20,8 @@
     "clean:dlls": "rimraf build/dlls  webpack/dlls",
     "prettier": "prettier-eslint --write --eslint-config-path .eslintrc './+(bin)/**/*.js'",
     "lint": "eslint -c .eslintrc bin",
-    "test": "NODE_PATH=src jest src"
+    "test": "NODE_PATH=src jest src",
+    "lighthouse-report": "lighthouse http://localhost:8080 --view"
   },
   "dependencies": {
     "@babel/register": "^7.5.5",
@@ -153,6 +154,7 @@
     "inspectpack": "^4.2.1",
     "jest": "^24.8.0",
     "jest-cli": "^24.8.0",
+    "lighthouse": "^5.2.0",
     "lint-staged": "^9.2.0",
     "morgan": "^1.9.1",
     "node-sass": "^4.12.0",
@@ -171,7 +173,7 @@
     "prettier-eslint-cli": "^5.0.0",
     "react-a11y": "^1.1.0",
     "react-devtools": "^3.6.1",
-    "react-hot-loader": "^4.12.9",
+    "react-hot-loader": "^4.12.10",
     "redux-devtools": "^3.5.0",
     "redux-devtools-dock-monitor": "^1.1.3",
     "redux-devtools-extension": "^2.13.8",

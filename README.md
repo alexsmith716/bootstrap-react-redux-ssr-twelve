@@ -12,8 +12,12 @@ https://github.com/GoogleChrome/lighthouse
 https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle
 https://developers.google.com/web/tools/workbox/
 https://developers.google.com/web/fundamentals/primers/service-workers/
-your first pwa
-the offline cookbook
+
+https://developers.google.com/web/fundamentals/codelabs/
+https://developers.google.com/web/fundamentals/codelabs/your-first-pwapp/
+https://developers.google.com/web/fundamentals/codelabs/debugging-service-workers/
+https://developers.google.com/web/fundamentals/codelabs/offline/
+
 https://developers.google.com/web/tools/workbox/guides/get-started
 https://developers.google.com/web/tools/workbox/modules/
 https://developers.google.com/web/tools/workbox/reference-docs/latest/
