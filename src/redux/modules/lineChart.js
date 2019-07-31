@@ -49,7 +49,7 @@ export default function reducer(state = initialState.lineChart, action = {}) {
       console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > ADDED_DATA > action.result: ', action.result);
       return {
         ...state,
-        addedData: action.result
+        newData: action.result
         // data: state.data.concat(action.result)
       };
 
