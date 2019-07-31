@@ -6,9 +6,9 @@ const express = require('express');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-// const http = require('http');
+const http = require('http');
 // const httpProxy = require('http-proxy');
-const https = require('https');
+// onst https = require('https');
 const favicon = require('serve-favicon');
 // const mongoose = require('mongoose');
 const webpack = require('webpack');
@@ -51,16 +51,16 @@ process.on('rejectionHandled', promise => {
 
 // https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener
 // https://nodejs.org/api/all.html#tls_tls_createserver_options_secureconnectionlistener
-const httpsOptions = {
-  key: fs.readFileSync(path.join(__dirname, '../ssl/localhost.key')),
-  cert: fs.readFileSync(path.join(__dirname, '../ssl/localhost.crt')),
-  requestCert: false,
-  rejectUnauthorized: false
-};
+// const httpsOptions = {
+//   key: fs.readFileSync(path.join(__dirname, '../ssl/localhost.key')),
+//   cert: fs.readFileSync(path.join(__dirname, '../ssl/localhost.crt')),
+//   requestCert: false,
+//   rejectUnauthorized: false
+// };
 
 const app = express();
-// const server = http.createServer(app);
-const server = https.createServer(httpsOptions, app);
+const server = http.createServer(app);
+// const server = https.createServer(httpsOptions, app);
 
 // app.set('port', port);
 app.use(morgan('dev'));

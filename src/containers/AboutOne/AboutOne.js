@@ -204,7 +204,11 @@ class AboutOne extends Component {
 
                   <div className="basic-inner-box padding-five-border-radius-three">
 
-                    <FilterableTable as='AboutOneMultireducerFilterableTable1' optionsArray={dropDownOptions} description='Filterable Product Table 1' />
+                    <FilterableTable
+                      as='AboutOneMultireducerFilterableTable1'
+                      optionsArray={dropDownOptions} 
+                      description='Filterable Product Table 1'
+                    />
 
                   </div>
 

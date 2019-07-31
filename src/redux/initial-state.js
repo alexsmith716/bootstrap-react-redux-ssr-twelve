@@ -4,8 +4,9 @@ export default {
 
   notifs: {},
 
-  d3: {
+  lineChart: {
     loaded: false,
+    data: null,
   },
 
   device: {

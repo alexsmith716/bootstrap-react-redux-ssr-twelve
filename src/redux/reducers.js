@@ -7,6 +7,7 @@ import device from './modules/device';
 import counter from './modules/counter';
 import temperatureCalculator from './modules/temperatureCalculator';
 import filterableTable from './modules/filterableTable';
+import lineChart from './modules/lineChart';
 // import auth from './modules/auth';
 // import notifs from './modules/notifs';
 import info from './modules/info';
@@ -29,6 +30,10 @@ export default function rootReducer() {
     filterableTableCollection: multireducer({
       AboutOneMultireducerFilterableTable1: filterableTable,
       AboutOneMultireducerFilterableTable2: filterableTable,
+    }),
+    lineChartCollection: multireducer({
+      AboutTwoMultireducerLineChart1: lineChart,
+      AboutTwoMultireducerLineChart2: lineChart,
     }),
     temperatureCalculatorCollection: multireducer({
       AboutOne1: temperatureCalculator,

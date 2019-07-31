@@ -5,8 +5,8 @@ import Helmet from 'react-helmet';
 import CounterPreloadedState from '../../components/widgets/Counter/CounterPreloadedState';
 import CounterMultireducer from '../../components/widgets/Counter/CounterMultireducer';
 // import Planets from '../../components/d3/Planets/Planets';
-import LineChartA from '../../components/d3/LineChart/LineChartA';
-// import LineChartAA from '../../components/d3/LineChart/LineChartAA';
+import LineChart from '../../components/d3/LineChart/LineChart';
+// import LineChartA from '../../components/d3/LineChart/LineChartA';
 // import LineChartB from '../../components/d3/LineChart/LineChartB';
 import TemperatureCalculator from '../../components/widgets/LiftingStateUp/TemperatureCalculator';
 
@@ -96,9 +96,10 @@ class AboutTwo extends Component {
 
                   <div className="card-body-content">
 
-                    <LineChartA
-                      request={'/json-data/lineChart1.json'}
-                      description='D3 LineChartA 1'
+                    <LineChart 
+                      as='AboutTwoMultireducerLineChart1' 
+                      request={'/json-data/LineChartA.json'}
+                      title='D3 LineChart 1' 
                     />
 
                   </div>
@@ -132,9 +133,10 @@ class AboutTwo extends Component {
 
                   <div className="card-body-content">
 
-                    <LineChartA
-                      request={'/json-data/lineChart2.json'}
-                      description='D3 LineChartA 2'
+                    <LineChart 
+                      as='AboutTwoMultireducerLineChart2' 
+                      request={'/json-data/lineChartB.json'}
+                      title='D3 LineChart 2' 
                     />
 
                   </div>
