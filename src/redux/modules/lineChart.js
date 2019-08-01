@@ -3,9 +3,12 @@
 const LOAD = 'redux-example/lineChart/LOAD';
 const LOAD_SUCCESS = 'redux-example/lineChart/LOAD_SUCCESS';
 const LOAD_FAIL = 'redux-example/lineChart/LOAD_FAIL';
+const ADD_NEW_DATA = 'redux-example/lineChart/ADD_NEW_DATA';
+// const PATCH_NEW_DATA = 'redux-example/lineChart/PATCH_NEW_DATA';
+// const PATCH_NEW_DATA_SUCCESS = 'redux-example/lineChart/PATCH_NEW_DATA_SUCCESS';
+// const PATCH_NEW_DATA_FAIL = 'redux-example/lineChart/PATCH_NEW_DATA_FAIL';
 
-const ADDED_DATA = 'redux-example/lineChart/ADDED_DATA';
-
+// import { mockAPI, patchHttpMethod } from '../../utils/mockAPI';
 import initialState from '../initial-state';
 
 // Reducer
@@ -31,7 +34,7 @@ export default function reducer(state = initialState.lineChart, action = {}) {
         loaded: true,
         error: false,
         errorResponse: {message:'', documentation_url:''},
-        data: action.result
+        data: action.result.values
       };
 
     case LOAD_FAIL:
@@ -44,14 +47,39 @@ export default function reducer(state = initialState.lineChart, action = {}) {
         errorResponse: action.result,
       };
 
-    case ADDED_DATA:
-      console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > ADDED_DATA > action: ', action);
-      console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > ADDED_DATA > action.result: ', action.result);
+    case ADD_NEW_DATA:
+      console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > ADD_NEW_DATA > action: ', action);
       return {
         ...state,
-        newData: action.result
-        // data: state.data.concat(action.result)
+        data: state.data.concat(action.newData)
       };
+
+    // case PATCH_NEW_DATA:
+    //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA > action: ', action);
+    //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA > action.result: ', action.result);
+    //   return {
+    //     ...state,
+    //     loadingD: true,
+    //   };
+
+    // case PATCH_NEW_DATA_SUCCESS:
+    //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA_SUCCESS > action: ', action);
+    //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA_SUCCESS > action.result: ', action.result);
+    //   return {
+    //     ...state,
+    //     loadingD: false,
+    //     errorD: false,
+    //     data: state.data.concat(action.newData)
+    //   };
+
+    // case PATCH_NEW_DATA_FAIL:
+    //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA_FAIL');
+    //   return {
+    //     ...state,
+    //     loadingD: false,
+    //     errorD: true,
+    //     errorResponseD: action.result,
+    //   };
 
     default:
       return state;
@@ -73,9 +101,18 @@ export function load(value) {
   };
 };
 
-//  export function addData(data) {
-//    return {
-//      type: ADD_DATA,
-//      data
-//    };
-//  }
+export function addNewData(newData) {
+  console.log('>>>>>>>>>>>>>>>> lineChart > redux > Action > addNewData() <<<<<<<<<<<<<<<<<<: ', newData);
+  return {
+    type: ADD_NEW_DATA,
+    newData
+  };
+}
+
+// // 200 (OK) - 204 (No Content) - 404 (Not Found)
+// export function patchMessage(id, data) {
+//   return {
+//     types: [PATCH_NEW_DATA, PATCH_NEW_DATA_SUCCESS, PATCH_NEW_DATA_FAIL],
+//     promise: () => mockAPI(() => patchHttpMethod(status))
+//   };
+// }

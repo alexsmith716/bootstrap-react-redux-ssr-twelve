@@ -261,6 +261,22 @@ export async function getSomeAsyncData(location) {
   // }
 }
 
+// =========================================================================
+
+export async function patchHttpMethod(status) {
+  try {
+    const k = await startResolvedRejectedPromise('foober', 1200);
+    console.log('###### mockAPI > patchHttpMethod > startResolvedRejectedPromise(1200) k: ', k);
+    return k;
+
+  } catch (error) {
+    console.log('###### mockAPI > patchHttpMethod > k > catch > error: ', error);
+    return error;
+  }
+}
+
+// =========================================================================
+
 export function mockAPI(doWhat, delay) {
   console.log('###### export function mockAPI <<<<<<<<<<<<<<<<<<<<<<<');
   return new Promise(( resolve ) => {
