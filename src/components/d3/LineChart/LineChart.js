@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import debounce from 'lodash.debounce';
 
 import Loading from '../../Loading/Loading';
-import * as LineChartctions from '../../../redux/modules/lineChart';
+import * as LineChartActions from '../../../redux/modules/lineChart';
 import drawVisualization from "../../../d3/drawLineChartBasic";
 // import { withApp } from '../../../hoc';
 
@@ -17,7 +17,7 @@ import drawVisualization from "../../../d3/drawLineChartBasic";
     loaded: state.lineChartCollection[as].loaded,
     data: state.lineChartCollection[as].data,
   }),
-  (dispatch, { as }) => bindActionCreators({ ...LineChartctions }, dispatch, as)
+  (dispatch, { as }) => bindActionCreators({ ...LineChartActions }, dispatch, as)
 )
 
 class LineChart extends Component {
@@ -30,7 +30,7 @@ class LineChart extends Component {
     this.containerRef = createRef();
     this.inputXValueRef = createRef();
     this.inputYValueRef = createRef();
-    console.log('>>>>>>>>>>>>>>>> LineChart > constructor(props) <<<<<<<<<<<<<<<<<<<<<<');
+    console.log('>>>>>>>>>>>>>>>> LineChart > constructor() <<<<<<<<<<<<<<<<<<<<<<');
   }
 
   static propTypes = {
@@ -40,13 +40,12 @@ class LineChart extends Component {
     // error: PropTypes.bool,
     // errorResponse: PropTypes.object,
     // load: PropTypes.func.isRequired,
+    // addNewData: PropTypes.func.isRequired,
   }
 
-  state = {
-    newData: null
-  };
-
   handleUpdate = (e) => {
+    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() <<<<<<<<<<<<<<<<<<<<<<<<');
+    const { addNewData } = this.props;
     // console.log('>>>>>>>>>>>>>>>> LineChartA > handleUpdate > this is:', this);
     // const { width, height } = this.containerRef.current.getBoundingClientRect();
     // console.log('>>>>>>>>>>>>>>>> LineChartA > getBoundingClientRect() > width:', width);
@@ -61,7 +60,9 @@ class LineChart extends Component {
     let y = parseInt(yValue.value);
     let formData = {x, y};
 
-    this.setState({ newData: formData });
+    // this.setState({ newData: formData });
+    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > formData: ', formData);
+    addNewData(formData);
 
     this.inputXValueRef.current.value = '';
     this.inputYValueRef.current.value = '';
@@ -83,14 +84,17 @@ class LineChart extends Component {
     load({ request: request });
   }
 
+  // invoked immediately after updating
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { data, error, loaded } = this.props;
-    const { newData } = this.state;
+    // const { newData } = this.state;
+
+    console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() <<<<<<<<<<<<<<<<<<<<<<<< DATA: ', data);
 
     // loading LOAD_FAIL
     if (error) {
       console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_FAIL > error: ', error);
-      console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_FAIL > errorResponse: ', errorResponse);
+      // console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_FAIL > errorResponse: ', errorResponse);
     }
 
     // loading LOAD_SUCCESS
@@ -100,16 +104,17 @@ class LineChart extends Component {
       // console.log('>>>>>>>>>>>>>>>> LineChartA > componentDidUpdate() > newData: ', newData);
       // console.log('>>>>>>>>>>>>>>>> LineChartA > componentDidUpdate() > containerTarget: ', containerTarget);
       // first render of inital data
-      if (data !== prevState.data) {
-        drawVisualization(data.values, containerTarget);
-      }
+      drawVisualization(data, containerTarget);
+      // if (data !== prevState.data) {
+      //   drawVisualization(data.values, containerTarget);
+      // }
       // re-render of initial data and all 'newData'
-      if (newData) {
-        const element = containerTarget.querySelector('svg');
-        element.parentNode.removeChild(element);
-        const updatedData = prevState.data.values.concat(newData);
-        drawVisualization(updatedData, containerTarget);
-      }
+      // if (newData) {
+      //   const element = containerTarget.querySelector('svg');
+      //   element.parentNode.removeChild(element);
+      //   const updatedData = prevState.data.values.concat(newData);
+      //   drawVisualization(updatedData, containerTarget);
+      // }
     }
   }
 
@@ -143,8 +148,8 @@ class LineChart extends Component {
   render() {
 
     // const styles = require('./scss/LineChart.scss');
-    const { containerRef, inputXValueRef, inputYValueRef } = this;
     const { data, title, error, loading, loaded } = this.props;
+    const { containerRef, inputXValueRef, inputYValueRef } = this;
 
     console.log('>>>>>>>>>>>>>>>> LineChart > render() <<<<<<<<<<<<<<<<< data: ', {data});
     console.log('>>>>>>>>>>>>>>>> LineChart > render() <<<<<<<<<<<<<<<<< error: ', {error});

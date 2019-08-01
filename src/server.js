@@ -236,9 +236,9 @@ export default ({ clientStats }) => async (req, res) => {
 
     // ------------------------------------------------------------------------------------------------------
 
-    console.log('>>>>>>>>>>>>>>>> SERVER > SSR ==================== ASSETS  !!: ', assets);
-    console.log('>>>>>>>>>>>>>>>> SERVER > SSR ==================== STORE   !!: ', store);
-    console.log('>>>>>>>>>>>>>>>> SERVER > SSR ==================== CONTENT !!: ', content);
+    // console.log('>>>>>>>>>>>>>>>> SERVER > SSR ==================== ASSETS  !!: ', assets);
+    // console.log('>>>>>>>>>>>>>>>> SERVER > SSR ==================== STORE   !!: ', store);
+    // console.log('>>>>>>>>>>>>>>>> SERVER > SSR ==================== CONTENT !!: ', content);
 
     const html = <Html assets={assets} store={store} content={content} />;
     const ssrHtml = `<!doctype html>${ReactDOM.renderToString(html)}`;
