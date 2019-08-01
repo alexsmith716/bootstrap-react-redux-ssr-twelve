@@ -39,17 +39,13 @@ class LineChart extends Component {
     // data: PropTypes.arrayOf(PropTypes.object).isRequired,
     // error: PropTypes.bool,
     // errorResponse: PropTypes.object,
-    // load: PropTypes.func.isRequired,
-    // addNewData: PropTypes.func.isRequired,
+    // loadFunc: PropTypes.func.isRequired,
+    // addNewDataFunc: PropTypes.func.isRequired,
   }
 
   handleUpdate = (e) => {
-    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() <<<<<<<<<<<<<<<<<<<<<<<<');
-    const { addNewData } = this.props;
-    // console.log('>>>>>>>>>>>>>>>> LineChartA > handleUpdate > this is:', this);
-    // const { width, height } = this.containerRef.current.getBoundingClientRect();
-    // console.log('>>>>>>>>>>>>>>>> LineChartA > getBoundingClientRect() > width:', width);
-    // console.log('>>>>>>>>>>>>>>>> LineChartA > getBoundingClientRect() > height:', height);
+    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > data1: ', data);
+    const { data, addNewDataFunc } = this.props;
 
     e.preventDefault();
 
@@ -58,36 +54,30 @@ class LineChart extends Component {
 
     let x = new Date(xValue.value).toUTCString();
     let y = parseInt(yValue.value);
-    let formData = {x, y};
+    let newData = {x, y};
 
-    // this.setState({ newData: formData });
-    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > formData: ', formData);
-    addNewData(formData);
+    let request = {
+      data: data,
+      newData: newData
+    }
+
+    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > request: ', request);
+
+    addNewDataFunc(request);
 
     this.inputXValueRef.current.value = '';
     this.inputYValueRef.current.value = '';
-
-    // let x = new Date(xValue.value).toUTCString();
-    // let y = parseInt(yValue.value);
-    // let formData = {x, y};
-
-    // postData(formData).then(response => {
-    //   this.setState({ newData: formData });
-    //   this.inputXValueRef.value = '';
-    //   this.inputYValueRef.value = '';
-    // });
   };
 
   componentDidMount() {
-    const { request, load } = this.props;
+    const { request, loadFunc } = this.props;
     console.log('>>>>>>>>>>>>>>>> LineChart > componentDidMount() > request: ', request);
-    load({ request: request });
+    loadFunc({ request: request });
   }
 
   // invoked immediately after updating
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { data, error, loaded } = this.props;
-    // const { newData } = this.state;
 
     console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() <<<<<<<<<<<<<<<<<<<<<<<< DATA: ', data);
 
@@ -101,7 +91,6 @@ class LineChart extends Component {
     if (loaded) {
       console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_SUCCESS: ');
       const containerTarget = this.containerRef.current;
-      // console.log('>>>>>>>>>>>>>>>> LineChartA > componentDidUpdate() > newData: ', newData);
       // console.log('>>>>>>>>>>>>>>>> LineChartA > componentDidUpdate() > containerTarget: ', containerTarget);
       // first render of inital data
       drawVisualization(data, containerTarget);

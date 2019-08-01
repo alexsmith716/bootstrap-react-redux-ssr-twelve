@@ -99,6 +99,32 @@ function startResolvedRejectedPromise(v, delay) {
   });
 }
 
+function postRequestConcatReslolveRejectPromise(dataObj, r, delay) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (r === 'resolve') {
+        resolve({
+          value: `${r}`,
+          timeElapsed: timeElapsedModule1.getSecondsElapsed(),
+          time: Date.now(),
+          delay: `${delay}`,
+          message: 'RESOLVED! This came from the mock API.',
+          data: dataObj.data.concat(dataObj.newData)
+        });
+      } else {
+        reject({
+          value: `${r}`,
+          timeElapsed: timeElapsedModule1.getSecondsElapsed(),
+          time: Date.now(),
+          delay: `${delay}`,
+          message: 'REJECTED! This came from the mock API.',
+          data: null
+        });
+      }
+    }, delay);
+  });
+}
+
 // 2nd promise is rejected but being resolved and returned on 1st promise from reducer load action
 // promise.all: rejects with reason of 1st promise that rejects
 // async always return a promise
@@ -263,14 +289,15 @@ export async function getSomeAsyncData(location) {
 
 // =========================================================================
 
-export async function patchHttpMethod(status) {
+export async function postRequestConcat(req) {
+  console.log('###### mockAPI > postSomeAsyncData > req: ', req);
   try {
-    const k = await startResolvedRejectedPromise('foober', 1200);
-    console.log('###### mockAPI > patchHttpMethod > startResolvedRejectedPromise(1200) k: ', k);
-    return k;
+    const res = await postRequestConcatReslolveRejectPromise(req, 'resolve', 500);
+    console.log('###### mockAPI > postSomeAsyncData > postRequestResolvedRejectedPromise(500) res: ', res);
+    return res;
 
   } catch (error) {
-    console.log('###### mockAPI > patchHttpMethod > k > catch > error: ', error);
+    console.log('###### mockAPI > postSomeAsyncData > res > catch > error: ', error);
     return error;
   }
 }
