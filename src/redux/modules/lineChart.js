@@ -83,13 +83,6 @@ export default function reducer(state = initialState.lineChart, action = {}) {
         errorResponse: action.result,
       };
 
-    // case ADD_NEW_DATA:
-    //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > ADD_NEW_DATA > action: ', action);
-    //   return {
-    //     ...state,
-    //     data: state.data.concat(action.newData)
-    //   };
-
     // case PATCH_NEW_DATA:
     //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA > action: ', action);
     //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA > action.result: ', action.result);
@@ -129,7 +122,6 @@ export default function reducer(state = initialState.lineChart, action = {}) {
 //   return globalState.lineChart && globalState.lineChart.loaded;
 // }
 
-// /json-data/LineChartA.json'
 export function loadFunc(req) {
   console.log('>>>>>>>>>>>>>>>> lineChart > redux > Action > loadFunc() <<<<<<<<<<<<<<<<<<: ', req);
   return {
@@ -145,14 +137,6 @@ export function addNewDataFunc(req) {
     promise: () => mockAPI(() => postRequestConcat(req))
   };
 }
-
-// export function addNewData(newData) {
-//   console.log('>>>>>>>>>>>>>>>> lineChart > redux > Action > addNewData() <<<<<<<<<<<<<<<<<<: ', newData);
-//   return {
-//     type: ADD_NEW_DATA,
-//     newData
-//   };
-// }
 
 // // 200 (OK) - 204 (No Content) - 404 (Not Found)
 // export function patchMessage(id, data) {

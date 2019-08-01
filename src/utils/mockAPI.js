@@ -108,7 +108,7 @@ function postRequestConcatReslolveRejectPromise(dataObj, r, delay) {
           timeElapsed: timeElapsedModule1.getSecondsElapsed(),
           time: Date.now(),
           delay: `${delay}`,
-          message: 'RESOLVED! This came from the mock API.',
+          message: 'RESOLVED! postRequestConcatReslolveRejectPromise.',
           data: dataObj.data.concat(dataObj.newData)
         });
       } else {
@@ -117,7 +117,7 @@ function postRequestConcatReslolveRejectPromise(dataObj, r, delay) {
           timeElapsed: timeElapsedModule1.getSecondsElapsed(),
           time: Date.now(),
           delay: `${delay}`,
-          message: 'REJECTED! This came from the mock API.',
+          message: 'REJECTED! postRequestConcatReslolveRejectPromise.',
           data: null
         });
       }
@@ -290,14 +290,15 @@ export async function getSomeAsyncData(location) {
 // =========================================================================
 
 export async function postRequestConcat(req) {
-  console.log('###### mockAPI > postSomeAsyncData > req: ', req);
+  console.log('###### mockAPI > postRequestConcat > req: ', req);
+  timeElapsedModule1.setStartTime();
   try {
     const res = await postRequestConcatReslolveRejectPromise(req, 'resolve', 500);
-    console.log('###### mockAPI > postSomeAsyncData > postRequestResolvedRejectedPromise(500) res: ', res);
+    console.log('###### mockAPI > postRequestConcat > postRequestConcatReslolveRejectPromise(500) res: ', res);
     return res;
 
   } catch (error) {
-    console.log('###### mockAPI > postSomeAsyncData > res > catch > error: ', error);
+    console.log('###### mockAPI > postRequestConcat > res > catch > error: ', error);
     return error;
   }
 }
