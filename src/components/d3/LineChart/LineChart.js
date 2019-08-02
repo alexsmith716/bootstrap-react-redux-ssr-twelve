@@ -43,32 +43,6 @@ class LineChart extends Component {
     // addNewDataFunc: PropTypes.func.isRequired,
   }
 
-  handleUpdate = (e) => {
-    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > data1: ', data);
-    const { data, addNewDataFunc } = this.props;
-
-    e.preventDefault();
-
-    let xValue = this.inputXValueRef.current;
-    let yValue = this.inputYValueRef.current;
-
-    let x = new Date(xValue.value).toUTCString();
-    let y = parseInt(yValue.value);
-    let newData = {x, y};
-
-    let request = {
-      data: data,
-      newData: newData
-    }
-
-    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > request: ', request);
-
-    addNewDataFunc(request);
-
-    this.inputXValueRef.current.value = '';
-    this.inputYValueRef.current.value = '';
-  };
-
   // ADD TO localforage ???
   componentDidMount() {
     const { data } = this.props;
@@ -147,6 +121,32 @@ class LineChart extends Component {
   componentDidCatch(error, info) {
     console.log('>>>>>>>>>>>>>>>> LineChart > componentDidCatch() > info.componentStack: ', info.componentStack);
   }
+
+  handleUpdate = (e) => {
+    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > data1: ', data);
+    const { data, addNewDataFunc } = this.props;
+
+    e.preventDefault();
+
+    let xValue = this.inputXValueRef.current;
+    let yValue = this.inputYValueRef.current;
+
+    let x = new Date(xValue.value).toUTCString();
+    let y = parseInt(yValue.value);
+    let newData = {x, y};
+
+    let request = {
+      data: data,
+      newData: newData
+    }
+
+    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > request: ', request);
+
+    addNewDataFunc(request);
+
+    this.inputXValueRef.current.value = '';
+    this.inputYValueRef.current.value = '';
+  };
 
   // ================================================================================
 
