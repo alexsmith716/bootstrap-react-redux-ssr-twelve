@@ -109,6 +109,7 @@ function postRequestConcatReslolveRejectPromise(dataObj, r, delay) {
           time: Date.now(),
           delay: `${delay}`,
           message: 'RESOLVED! postRequestConcatReslolveRejectPromise.',
+          status: 200,
           data: dataObj.data.concat(dataObj.newData)
         });
       } else {
@@ -118,6 +119,7 @@ function postRequestConcatReslolveRejectPromise(dataObj, r, delay) {
           time: Date.now(),
           delay: `${delay}`,
           message: 'REJECTED! postRequestConcatReslolveRejectPromise.',
+          status: 404,
           data: null
         });
       }
