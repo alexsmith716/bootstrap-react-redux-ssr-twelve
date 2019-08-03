@@ -3,6 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const dllHelpers = require('./dllreferenceplugin');
 
+// Extract CSS from chunks into multiple stylesheets + HMR 
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 

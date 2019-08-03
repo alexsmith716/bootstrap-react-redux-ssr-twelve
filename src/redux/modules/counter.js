@@ -50,7 +50,6 @@ export default function reducer(state = initialState.counter, action = {}) {
   }
 }
 
-
 // Action Creators
 export function incrementPreloadedState() {
   return {
@@ -75,7 +74,6 @@ export function decrementMultireducer() {
     type: DECREMENT_COUNTER_MULTIREDUCER
   };
 }
-
 
 // side effects, only as applicable (e.g. thunks, epics, etc)
 
