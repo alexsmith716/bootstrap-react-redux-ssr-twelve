@@ -8,10 +8,6 @@ const ADD_NEW_DATA_LOAD = 'redux-example/lineChart/ADD_NEW_DATA_LOAD';
 const ADD_NEW_DATA_LOAD_SUCCESS = 'redux-example/lineChart/ADD_NEW_DATA_LOAD_SUCCESS';
 const ADD_NEW_DATA_LOAD_FAIL = 'redux-example/lineChart/ADD_NEW_DATA_LOAD_FAIL';
 
-// const PATCH_NEW_DATA = 'redux-example/lineChart/PATCH_NEW_DATA';
-// const PATCH_NEW_DATA_SUCCESS = 'redux-example/lineChart/PATCH_NEW_DATA_SUCCESS';
-// const PATCH_NEW_DATA_FAIL = 'redux-example/lineChart/PATCH_NEW_DATA_FAIL';
-
 import { mockAPI, postRequestConcat } from '../../utils/mockAPI';
 import initialState from '../initial-state';
 
@@ -82,33 +78,6 @@ export default function reducer(state = initialState.lineChart, action = {}) {
         error: true,
         errorResponse: action.result,
       };
-
-    // case PATCH_NEW_DATA:
-    //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA > action: ', action);
-    //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA > action.result: ', action.result);
-    //   return {
-    //     ...state,
-    //     loadingD: true,
-    //   };
-
-    // case PATCH_NEW_DATA_SUCCESS:
-    //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA_SUCCESS > action: ', action);
-    //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA_SUCCESS > action.result: ', action.result);
-    //   return {
-    //     ...state,
-    //     loadingD: false,
-    //     errorD: false,
-    //     data: state.data.concat(action.newData)
-    //   };
-
-    // case PATCH_NEW_DATA_FAIL:
-    //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > PATCH_NEW_DATA_FAIL');
-    //   return {
-    //     ...state,
-    //     loadingD: false,
-    //     errorD: true,
-    //     errorResponseD: action.result,
-    //   };
 
     default:
       return state;

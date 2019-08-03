@@ -99,7 +99,7 @@ function startResolvedRejectedPromise(v, delay) {
   });
 }
 
-function postRequestConcatReslolveRejectPromise(dataObj, r, delay) {
+function postRequestConcatResolveRejectPromise(dataObj, r, delay) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (r === 'resolve') {
@@ -108,7 +108,7 @@ function postRequestConcatReslolveRejectPromise(dataObj, r, delay) {
           timeElapsed: timeElapsedModule1.getSecondsElapsed(),
           time: Date.now(),
           delay: `${delay}`,
-          message: 'RESOLVED! postRequestConcatReslolveRejectPromise.',
+          message: 'RESOLVED! postRequestConcatResolveRejectPromise.',
           status: 200,
           data: dataObj.data.concat(dataObj.newData)
         });
@@ -118,7 +118,7 @@ function postRequestConcatReslolveRejectPromise(dataObj, r, delay) {
           timeElapsed: timeElapsedModule1.getSecondsElapsed(),
           time: Date.now(),
           delay: `${delay}`,
-          message: 'REJECTED! postRequestConcatReslolveRejectPromise.',
+          message: 'REJECTED! postRequestConcatResolveRejectPromise.',
           status: 404,
           data: null
         });
@@ -295,8 +295,8 @@ export async function postRequestConcat(req) {
   console.log('###### mockAPI > postRequestConcat > req: ', req);
   timeElapsedModule1.setStartTime();
   try {
-    const res = await postRequestConcatReslolveRejectPromise(req, 'resolve', 500);
-    console.log('###### mockAPI > postRequestConcat > postRequestConcatReslolveRejectPromise(500) res: ', res);
+    const res = await postRequestConcatResolveRejectPromise(req, 'resolve', 600);
+    console.log('###### mockAPI > postRequestConcat > postRequestConcatResolveRejectPromise(500) res: ', res);
     return res;
 
   } catch (error) {

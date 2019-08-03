@@ -6,13 +6,15 @@ const WebpackBar = require('webpackbar');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+// Extract CSS from chunks into multiple stylesheets + HMR 
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 // const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-// const { DuplicatesPlugin } = require('inspectpack/plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { DuplicatesPlugin } = require('inspectpack/plugin');
 
 const rootPath = path.resolve(__dirname, '..');
 const assetsPath = path.resolve(rootPath, './build/dist');
@@ -253,6 +255,7 @@ module.exports = {
       })
     ],
     // Code Splitting: Prevent Duplication: Use the SplitChunksPlugin to dedupe and split chunks!
+    // react-hot-loader | react-redux | react-router-dom | react-router
     splitChunks: {
       cacheGroups: {
         vendors: {
@@ -362,17 +365,17 @@ module.exports = {
 
     new webpack.HashedModuleIdsPlugin(),
 
-    // new BundleAnalyzerPlugin({
-    //   analyzerMode: 'static',
-    //   reportFilename: '../../analyzers/bundleAnalyzer/prod.clientXXX2.html',
-    //   openAnalyzer: false,
-    //   generateStatsFile: false
-    // }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: '../../analyzers/bundleAnalyzer/prod.clientXXX2.html',
+      openAnalyzer: false,
+      generateStatsFile: false
+    }),
 
-    // new DuplicatesPlugin({
-    //   emitErrors: false,
-    //   emitHandler: undefined,
-    //   verbose: true
-    // }),
+    new DuplicatesPlugin({
+      emitErrors: false,
+      emitHandler: undefined,
+      verbose: true
+    }),
   ],
 };

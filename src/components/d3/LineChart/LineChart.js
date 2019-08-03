@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import debounce from 'lodash.debounce';
 
 import Loading from '../../Loading/Loading';
-import * as LineChartctions from '../../../redux/modules/lineChart';
+import * as lineChartActions from '../../../redux/modules/lineChart';
 import drawVisualization from "../../../d3/drawLineChartBasic";
 // import { withApp } from '../../../hoc';
 
@@ -17,7 +17,7 @@ import drawVisualization from "../../../d3/drawLineChartBasic";
     loaded: state.lineChartCollection[as].loaded,
     data: state.lineChartCollection[as].data,
   }),
-  (dispatch, { as }) => bindActionCreators({ ...LineChartctions }, dispatch, as)
+  (dispatch, { as }) => bindActionCreators({ ...lineChartActions }, dispatch, as)
 )
 
 class LineChart extends Component {
@@ -47,7 +47,6 @@ class LineChart extends Component {
   componentDidMount() {
     const { data } = this.props;
     console.log('>>>>>>>>>>>>>>>> LineChart > componentDidMount() > data: ', data);
-    // console.log('>>>>>>>>>>>>>>>> LineChart > componentDidMount() > request: ', request);
     if (data === null) {
       const { request, loadFunc } = this.props;
       loadFunc({ request: request });
