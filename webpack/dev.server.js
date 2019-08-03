@@ -5,9 +5,9 @@ const webpack = require('webpack');
 const externals = require('./node-externals');
 
 // const loaderUtils = require('loader-utils').stringifyRequest;
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const { DuplicatesPlugin } = require('inspectpack/plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { DuplicatesPlugin } = require('inspectpack/plugin');
 
 const rootPath = path.resolve(__dirname, '..');
 
@@ -242,10 +242,10 @@ module.exports = {
     //   generateStatsFile: false
     // }),
 
-    new DuplicatesPlugin({
-      emitErrors: false,
-      emitHandler: undefined,
-      verbose: true
-    }),
+    // new DuplicatesPlugin({
+    //   emitErrors: false,
+    //   emitHandler: undefined,
+    //   verbose: true
+    // }),
   ]
 };

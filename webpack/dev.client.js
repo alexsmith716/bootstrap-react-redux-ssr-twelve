@@ -5,9 +5,9 @@ const dllHelpers = require('./dllreferenceplugin');
 
 // Extract CSS from chunks into multiple stylesheets + HMR 
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const { DuplicatesPlugin } = require('inspectpack/plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { DuplicatesPlugin } = require('inspectpack/plugin');
 
 const rootPath = path.resolve(__dirname, '..');
 const assetsPath = path.resolve(__dirname, '../build/dist');
@@ -281,11 +281,11 @@ const webpackConfig = {
     //   generateStatsFile: false
     // }),
 
-    new DuplicatesPlugin({
-      emitErrors: false,
-      emitHandler: undefined,
-      verbose: true
-    }),
+    // new DuplicatesPlugin({
+    //   emitErrors: false,
+    //   emitHandler: undefined,
+    //   verbose: true
+    // }),
 
     // This plugin enables more fine grained control of source map generation.
     // https://webpack.js.org/plugins/source-map-dev-tool-plugin/#exclude-vendor-maps
