@@ -13,8 +13,8 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 // const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { DuplicatesPlugin } = require('inspectpack/plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { DuplicatesPlugin } = require('inspectpack/plugin');
 
 const rootPath = path.resolve(__dirname, '..');
 const assetsPath = path.resolve(rootPath, './build/dist');
@@ -365,17 +365,17 @@ module.exports = {
 
     new webpack.HashedModuleIdsPlugin(),
 
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      reportFilename: '../../analyzers/bundleAnalyzer/prod.clientXXX2.html',
-      openAnalyzer: false,
-      generateStatsFile: false
-    }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    //   reportFilename: '../../analyzers/bundleAnalyzer/prod.clientXXX2.html',
+    //   openAnalyzer: false,
+    //   generateStatsFile: false
+    // }),
 
-    new DuplicatesPlugin({
-      emitErrors: false,
-      emitHandler: undefined,
-      verbose: true
-    }),
+    // new DuplicatesPlugin({
+    //   emitErrors: false,
+    //   emitHandler: undefined,
+    //   verbose: true
+    // }),
   ],
 };

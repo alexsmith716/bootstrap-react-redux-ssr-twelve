@@ -100,10 +100,12 @@ class LineChart extends Component {
     console.log('>>>>>>>>>>>>>>>> LineChart > componentWillUnmount() <<<<<<<<<<<<<<<<<<<<<<');
   }
 
+  // invoked before rendering when new props or state are being received (default: true)
+  // let react know if a component's output is not affected by the current change in state or props
+  // "true" re-render
   shouldComponentUpdate(nextProps, nextState) {
-    // invoked before rendering when new props or state are being received
-    console.log('>>>>>>>>>>>>>>>> LineChart > shouldComponentUpdate() > nextProps: ', nextProps);
-    console.log('>>>>>>>>>>>>>>>> LineChart > shouldComponentUpdate() > nextState: ', nextState);
+    console.log('>>>>>>>>>>>>>>>> LineChart > shouldComponentUpdate()?? > nextProps: ', nextProps);
+    console.log('>>>>>>>>>>>>>>>> LineChart > shouldComponentUpdate()?? > nextState: ', nextState);
     return nextProps;
   };
 
@@ -130,18 +132,25 @@ class LineChart extends Component {
     let xValue = this.inputXValueRef.current;
     let yValue = this.inputYValueRef.current;
 
-    let x = new Date(xValue.value).toUTCString();
-    let y = parseInt(yValue.value);
-    let newData = {x, y};
+    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > xValue: ', xValue.value);
+    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > yValue: ', yValue.value);
 
-    let request = {
-      data: data,
-      newData: newData
+    if (xValue.value !== '' && yValue.value !== '') {
+
+      let x = new Date(xValue.value).toUTCString();
+      let y = parseInt(yValue.value);
+      let newData = {x, y};
+
+      let request = {
+        data: data,
+        newData: newData
+      }
+
+      console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > request: ', request);
+
+      addNewDataFunc(request);
+
     }
-
-    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > request: ', request);
-
-    addNewDataFunc(request);
 
     this.inputXValueRef.current.value = '';
     this.inputYValueRef.current.value = '';
