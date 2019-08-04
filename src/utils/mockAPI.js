@@ -294,6 +294,7 @@ export async function getSomeAsyncData(location) {
 // =========================================================================
 
 export async function postRequestConcatExport(dataObj, r, delay) {
+  timeElapsedModule1.setStartTime();
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (r === 'resolve') {
