@@ -104,8 +104,8 @@ export function addNewDataFunc(req) {
   return {
     types: [ADD_NEW_DATA_LOAD, ADD_NEW_DATA_LOAD_SUCCESS, ADD_NEW_DATA_LOAD_FAIL],
     promise: async () => {
-      const response = await postRequestConcatExport(req, 'resolve', 600);
-      console.log('>>>>>>>>>>>>>>>> lineChart > redux > Action > addNewDataFunc() > response: ', response);
+      const response = await postRequestConcatExport(req, 'resolve', 1600);
+      console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > response: ', response);
       return response;
     }
   };
