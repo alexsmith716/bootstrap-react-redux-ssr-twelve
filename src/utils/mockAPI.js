@@ -290,13 +290,45 @@ export async function getSomeAsyncData(location) {
 }
 
 // =========================================================================
+// =========================================================================
+// =========================================================================
+
+export async function postRequestConcatExport(dataObj, r, delay) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (r === 'resolve') {
+        resolve({
+          value: `${r}`,
+          timeElapsed: timeElapsedModule1.getSecondsElapsed(),
+          time: Date.now(),
+          delay: `${delay}`,
+          message: 'RESOLVED! postRequestConcatExport.',
+          status: 200,
+          data: dataObj.data.concat(dataObj.newData)
+        });
+      } else {
+        reject({
+          value: `${r}`,
+          timeElapsed: timeElapsedModule1.getSecondsElapsed(),
+          time: Date.now(),
+          delay: `${delay}`,
+          message: 'REJECTED! postRequestConcatExport.',
+          status: 404,
+          data: null
+        });
+      }
+    }, delay);
+  });
+}
+
+// ------------------------------------------------------------------------
 
 export async function postRequestConcat(req) {
   console.log('###### mockAPI > postRequestConcat > req: ', req);
   timeElapsedModule1.setStartTime();
   try {
     const res = await postRequestConcatResolveRejectPromise(req, 'resolve', 600);
-    console.log('###### mockAPI > postRequestConcat > postRequestConcatResolveRejectPromise(500) res: ', res);
+    console.log('###### mockAPI > postRequestConcat > postRequestConcatResolveRejectPromise(600) res: ', res);
     return res;
 
   } catch (error) {
@@ -305,7 +337,7 @@ export async function postRequestConcat(req) {
   }
 }
 
-// =========================================================================
+// ------------------------------------------------------------------------
 
 export function mockAPI(doWhat, delay) {
   console.log('###### export function mockAPI <<<<<<<<<<<<<<<<<<<<<<<');
