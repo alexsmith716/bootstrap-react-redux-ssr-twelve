@@ -57,6 +57,8 @@ class LineChart extends Component {
   }
 
   // invoked immediately after updating
+  // not called for the initial render
+  // component has been updated, so do something
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { loaded, error, errorResponse, data } = this.props;
 
@@ -78,21 +80,24 @@ class LineChart extends Component {
       console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_SUCCESS > data: ', data);
       console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_SUCCESS > prevProps.data: ', prevProps.data);
 
+      // 1st render
+      // LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > (data !== prevProps.data)!!!
+
+      // update after 1st render
+      // LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > (data === prevProps.data)!!!
+
       if (data === prevProps.data) {
-        // ########################## CHECK AGAIN ########################################
-        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_SUCCESS > (data === prevProps.data)!!!');
-        //const element = containerTarget.querySelector('svg');
-        //element.parentNode.removeChild(element);
+        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > 11111111111111');
+        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > containerTarget1: ', containerTarget);
       }
 
       if (data !== prevProps.data) {
-        // ########################## CHECK AGAIN ########################################
-        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_SUCCESS > (data !== prevProps.data)!!!');
-        //const element = containerTarget.querySelector('svg');
-        //element.parentNode.removeChild(element);
+        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > 22222222222222');
+        // const element = containerTarget.querySelector('svg');
+        // element.parentNode.removeChild(element);
+        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > containerTarget2: ', containerTarget);
+        drawVisualization(data, containerTarget);
       }
-
-      drawVisualization(data, containerTarget);
     }
   }
 
@@ -102,7 +107,7 @@ class LineChart extends Component {
 
   // invoked before rendering when new props or state are being received (default: true)
   // let react know if a component's output is not affected by the current change in state or props
-  // "true" re-render
+  // evaluate "true" ? re-render
   shouldComponentUpdate(nextProps, nextState) {
     console.log('>>>>>>>>>>>>>>>> LineChart > shouldComponentUpdate()?? > nextProps: ', nextProps);
     console.log('>>>>>>>>>>>>>>>> LineChart > shouldComponentUpdate()?? > nextState: ', nextState);
@@ -124,7 +129,7 @@ class LineChart extends Component {
   }
 
   handleUpdate = (e) => {
-    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > data1: ', data);
+    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > data: ', data);
     const { data, addNewDataFunc } = this.props;
 
     e.preventDefault();
@@ -149,12 +154,36 @@ class LineChart extends Component {
       console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > request: ', request);
 
       addNewDataFunc(request);
-
     }
 
     this.inputXValueRef.current.value = '';
     this.inputYValueRef.current.value = '';
   };
+
+  // --------------------------------------------------------------------------------
+
+  // there may be delays between “render” phase lifecycles (like render) 
+  //  and “commit” phase lifecycles (like getSnapshotBeforeUpdate and componentDidUpdate)
+
+  // invoked before most recently rendered output is committed to the DOM
+  // enables capturing information from the DOM (e.g. scroll position) before it is changed
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    return null;
+  }
+
+  // invoked after an error has been thrown by a descendant component
+  // receives the error thrown as param and returns a value to update state
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    // return { hasError: true };
+    return;
+  }
+
+  // invoked after an error has been thrown by a descendant component
+  // used for things like logging errors
+  componentDidCatch(error, info) {
+    console.log('>>>>>>>>>>>>>>>> LineChart > componentDidCatch() > info.componentStack: ', info.componentStack);
+  }
 
   // ================================================================================
 
@@ -202,7 +231,7 @@ class LineChart extends Component {
 
               {/* (>>>>>>>>>>>>>>>>>>>>>> DATA LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
-              {loaded &&
+              {data !== null &&
                 !loading && (
 
                   <div>
