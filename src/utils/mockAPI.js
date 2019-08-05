@@ -108,7 +108,7 @@ function postRequestConcatResolveRejectPromise(dataObj, r, delay) {
           timeElapsed: timeElapsedModule1.getSecondsElapsed(),
           time: Date.now(),
           delay: `${delay}`,
-          message: 'RESOLVED! postRequestConcatResolveRejectPromise.',
+          message: 'RESOLVED! 200 - Data Found',
           status: 200,
           data: dataObj.data.concat(dataObj.newData)
         });
@@ -118,9 +118,9 @@ function postRequestConcatResolveRejectPromise(dataObj, r, delay) {
           timeElapsed: timeElapsedModule1.getSecondsElapsed(),
           time: Date.now(),
           delay: `${delay}`,
-          message: 'REJECTED! postRequestConcatResolveRejectPromise.',
+          message: 'REJECTED! 404 - Data Not Found',
           status: 404,
-          data: null
+          data: dataObj.data
         });
       }
     }, delay);
@@ -293,49 +293,12 @@ export async function getSomeAsyncData(location) {
 // =========================================================================
 // =========================================================================
 
-export async function postRequestConcatExport(dataObj, r, delay) {
-  timeElapsedModule1.setStartTime();
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (r === 'resolve') {
-        resolve({
-          value: `${r}`,
-          timeElapsed: timeElapsedModule1.getSecondsElapsed(),
-          time: Date.now(),
-          delay: `${delay}`,
-          message: 'RESOLVED! postRequestConcatExport.',
-          status: 200,
-          data: dataObj.data.concat(dataObj.newData)
-        });
-      } else {
-        reject({
-          value: `${r}`,
-          timeElapsed: timeElapsedModule1.getSecondsElapsed(),
-          time: Date.now(),
-          delay: `${delay}`,
-          message: 'REJECTED! postRequestConcatExport.',
-          status: 404,
-          data: null
-        });
-      }
-    }, delay);
-  });
-}
-
-// ------------------------------------------------------------------------
-
-export async function postRequestConcat(req) {
+export async function postRequestConcatExport(req) {
   console.log('###### mockAPI > postRequestConcat > req: ', req);
   timeElapsedModule1.setStartTime();
-  try {
-    const res = await postRequestConcatResolveRejectPromise(req, 'resolve', 600);
-    console.log('###### mockAPI > postRequestConcat > postRequestConcatResolveRejectPromise(600) res: ', res);
-    return res;
-
-  } catch (error) {
-    console.log('###### mockAPI > postRequestConcat > res > catch > error: ', error);
-    return error;
-  }
+  const response = await postRequestConcatResolveRejectPromise(req, 'reject', 1600);
+  console.log('###### mockAPI > postRequestConcatExport > postRequestConcatResolveRejectPromise(1600) response: ', response);
+  return await response;
 }
 
 // ------------------------------------------------------------------------

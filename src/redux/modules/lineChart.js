@@ -8,7 +8,7 @@ const ADD_NEW_DATA_LOAD = 'redux-example/lineChart/ADD_NEW_DATA_LOAD';
 const ADD_NEW_DATA_LOAD_SUCCESS = 'redux-example/lineChart/ADD_NEW_DATA_LOAD_SUCCESS';
 const ADD_NEW_DATA_LOAD_FAIL = 'redux-example/lineChart/ADD_NEW_DATA_LOAD_FAIL';
 
-import { mockAPI, postRequestConcat, postRequestConcatExport } from '../../utils/mockAPI';
+import { mockAPI, postRequestConcatExport } from '../../utils/mockAPI';
 import initialState from '../initial-state';
 
 // "concat" method adds multiple elements to the array and returns a copy
@@ -76,7 +76,7 @@ export default function reducer(state = initialState.lineChart, action = {}) {
         loading: false,
         loaded: false,
         error: true,
-        errorResponse: action.result,
+        errorResponse: {message: action.error.message, documentation_url:''},
       };
 
     default:
@@ -100,22 +100,19 @@ export function loadFunc(req) {
 };
 
 export function addNewDataFunc(req) {
-  console.log('>>>>>>>>>>>>>>>> lineChart > redux > Action > addNewDataFunc() > req: ', req);
+  console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > req: ', req);
   return {
     types: [ADD_NEW_DATA_LOAD, ADD_NEW_DATA_LOAD_SUCCESS, ADD_NEW_DATA_LOAD_FAIL],
     promise: async () => {
-      const response = await postRequestConcatExport(req, 'resolve', 1600);
-      console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > response: ', response);
-      return response;
+      try {
+        const response = await postRequestConcatExport(req);
+        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc2() > response: ', response);
+        return response;
+      } catch (error) {
+        return Promise.reject(error);
+        throw error;
+      }
     }
-  };
-}
-
-export function addNewDataFunc2(req) {
-  console.log('>>>>>>>>>>>>>>>> lineChart > redux > Action > addNewDataFunc2() > req: ', req);
-  return {
-    types: [ADD_NEW_DATA_LOAD, ADD_NEW_DATA_LOAD_SUCCESS, ADD_NEW_DATA_LOAD_FAIL],
-    promise: () => mockAPI(() => postRequestConcat(req))
   };
 }
 
