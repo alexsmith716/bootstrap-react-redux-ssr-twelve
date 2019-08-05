@@ -9,7 +9,7 @@ const timeElapsedClass2 = new timeElapsedClass();
 const timeElapsedModule1 = timeElapsedModule();
 const timeElapsedModule2 = timeElapsedModule();
 
-// --------------------------
+// ------------------------------------------------------------------------
 
 // https://tc39.github.io/ecma262/#sec-date.now
 // new Date().getTime()
@@ -32,7 +32,7 @@ function closureFuncDemo1(lexicalEnvVar) {
   };
 }
 
-// --------------------------
+// ------------------------------------------------------------------------
 
 export function getRandomInt() {
   return Math.floor(Math.random() * (100 - 1)) + 1;
@@ -76,7 +76,7 @@ function startResolvedPromise(delay) {
 function startResolvedRejectedPromise(v, delay) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (v === 'foober') {
+      if (v === 'resolve') {
         resolve({
           value: `${v}`,
           // timeElapsed: timeElapsedClass1.getSecondsElapsed(),
@@ -120,7 +120,7 @@ function postRequestConcatResolveRejectPromise(dataObj, r, delay) {
           delay: `${delay}`,
           message: 'REJECTED! 404 - Data Not Found',
           status: 404,
-          data: dataObj.data
+          // data: dataObj.data
         });
       }
     }, delay);
@@ -238,64 +238,83 @@ async function doSomeAsyncSyncLikeOperations() {
 }
 
 // =========================================================================
+// =========================================================================
+// =========================================================================
+
+// export async function getSomeAsyncDataXX(location) {
+// 
+//   // console.log('###### mockAPI > Object.getOwnPropertyDescriptor(timeElapsedClass1): ', Object.getOwnPropertyDescriptor(timeElapsedClass1));
+// 
+//   // initiate TimeElapsed setStartTime
+//   timeElapsedClass1.setStartTime();
+//   timeElapsedModule1.setStartTime();
+//   
+//   console.log(`###### mockAPI > getSomeAsyncData > timeElapsedClass1.getStartTime(): ${timeElapsedClass1.getStartTime()}`);
+//   console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule1.getStartTime(): ', timeElapsedModule1.getStartTime());
+// 
+//   // --------------------------
+// 
+//   const closureFuncDemo1Closure1 = closureFuncDemo1('foo');
+//   const closureFuncDemo1Closure2 = closureFuncDemo1('fooooooo');
+// 
+//   console.log('###### mockAPI > closureFuncDemo1 > closureFuncDemo1Closure1(): ', closureFuncDemo1Closure1('berrr'));
+//   console.log('###### mockAPI > closureFuncDemo1 > closureFuncDemo1Closure2(): ', closureFuncDemo1Closure2('bbbeeerrrr'));
+// 
+//   // --------------------------
+// 
+//   // doSomeAsyncSyncLikeOperations();
+//   await doSomeAsyncSyncLikeOperations();
+// 
+//   // --------------------------
+// 
+//   console.log(`###### mockAPI > getSomeAsyncData > timeElapsedClass1.getSecondsElapsed(): ${timeElapsedClass1.getSecondsElapsed()}`);
+//   console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule1.getSecondsElapsed(): ', timeElapsedModule1.getSecondsElapsed());
+// 
+//   try {
+//     // 10.8
+//     const k = await startResolvedRejectedPromise('foober', 1200);
+//     console.log('###### mockAPI > getSomeAsyncData > startResolvedRejectedPromise(1200) k: ', k);
+//     return k;
+// 
+//   } catch (error) {
+//     console.log('###### mockAPI > getSomeAsyncData > k > catch > error: ', error);
+//     return error;
+//   }
+// 
+//   // try {
+//   //   const response = await axios.get(location);
+//   //   const e = await awaitForReturnValueOfAFunction(response.data);
+//   //   return e;
+//   // } catch (error) {
+//   //   console.log('###### mockAPI > getSomeAsyncData() > catch > error: ', error);
+//   //   return error;
+//   // }
+// }
+
+// ------------------------------------------------------------------------
 
 export async function getSomeAsyncData(location) {
 
-  // console.log('###### mockAPI > Object.getOwnPropertyDescriptor(timeElapsedClass1): ', Object.getOwnPropertyDescriptor(timeElapsedClass1));
+  console.log('###### mockAPI > getSomeAsyncData > location: ', location);
 
-  // initiate TimeElapsed setStartTime
-  timeElapsedClass1.setStartTime();
   timeElapsedModule1.setStartTime();
-  
-  console.log(`###### mockAPI > getSomeAsyncData > timeElapsedClass1.getStartTime(): ${timeElapsedClass1.getStartTime()}`);
-  console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule1.getStartTime(): ', timeElapsedModule1.getStartTime());
-
-  // --------------------------
-
-  const closureFuncDemo1Closure1 = closureFuncDemo1('foo');
-  const closureFuncDemo1Closure2 = closureFuncDemo1('fooooooo');
-
-  console.log('###### mockAPI > closureFuncDemo1 > closureFuncDemo1Closure1(): ', closureFuncDemo1Closure1('berrr'));
-  console.log('###### mockAPI > closureFuncDemo1 > closureFuncDemo1Closure2(): ', closureFuncDemo1Closure2('bbbeeerrrr'));
-
-  // --------------------------
 
   // doSomeAsyncSyncLikeOperations();
-  await doSomeAsyncSyncLikeOperations();
+  // await doSomeAsyncSyncLikeOperations();
 
-  // --------------------------
-
-  console.log(`###### mockAPI > getSomeAsyncData > timeElapsedClass1.getSecondsElapsed(): ${timeElapsedClass1.getSecondsElapsed()}`);
-  console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule1.getSecondsElapsed(): ', timeElapsedModule1.getSecondsElapsed());
-
-  try {
-    // 10.8
-    const k = await startResolvedRejectedPromise('foober', 1200);
-    console.log('###### mockAPI > getSomeAsyncData > startResolvedRejectedPromise(1200) k: ', k);
-    return k;
-
-  } catch (error) {
-    console.log('###### mockAPI > getSomeAsyncData > k > catch > error: ', error);
-    return error;
-  }
-
-  // try {
-  //   const response = await axios.get(location);
-  //   const e = await awaitForReturnValueOfAFunction(response.data);
-  //   return e;
-  // } catch (error) {
-  //   console.log('###### mockAPI > getSomeAsyncData() > catch > error: ', error);
-  //   return error;
-  // }
+  const response = await startResolvedRejectedPromise('resolve', 1200);
+  console.log('###### mockAPI > getSomeAsyncData > startResolvedRejectedPromise(1600) response: ', response);
+  return await response;
 }
 
-// =========================================================================
-// =========================================================================
-// =========================================================================
+// ------------------------------------------------------------------------
 
 export async function postRequestConcatExport(req) {
+
   console.log('###### mockAPI > postRequestConcat > req: ', req);
+
   timeElapsedModule1.setStartTime();
+
   const response = await postRequestConcatResolveRejectPromise(req, 'reject', 1600);
   console.log('###### mockAPI > postRequestConcatExport > postRequestConcatResolveRejectPromise(1600) response: ', response);
   return await response;

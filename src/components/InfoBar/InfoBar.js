@@ -6,8 +6,10 @@ import Loading from '../Loading/Loading';
 
 @connect(
   (state) => ({ 
-    info: state.info.data,
-    isLoading: state.info.isLoading
+    data: state.info.data,
+    loading: state.info.loading,
+    error: state.info.error,
+    errorResponse: state.info.errorResponse,
   }),
   { load }
 )
@@ -15,19 +17,15 @@ import Loading from '../Loading/Loading';
 class InfoBar extends Component {
 
   static propTypes = {
-    // info: PropTypes.shape({
+    // data: PropTypes.shape({
     //   // value: `${v}`,
     //   // timeElapsed: timeElapsedModule1.getSecondsElapsed(),
     //   // time: Date.now(),
     //   // delay: `${delay}`,
     //   // message: 'RESOLVED! This came from the mock API.',
-    //      isLoading: PropTypes.bool,
+    //      loading: PropTypes.bool,
     // }),
-    load: PropTypes.func.isRequired
-  };
-
-  static defaultProps = {
-    info: null
+    // load: PropTypes.func.isRequired
   };
 
   // ============================================================
@@ -64,7 +62,7 @@ class InfoBar extends Component {
 
   render() {
 
-    const { info, isLoading, load } = this.props;
+    const { data, loading, load, error, errorResponse } = this.props;
     const styles = require('./scss/InfoBar.scss');
 
     return (
@@ -75,21 +73,29 @@ class InfoBar extends Component {
 
           {/* (>>>>>>>>>>>>>>>>>>>>>> LOADING >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
-          {isLoading && (
+          {loading && (
               <Loading text="Loading" />
+            )}
+
+          {/* (>>>>>>>>>>>>>>>>>>>>>> ERROR >>>>>>>>>>>>>>>>>>>>>>>>) */}
+
+          {error && (
+
+              <div className="alert alert-danger text-center" role="alert">RENDERING ERROR<br/><span>{`Message: ${errorResponse.message}`}</span><br/><span>{`Url: ${errorResponse.documentation_url}`}</span></div>
+
             )}
 
           {/* (>>>>>>>>>>>>>>>>>>>>>>>> LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
-          {!isLoading && (
+          {!loading && (
 
               <div>
                 <div className={`card-title ${styles.infoBar}`}>
-                  <h5>InfoBar message: '<span className={styles.message}>{info ? info.message : 'no message!'}</span>'</h5>
+                  <h5>InfoBar message: '<span className={styles.message}>{data ? data.message : 'no message!'}</span>'</h5>
 
-                  <h6>{info && new Date(info.time).toString()}</h6>
+                  <h6>{data && new Date(data.time).toString()}</h6>
 
-                  <h6>{info && info.timeElapsed}</h6>
+                  <h6>{data && data.timeElapsed}</h6>
                 </div>
 
                 <button type="button" className="btn btn-primary" onClick={load}>
