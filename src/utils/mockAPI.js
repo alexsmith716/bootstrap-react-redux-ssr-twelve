@@ -241,66 +241,15 @@ async function doSomeAsyncSyncLikeOperations() {
 // =========================================================================
 // =========================================================================
 
-// export async function getSomeAsyncDataXX(location) {
-// 
-//   // console.log('###### mockAPI > Object.getOwnPropertyDescriptor(timeElapsedClass1): ', Object.getOwnPropertyDescriptor(timeElapsedClass1));
-// 
-//   // initiate TimeElapsed setStartTime
-//   timeElapsedClass1.setStartTime();
-//   timeElapsedModule1.setStartTime();
-//   
-//   console.log(`###### mockAPI > getSomeAsyncData > timeElapsedClass1.getStartTime(): ${timeElapsedClass1.getStartTime()}`);
-//   console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule1.getStartTime(): ', timeElapsedModule1.getStartTime());
-// 
-//   // --------------------------
-// 
-//   const closureFuncDemo1Closure1 = closureFuncDemo1('foo');
-//   const closureFuncDemo1Closure2 = closureFuncDemo1('fooooooo');
-// 
-//   console.log('###### mockAPI > closureFuncDemo1 > closureFuncDemo1Closure1(): ', closureFuncDemo1Closure1('berrr'));
-//   console.log('###### mockAPI > closureFuncDemo1 > closureFuncDemo1Closure2(): ', closureFuncDemo1Closure2('bbbeeerrrr'));
-// 
-//   // --------------------------
-// 
-//   // doSomeAsyncSyncLikeOperations();
-//   await doSomeAsyncSyncLikeOperations();
-// 
-//   // --------------------------
-// 
-//   console.log(`###### mockAPI > getSomeAsyncData > timeElapsedClass1.getSecondsElapsed(): ${timeElapsedClass1.getSecondsElapsed()}`);
-//   console.log('###### mockAPI > getSomeAsyncData > timeElapsedModule1.getSecondsElapsed(): ', timeElapsedModule1.getSecondsElapsed());
-// 
-//   try {
-//     // 10.8
-//     const k = await startResolvedRejectedPromise('foober', 1200);
-//     console.log('###### mockAPI > getSomeAsyncData > startResolvedRejectedPromise(1200) k: ', k);
-//     return k;
-// 
-//   } catch (error) {
-//     console.log('###### mockAPI > getSomeAsyncData > k > catch > error: ', error);
-//     return error;
-//   }
-// 
-//   // try {
-//   //   const response = await axios.get(location);
-//   //   const e = await awaitForReturnValueOfAFunction(response.data);
-//   //   return e;
-//   // } catch (error) {
-//   //   console.log('###### mockAPI > getSomeAsyncData() > catch > error: ', error);
-//   //   return error;
-//   // }
-// }
-
-// ------------------------------------------------------------------------
-
 export async function getSomeAsyncData(location) {
 
   console.log('###### mockAPI > getSomeAsyncData > location: ', location);
 
+  timeElapsedClass1.setStartTime();
   timeElapsedModule1.setStartTime();
 
   // doSomeAsyncSyncLikeOperations();
-  // await doSomeAsyncSyncLikeOperations();
+  await doSomeAsyncSyncLikeOperations();
 
   const response = await startResolvedRejectedPromise('resolve', 1200);
   console.log('###### mockAPI > getSomeAsyncData > startResolvedRejectedPromise(1600) response: ', response);
