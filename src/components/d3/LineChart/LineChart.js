@@ -231,7 +231,7 @@ class LineChart extends Component {
 
               {/* (>>>>>>>>>>>>>>>>>>>>>> DATA LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
-              {data !== null &&
+              {loaded &&
                 !loading && (
 
                   <div>
