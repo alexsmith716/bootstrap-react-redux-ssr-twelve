@@ -11,11 +11,11 @@ import drawVisualization from "../../../d3/drawLineChartBasic";
 
 @connect(
   (state, { as }) => ({
-    error: state.lineChartCollection[as].error,
-    errorResponse: state.lineChartCollection[as].errorResponse,
     loading: state.lineChartCollection[as].loading,
     loaded: state.lineChartCollection[as].loaded,
     data: state.lineChartCollection[as].data,
+    error: state.lineChartCollection[as].error,
+    errorResponse: state.lineChartCollection[as].errorResponse,
   }),
   (dispatch, { as }) => bindActionCreators({ ...lineChartActions }, dispatch, as)
 )
@@ -190,7 +190,7 @@ class LineChart extends Component {
   render() {
 
     // const styles = require('./scss/LineChart.scss');
-    const { loading, loaded, title, error, errorResponse, data } = this.props;
+    const { loading, loaded, title, data, error, errorResponse } = this.props;
     const { containerRef, inputXValueRef, inputYValueRef } = this;
 
     console.log('>>>>>>>>>>>>>>>> LineChart > render() <<<<<<<<<<<<<<<<< data: ', {data});

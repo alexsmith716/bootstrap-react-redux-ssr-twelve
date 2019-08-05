@@ -23,7 +23,7 @@ export default function reducer(state = initialState.lineChart, action = {}) {
       console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > SWITCH > action.type > LOAD > state: ', state);
       return {
         ...state,
-        loading: true
+        loading: true,
       };
 
     case LOAD_SUCCESS:
@@ -35,7 +35,7 @@ export default function reducer(state = initialState.lineChart, action = {}) {
         loaded: true,
         error: false,
         errorResponse: {message:'', documentation_url:''},
-        data: action.result.values
+        data: action.result.values,
       };
 
     case LOAD_FAIL:
@@ -53,7 +53,7 @@ export default function reducer(state = initialState.lineChart, action = {}) {
       console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > reducer > SWITCH > action.type > ADD_NEW_DATA_LOAD > action: ', action);
       return {
         ...state,
-        loading: true
+        loading: true,
       };
 
     case ADD_NEW_DATA_LOAD_SUCCESS:
@@ -106,7 +106,7 @@ export function addNewDataFunc(req) {
     promise: async () => {
       try {
         const response = await postRequestConcatExport(req);
-        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc2() > response: ', response);
+        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > response: ', response);
         return response;
       } catch (error) {
         return Promise.reject(error);

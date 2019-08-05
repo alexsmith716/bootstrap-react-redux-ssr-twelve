@@ -18,25 +18,27 @@ export default function reducer(state = initialState.info, action = {}) {
       console.log('>>>>>>>>>>>>>>>> info > redux > SWITCH > action.type > LOAD > state: ', state);
       return {
         ...state,
-        isLoading: true
+        loading: true,
       };
 
     case LOAD_SUCCESS:
       console.log('>>>>>>>>>>>>>>>> info > redux > SWITCH > action.type > LOAD_SUCCESS > action.result: ', action);
       return {
         ...state,
-        isLoading: false,
+        loading: false,
         loaded: true,
-        data: action.result
+        data: action.result,
       };
 
     case LOAD_FAIL:
       console.log('>>>>>>>>>>>>>>>> info > redux > SWITCH > action.type > LOAD_FAIL > action.error: ', action);
       return {
         ...state,
-        isLoading: false,
+        loading: false,
         loaded: false,
-        error: action.error
+        // error: action.error,
+        error: true,
+        errorResponse: {message: action.error.message, documentation_url:''},
       };
 
     default:
@@ -65,8 +67,18 @@ export function load() {
   // let location = 'https://www.metaweather.com/api/location/2459115/';
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: () => mockAPI(() => getRandomInt())
+    // promise: () => mockAPI(() => getRandomInt())
     // promise: () => mockAPI(() => getSomeAsyncData(location))
+    promise: async () => {
+      try {
+        const response = await getSomeAsyncData(location);
+        console.log('>>>>>>>>>>>>>>>> ########## info ########## > redux > Action > load() > response: ', response);
+        return response;
+      } catch (error) {
+        return Promise.reject(error);
+        throw error;
+      }
+    }
   };
 };
 

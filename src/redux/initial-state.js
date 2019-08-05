@@ -11,11 +11,12 @@ export default {
 
   device: {
     userAgent: null,
-    isBot: null
+    isBot: null,
   },
 
   info: {
     loaded: false,
+    data: null,
   },
 
   counter: {
