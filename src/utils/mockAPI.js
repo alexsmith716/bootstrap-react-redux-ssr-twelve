@@ -239,7 +239,6 @@ async function doSomeAsyncSyncLikeOperations() {
 
 // =========================================================================
 // =========================================================================
-// =========================================================================
 
 export async function getSomeAsyncData(location) {
 
@@ -264,7 +263,7 @@ export async function postRequestConcatExport(req) {
 
   timeElapsedModule1.setStartTime();
 
-  const response = await postRequestConcatResolveRejectPromise(req, 'reject', 1600);
+  const response = await postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
   console.log('###### mockAPI > postRequestConcatExport > postRequestConcatResolveRejectPromise(1600) response: ', response);
   return await response;
 }

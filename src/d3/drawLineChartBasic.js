@@ -47,7 +47,8 @@ export default function drawLineChartBasic(payload, containerTarget) {
     .domain([0, max(data, d => d.y)])
     .range([height - margin, 0]);
 
-  let color = scaleOrdinal(schemeCategory10);
+  // let color = scaleOrdinal(schemeCategory10);
+  // let color = scaleLinear([10, 100], ['brown', 'steelblue']);
 
   /* Add SVG */
   let svg = select(containerTarget)
@@ -84,6 +85,18 @@ export default function drawLineChartBasic(payload, containerTarget) {
   // MIND THE SEMICOLON !!!!!!!!!!!!!!!!!!!!!!
   // ###########################################################################################################################
 
+  // lines
+  //   .selectAll('.line-group')
+  //   .data(data)
+  //   .enter()
+  //   .append('g')
+  //   .attr('class', 'line-group')
+  //   .append('path')
+  //   .attr('class', 'line')
+  //   .attr('d', () => addedLine(data))
+  //   .style('stroke', (d, i) => color(i))
+  //   .style('opacity', lineOpacity);
+
   lines
     .selectAll('.line-group')
     .data(data)
@@ -93,7 +106,7 @@ export default function drawLineChartBasic(payload, containerTarget) {
     .append('path')
     .attr('class', 'line')
     .attr('d', () => addedLine(data))
-    .style('stroke', (d, i) => color(i))
+    .style('stroke', '#009900')
     .style('opacity', lineOpacity);
 
   svg.select('.lines').selectAll('.line-group').selectAll('.line')

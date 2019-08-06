@@ -80,12 +80,6 @@ class LineChart extends Component {
       console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_SUCCESS > data: ', data);
       console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_SUCCESS > prevProps.data: ', prevProps.data);
 
-      // 1st render
-      // LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > (data !== prevProps.data)!!!
-
-      // update after 1st render
-      // LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > (data === prevProps.data)!!!
-
       if (data === prevProps.data) {
         console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > 11111111111111');
         console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > containerTarget1: ', containerTarget);

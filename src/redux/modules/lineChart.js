@@ -11,6 +11,8 @@ const ADD_NEW_DATA_LOAD_FAIL = 'redux-example/lineChart/ADD_NEW_DATA_LOAD_FAIL';
 import { mockAPI, postRequestConcatExport } from '../../utils/mockAPI';
 import initialState from '../initial-state';
 
+// 200 (OK) - 204 (No Content) - 404 (Not Found)
+
 // "concat" method adds multiple elements to the array and returns a copy
 
 // Reducer
@@ -62,7 +64,7 @@ export default function reducer(state = initialState.lineChart, action = {}) {
       return {
         ...state,
         loading: false,
-        loaded: true,
+        // loaded: true,
         error: false,
         errorResponse: {message:'', documentation_url:''},
         data: action.result.data,
@@ -74,7 +76,7 @@ export default function reducer(state = initialState.lineChart, action = {}) {
       return {
         ...state,
         loading: false,
-        loaded: false,
+        // loaded: false,
         error: true,
         errorResponse: {message: action.error.message, documentation_url:''},
       };
@@ -115,11 +117,3 @@ export function addNewDataFunc(req) {
     }
   };
 }
-
-// // 200 (OK) - 204 (No Content) - 404 (Not Found)
-// export function patchMessage(id, data) {
-//   return {
-//     types: [PATCH_NEW_DATA, PATCH_NEW_DATA_SUCCESS, PATCH_NEW_DATA_FAIL],
-//     promise: () => mockAPI(() => patchHttpMethod(status))
-//   };
-// }
