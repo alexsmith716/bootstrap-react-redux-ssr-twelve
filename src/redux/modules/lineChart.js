@@ -123,6 +123,19 @@ export function loadFunc(req) {
 
 export function addNewDataFunc(req) {
   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > req: ', req);
+  // going to 'clientMiddleware' > 'YES promise'
+  // going to Reducer switch action 'LOAD'
+  // going to API 'postRequestConcat'
+  // going to API 'postRequestConcatResolveRejectPromise' and returning Promise
+  // going to 'clientMiddleware' > 'actionPromise'
+  // going to 'LineChart' > 'mounting' lifecycle
+  // >>>>>>>>>> API RESOLVED ?
+  // going to API 'postRequestConcatExport' and returning response
+  // going to Reducer 'postRequestConcatExport' and response received from API
+  // going to Reducer switch action 'LOAD_SUCCESS'
+  // >>>>>>>>>> API REJECTED ?
+  // going to Reducer try/catch block > catch (error) > Promise.reject(error)
+    // going to Reducer switch action 'LOAD_FAIL'
   return {
     types: [ADD_NEW_DATA_LOAD, ADD_NEW_DATA_LOAD_SUCCESS, ADD_NEW_DATA_LOAD_FAIL],
     promise: async () => {
