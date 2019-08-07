@@ -167,8 +167,10 @@ const portNum = Number(config.port);
 const port = normalizePort(__DEVELOPMENT__ ? portNum : portNum);
 
 server.on('error', err => {
+  // if (err.code === 'EACCES') {
+  //   // requires elevated privileges
+  // }
   if (err.code === 'EADDRINUSE') {
-    console.log('Address in use, retrying...');
     console.error('>>>>>>>> BIN > START > ERROR > Address in use, retrying...');
     setTimeout(() => {
       server.close();

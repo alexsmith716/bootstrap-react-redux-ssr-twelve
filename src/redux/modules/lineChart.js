@@ -101,6 +101,26 @@ export function loadFunc(req) {
   };
 };
 
+//  https://developer.mozilla.org/en-US/docs/Web/API/Body/blob
+// 'async' keyword: turns any function into a promise (invoking the function returns a promise)
+// '.then()' block consumes value returned when promise fulfills
+// 'await' keyword: placed before promise-based function to pause code until promise fulfills
+// use 'await' when calling any function that returns a Promise
+
+// error handling:
+// retry fetching the asset ...
+// show a default error message ...
+// prompt user to to something else (provide a different asset URL) ...
+// using synchronous 'try...catch' structure with async/await
+
+// component
+// reducer
+// clientMiddleware
+// reducer
+// API
+// API
+// clientMiddleware >> resolved ? reducer > return response : reducer > LOAD_FAIL
+
 export function addNewDataFunc(req) {
   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > req: ', req);
   return {
@@ -111,7 +131,11 @@ export function addNewDataFunc(req) {
         console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > response: ', response);
         return response;
       } catch (error) {
-        return Promise.reject(error);
+        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > ERROR1: ', error);
+        const e = Promise.reject(error)
+        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > ERROR2: ', e);
+        // return Promise.reject(error);
+        return e;
         throw error;
       }
     }

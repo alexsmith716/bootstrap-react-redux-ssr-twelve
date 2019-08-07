@@ -15,7 +15,9 @@ import { getStoredState } from 'redux-persist';
 import { AppContainer as HotEnabler } from 'react-hot-loader';
 
 import asyncMatchRoutes from './utils/asyncMatchRoutes';
-import { RouterTrigger, Provider } from './components';
+// import { Provider } from './components';
+import { Provider } from 'react-redux';
+import { RouterTrigger } from './components';
 import routes from './routes';
 import apiClient from './helpers/apiClient';
 import configureStore from './redux/configureStore';
