@@ -43,7 +43,19 @@ class LineChart extends Component {
     // addNewDataFunc: PropTypes.func.isRequired,
   }
 
-  // ADD TO localforage ???
+  // ==============================================================================================
+
+
+  // MOUNTING (instance of a component is being created and inserted into the DOM)
+  // ----------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------
+
+  // constructor()
+
+  // static getDerivedStateFromProps(props, state)
+
+  // render()
+
   componentDidMount() {
     const { data } = this.props;
     console.log('>>>>>>>>>>>>>>>> LineChart > componentDidMount() > data: ', data);
@@ -54,6 +66,43 @@ class LineChart extends Component {
       const containerTarget = this.containerRef.current;
       drawVisualization(data, containerTarget);
     }
+  }
+
+  // ==============================================================================================
+
+
+  // UPDATING (update was caused by changes to props or state. component is being re-rendered.)
+  // ----------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------
+
+  // derive state:
+  // enables a component to update its internal state as the result of changes in props
+  // invoked right before calling the render method, both on the initial mount and on subsequent updates
+  // invoked after a component is instantiated as well as before it is re-rendered
+  // --------------------------------------------------------------------------------
+  static getDerivedStateFromProps(props, state) {
+    console.log('>>>>>>>>>>>>>>>> LineChart > getDerivedStateFromProps() <<<<<<<<<<<<<<<<<<<<<<');
+    return null;
+  };
+
+  // invoked before rendering when new props or state are being received (default: true)
+  // let react know if a component's output is not affected by the current change in state or props
+  // evaluate "true" ? re-render
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('>>>>>>>>>>>>>>>> LineChart > shouldComponentUpdate()?? > nextProps: ', nextProps);
+    console.log('>>>>>>>>>>>>>>>> LineChart > shouldComponentUpdate()?? > nextState: ', nextState);
+    return nextProps;
+  };
+
+  // render()
+
+  // there may be delays between “render” phase lifecycles (like render) 
+  //  and “commit” phase lifecycles (like getSnapshotBeforeUpdate and componentDidUpdate)
+
+  // invoked before most recently rendered output is committed to the DOM
+  // enables capturing information from the DOM (e.g. scroll position) before it is changed
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    return null;
   }
 
   // invoked immediately after updating
@@ -94,32 +143,40 @@ class LineChart extends Component {
     }
   }
 
+  // ==============================================================================================
+
+
+  // UNMOUNTING (component is being removed from the DOM)
+  // ----------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------
+
   componentWillUnmount() {
     console.log('>>>>>>>>>>>>>>>> LineChart > componentWillUnmount() <<<<<<<<<<<<<<<<<<<<<<');
   }
 
-  // invoked before rendering when new props or state are being received (default: true)
-  // let react know if a component's output is not affected by the current change in state or props
-  // evaluate "true" ? re-render
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('>>>>>>>>>>>>>>>> LineChart > shouldComponentUpdate()?? > nextProps: ', nextProps);
-    console.log('>>>>>>>>>>>>>>>> LineChart > shouldComponentUpdate()?? > nextState: ', nextState);
-    return nextProps;
-  };
+  // ==============================================================================================
 
-  // derive state:
-  // enables a component to update its internal state as the result of changes in props
-  // invoked right before calling the render method, both on the initial mount and on subsequent updates
-  // invoked after a component is instantiated as well as before it is re-rendered
-  // --------------------------------------------------------------------------------
-  static getDerivedStateFromProps(props, state) {
-    console.log('>>>>>>>>>>>>>>>> LineChart > getDerivedStateFromProps() <<<<<<<<<<<<<<<<<<<<<<');
-    return null;
-  };
 
+  // ERROR HANDLING (error during render, in a lifecycle, in the constructor of any child component)
+  // ----------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------
+
+  // invoked after an error has been thrown by a descendant component
+  // receives the error thrown as param and returns a value to update state
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    // return { hasError: true };
+    return;
+  }
+
+  // invoked after an error has been thrown by a descendant component
+  // used for things like logging errors
   componentDidCatch(error, info) {
     console.log('>>>>>>>>>>>>>>>> LineChart > componentDidCatch() > info.componentStack: ', info.componentStack);
   }
+
+  // ==============================================================================================
+
 
   handleUpdate = (e) => {
     console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > data: ', data);
@@ -152,31 +209,6 @@ class LineChart extends Component {
     this.inputXValueRef.current.value = '';
     this.inputYValueRef.current.value = '';
   };
-
-  // --------------------------------------------------------------------------------
-
-  // there may be delays between “render” phase lifecycles (like render) 
-  //  and “commit” phase lifecycles (like getSnapshotBeforeUpdate and componentDidUpdate)
-
-  // invoked before most recently rendered output is committed to the DOM
-  // enables capturing information from the DOM (e.g. scroll position) before it is changed
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    return null;
-  }
-
-  // invoked after an error has been thrown by a descendant component
-  // receives the error thrown as param and returns a value to update state
-  static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
-    // return { hasError: true };
-    return;
-  }
-
-  // invoked after an error has been thrown by a descendant component
-  // used for things like logging errors
-  componentDidCatch(error, info) {
-    console.log('>>>>>>>>>>>>>>>> LineChart > componentDidCatch() > info.componentStack: ', info.componentStack);
-  }
 
   // ================================================================================
 
