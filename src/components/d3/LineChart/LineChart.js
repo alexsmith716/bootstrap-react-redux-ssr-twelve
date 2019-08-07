@@ -61,6 +61,8 @@ class LineChart extends Component {
   // component has been updated, so do something
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { loaded, error, errorResponse, data } = this.props;
+    const containerTarget = this.containerRef.current;
+    // console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > containerTarget: ', containerTarget);
 
     console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() <<<<<<<<<<<<<<<<<<<<<<<< DATA: ', data);
 
@@ -69,9 +71,6 @@ class LineChart extends Component {
       console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_FAIL > error: ', error);
       console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_FAIL > errorResponse: ', errorResponse);
     }
-
-    const containerTarget = this.containerRef.current;
-    // console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > containerTarget: ', containerTarget);
 
     // LOAD_SUCCESS
     if (!error && loaded) {

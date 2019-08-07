@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import { Provider } from './components';
+// import { Provider } from './components';
+import { Provider } from 'react-redux';
 import { Router, StaticRouter } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { renderRoutes } from 'react-router-config';

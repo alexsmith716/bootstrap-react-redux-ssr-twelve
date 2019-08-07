@@ -1,4 +1,3 @@
-import axios from 'axios';
 // import TimeElapsedClass from './TimeElapsedClass';
 import timeElapsedClass from './timeElapsedClassTwo';
 import timeElapsedModule from './timeElapsedModule';
@@ -100,7 +99,7 @@ function startResolvedRejectedPromise(v, delay) {
 }
 
 function postRequestConcatResolveRejectPromise(dataObj, r, delay) {
-  return new Promise((resolve, reject) => {
+  const v = new Promise((resolve, reject) => {
     setTimeout(() => {
       if (r === 'resolve') {
         resolve({
@@ -125,6 +124,8 @@ function postRequestConcatResolveRejectPromise(dataObj, r, delay) {
       }
     }, delay);
   });
+  console.log('###### mockAPI > postRequestConcatResolveRejectPromise(1600) VVVVVVV: ', v);
+  return v;
 }
 
 // 2nd promise is rejected but being resolved and returned on 1st promise from reducer load action
@@ -263,7 +264,7 @@ export async function postRequestConcatExport(req) {
 
   timeElapsedModule1.setStartTime();
 
-  const response = await postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
+  const response = await postRequestConcatResolveRejectPromise(req, 'reject', 1600);
   console.log('###### mockAPI > postRequestConcatExport > postRequestConcatResolveRejectPromise(1600) response: ', response);
   return await response;
 }
