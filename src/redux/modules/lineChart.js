@@ -8,7 +8,7 @@ const ADD_NEW_DATA_LOAD = 'redux-example/lineChart/ADD_NEW_DATA_LOAD';
 const ADD_NEW_DATA_LOAD_SUCCESS = 'redux-example/lineChart/ADD_NEW_DATA_LOAD_SUCCESS';
 const ADD_NEW_DATA_LOAD_FAIL = 'redux-example/lineChart/ADD_NEW_DATA_LOAD_FAIL';
 
-import { mockAPI, postRequestConcatExport } from '../../utils/mockAPI';
+import { mockAPI, postRequestConcatExportASYNC, postRequestConcatExportSYNC } from '../../utils/mockAPI';
 import initialState from '../initial-state';
 
 // 200 (OK) - 204 (No Content) - 404 (Not Found)
@@ -102,6 +102,8 @@ export function loadFunc(req) {
 };
 
 //  https://developer.mozilla.org/en-US/docs/Web/API/Body/blob
+// Promise: an object that represents an intermediate state of an operation
+// Promise: a result of some kind to be returned
 // 'async' keyword: turns any function into a promise (invoking the function returns a promise)
 // '.then()' block consumes value returned when promise fulfills
 // 'await' keyword: placed before promise-based function to pause code until promise fulfills
@@ -113,42 +115,54 @@ export function loadFunc(req) {
 // prompt user to to something else (provide a different asset URL) ...
 // using synchronous 'try...catch' structure with async/await
 
-// component
-// reducer
-// clientMiddleware
-// reducer
-// API
-// API
-// clientMiddleware >> resolved ? reducer > return response : reducer > LOAD_FAIL
+// thenable API
 
+// going to 'clientMiddleware' > 'YES promise'
+// going to Reducer switch action 'LOAD'
+// going to API 'postRequestConcat'
+// going to API 'postRequestConcatResolveRejectPromise' and returning Promise
+// going to 'clientMiddleware' > 'actionPromise'
+// going to 'LineChart' > 'mounting' lifecycle
+// >>>>>>>>>> API RESOLVED ?
+// going to API 'postRequestConcatExport' and returning response
+// going to Reducer 'postRequestConcatExport' and response received from API
+// going to Reducer switch action 'LOAD_SUCCESS'
+// >>>>>>>>>> API REJECTED ?
+// going to Reducer try/catch block > catch (error) > Promise.reject(error)
+// going to Reducer switch action 'LOAD_FAIL'
+
+// best tool for the job
+// may not need sync 'generator pattern' for code flow
+// may not need control to wait until promise settles
+// real, real-world practice using promises & async/await
+
+// export function addNewDataFuncASYNC(req) {
 export function addNewDataFunc(req) {
   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > req: ', req);
-  // going to 'clientMiddleware' > 'YES promise'
-  // going to Reducer switch action 'LOAD'
-  // going to API 'postRequestConcat'
-  // going to API 'postRequestConcatResolveRejectPromise' and returning Promise
-  // going to 'clientMiddleware' > 'actionPromise'
-  // going to 'LineChart' > 'mounting' lifecycle
-  // >>>>>>>>>> API RESOLVED ?
-  // going to API 'postRequestConcatExport' and returning response
-  // going to Reducer 'postRequestConcatExport' and response received from API
-  // going to Reducer switch action 'LOAD_SUCCESS'
-  // >>>>>>>>>> API REJECTED ?
-  // going to Reducer try/catch block > catch (error) > Promise.reject(error)
-    // going to Reducer switch action 'LOAD_FAIL'
+  return {
+    types: [ADD_NEW_DATA_LOAD, ADD_NEW_DATA_LOAD_SUCCESS, ADD_NEW_DATA_LOAD_FAIL],
+    promise: () => postRequestConcatExportASYNC(req)
+      .then(
+        (result) => {
+          console.log(`>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > RESPONSE.THEN1: ${result}`);
+          return result;
+        }
+      )
+  };
+}
+
+export function addNewDataFuncSYNC(req) {
+  console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > req: ', req);
   return {
     types: [ADD_NEW_DATA_LOAD, ADD_NEW_DATA_LOAD_SUCCESS, ADD_NEW_DATA_LOAD_FAIL],
     promise: async () => {
       try {
-        const response = await postRequestConcatExport(req);
+        const response = await postRequestConcatExportSYNC(req);
         console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > response: ', response);
         return response;
       } catch (error) {
         console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > ERROR1: ', error);
-        const e = Promise.reject(error)
-        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > ERROR2: ', e);
-        // return Promise.reject(error);
-        return e;
+        return Promise.reject(error);
         throw error;
       }
     }

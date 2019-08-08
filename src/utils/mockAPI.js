@@ -96,10 +96,10 @@ function startResolvedRejectedPromise(v, delay) {
       }
     }, delay);
   });
-}
+};
 
 function postRequestConcatResolveRejectPromise(dataObj, r, delay) {
-  const v = new Promise((resolve, reject) => {
+  const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
       if (r === 'resolve') {
         resolve({
@@ -124,9 +124,9 @@ function postRequestConcatResolveRejectPromise(dataObj, r, delay) {
       }
     }, delay);
   });
-  console.log('###### mockAPI > postRequestConcatResolveRejectPromise(1600) VVVVVVV: ', v);
-  return v;
-}
+  console.log('###### mockAPI > postRequestConcatResolveRejectPromise(1600) PPPPPPPP: ', promise);
+  return promise;
+};
 
 // 2nd promise is rejected but being resolved and returned on 1st promise from reducer load action
 // promise.all: rejects with reason of 1st promise that rejects
@@ -258,16 +258,39 @@ export async function getSomeAsyncData(location) {
 
 // ------------------------------------------------------------------------
 
-export async function postRequestConcatExport(req) {
+export function postRequestConcatExportASYNC(req) {
 
-  console.log('###### mockAPI > postRequestConcat > req: ', req);
+  console.log('###### mockAPI > postRequestConcatExportASYNC > req: ', req);
 
   timeElapsedModule1.setStartTime();
 
-  const response = await postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
-  console.log('###### mockAPI > postRequestConcatExport > postRequestConcatResolveRejectPromise(1600) response: ', response);
+  let promise = postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
+  console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE: ', promise);
 
-  return response;
+  // demonstrate the asynchronicity of the then method
+  let thenProm = promise.then(
+      (result) => {
+        console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN1:', result);
+        return new Promise((resolve, reject) => {
+          setTimeout(() => resolve(result), 250);
+        });
+      }
+    );
+  return thenProm;
+}
+
+export async function postRequestConcatExportSYNC(req) {
+
+  console.log('###### mockAPI > postRequestConcatExportSYNC > req: ', req);
+
+  timeElapsedModule1.setStartTime();
+
+  // resolved promise object returned
+  let promise = await postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
+  console.log('###### mockAPI > postRequestConcatExportSYNC > postRequestConcatResolveRejectPromise(1600) PROMISE: ', promise);
+
+  // return await promise;
+  return promise;
 }
 
 // ------------------------------------------------------------------------
