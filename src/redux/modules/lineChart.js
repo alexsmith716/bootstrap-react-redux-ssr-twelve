@@ -131,6 +131,8 @@ export function loadFunc(req) {
 // going to Reducer try/catch block > catch (error) > Promise.reject(error)
 // going to Reducer switch action 'LOAD_FAIL'
 
+// when promise rejects control jumps to the closest rejection handler
+
 // best tool for the job
 // may not need sync 'generator pattern' for code flow
 // may not need control to wait until promise settles
@@ -142,12 +144,26 @@ export function addNewDataFunc(req) {
   return {
     types: [ADD_NEW_DATA_LOAD, ADD_NEW_DATA_LOAD_SUCCESS, ADD_NEW_DATA_LOAD_FAIL],
     promise: () => postRequestConcatExportASYNC(req)
-      .then(
-        (result) => {
-          console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > RESPONSE.THEN1: ', result);
-          return result;
-        }
-      )
+      .then(result => {
+        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > PROMISE.THEN1:', result);
+        result.message += ' P4,'
+        return result;
+      })
+      .then(result => {
+        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > PROMISE.THEN2:', result);
+        result.message += ' P5,'
+        return result;
+      })
+      .then(result => {
+        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > PROMISE.THEN3:', result);
+        result.message += ' P6.'
+        return result;
+      })
+      .catch(error => {
+        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > CATCH:ERROR:', error);
+        return Promise.reject(error);
+        throw error;
+      })
   };
 }
 
