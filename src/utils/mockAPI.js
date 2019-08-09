@@ -107,7 +107,7 @@ function postRequestConcatResolveRejectPromise(dataObj, r, delay) {
           timeElapsed: timeElapsedModule1.getSecondsElapsed(),
           time: Date.now(),
           delay: `${delay}`,
-          message: 'RESOLVED! 200 - Data Found',
+          message: 'RESOLVED! 200 - Data Found.',
           status: 200,
           data: dataObj.data.concat(dataObj.newData)
         });
@@ -117,7 +117,7 @@ function postRequestConcatResolveRejectPromise(dataObj, r, delay) {
           timeElapsed: timeElapsedModule1.getSecondsElapsed(),
           time: Date.now(),
           delay: `${delay}`,
-          message: 'REJECTED! 404 - Data Not Found',
+          message: 'REJECTED! 404 - Data Not Found.',
           status: 404,
           // data: dataObj.data
         });
@@ -267,25 +267,40 @@ export function postRequestConcatExportASYNC(req) {
   const promise = postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
   console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE: ', promise);
 
-  // not passing result here / not chaining
-  promise.then(result => {
-    console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN1:', result);
-    return result;
-  });
+  // not passing value as next result here / not chaining
+  // promise.then(result => {
+  //   console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN1:', result);
+  //   return result;
+  // });
 
-  promise.then(result => {
-    console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN2:', result);
-    return result;
-  });
+  // promise.then(result => {
+  //   console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN2:', result);
+  //   return result;
+  // });
 
-  const thenProm = promise.then(result => {
-    console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN3:', result);
-    return result;
-  });
+  // chaining - returned handler value is result of next chained handler
+  //  a sequence of asynchronous tasks done one after another
+  const thenProm = promise
+    .then(result => {
+      console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN1:', result);
+      result.message += ' P1,'
+      return result;
+    })
+    .then(result => {
+      console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN2:', result);
+      result.message += ' P2,'
+      return result;
+    })
+    .then(result => {
+      console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN3:', result);
+      result.message += ' P3.'
+      return result;
+    })
 
-  console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) thenProm!!:', thenProm);
   return thenProm;
 }
+
+// ------------------------------------------------------------------------
 
 export async function postRequestConcatExportSYNC(req) {
 
