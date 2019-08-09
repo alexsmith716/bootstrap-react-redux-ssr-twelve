@@ -144,7 +144,7 @@ export function addNewDataFunc(req) {
     promise: () => postRequestConcatExportASYNC(req)
       .then(
         (result) => {
-          console.log(`>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > RESPONSE.THEN1: ${result}`);
+          console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > RESPONSE.THEN1: ', result);
           return result;
         }
       )
