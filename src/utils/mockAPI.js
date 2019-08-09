@@ -249,7 +249,7 @@ export async function getSomeAsyncData(location) {
   timeElapsedModule1.setStartTime();
 
   // doSomeAsyncSyncLikeOperations();
-  await doSomeAsyncSyncLikeOperations();
+  // await doSomeAsyncSyncLikeOperations();
 
   const response = await startResolvedRejectedPromise('resolve', 1200);
   console.log('###### mockAPI > getSomeAsyncData > startResolvedRejectedPromise(1600) response: ', response);
@@ -264,7 +264,7 @@ export function postRequestConcatExportASYNC(req) {
 
   timeElapsedModule1.setStartTime();
 
-  const promise = postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
+  const promise = postRequestConcatResolveRejectPromise(req, 'reject', 1600);
   console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE: ', promise);
 
   // not passing value as next result here / not chaining
@@ -279,7 +279,7 @@ export function postRequestConcatExportASYNC(req) {
   // });
 
   // chaining - returned handler value is result of next chained handler
-  //  a sequence of asynchronous tasks done one after another
+  // a sequence of asynchronous tasks done one after another
   const thenProm = promise
     .then(result => {
       console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN1:', result);
@@ -293,11 +293,18 @@ export function postRequestConcatExportASYNC(req) {
     })
     .then(result => {
       console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN3:', result);
-      result.message += ' P3.'
+      result.message += ' P3,'
       return result;
     })
+  // handle rejected promise in action creator (closest rejection handler)
+  //   .catch(error => {
+  //     console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) CATCH:ERROR:', error);
+  //     return Promise.reject(error);
+  //     throw error;
+  //   });
 
   return thenProm;
+  // return promise;
 }
 
 // ------------------------------------------------------------------------
