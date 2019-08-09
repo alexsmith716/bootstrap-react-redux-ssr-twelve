@@ -264,18 +264,26 @@ export function postRequestConcatExportASYNC(req) {
 
   timeElapsedModule1.setStartTime();
 
-  let promise = postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
+  const promise = postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
   console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE: ', promise);
 
-  // demonstrate the asynchronicity of the then method
-  let thenProm = promise.then(
-      (result) => {
-        console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN1:', result);
-        return new Promise((resolve, reject) => {
-          setTimeout(() => resolve(result), 250);
-        });
-      }
-    );
+  // not passing result here / not chaining
+  promise.then(result => {
+    console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN1:', result);
+    return result;
+  });
+
+  promise.then(result => {
+    console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN2:', result);
+    return result;
+  });
+
+  const thenProm = promise.then(result => {
+    console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE.THEN3:', result);
+    return result;
+  });
+
+  console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) thenProm!!:', thenProm);
   return thenProm;
 }
 
