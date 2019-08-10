@@ -9,7 +9,11 @@ const ADD_NEW_DATA_LOAD_SUCCESS = 'redux-example/lineChart/ADD_NEW_DATA_LOAD_SUC
 const ADD_NEW_DATA_LOAD_FAIL = 'redux-example/lineChart/ADD_NEW_DATA_LOAD_FAIL';
 
 import { mockAPI, postRequestConcatExportASYNC, postRequestConcatExportSYNC } from '../../utils/mockAPI';
-import initialState from '../initial-state';
+
+const initialState = {
+  loaded: false,
+  data: null,
+};
 
 // 200 (OK) - 204 (No Content) - 404 (Not Found)
 
@@ -17,7 +21,7 @@ import initialState from '../initial-state';
 
 // Reducer
 // -------------------
-export default function reducer(state = initialState.lineChart, action = {}) {
+export default function reducer(state = initialState, action = {}) {
 
   switch (action.type) {
 

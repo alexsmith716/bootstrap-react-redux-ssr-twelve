@@ -1,8 +1,11 @@
+// Actions
+// -------------------
 
-import initialState from '../initial-state';
+const initialState = {};
 
-
-export default function reducer(state = initialState.online, action) {
+// Reducer
+// -------------------
+export default function reducer(state = initialState, action) {
 
   switch (action.type) {
 
@@ -10,3 +13,6 @@ export default function reducer(state = initialState.online, action) {
       return state;
   }
 }
+
+// Actions (action creators)
+// -------------------

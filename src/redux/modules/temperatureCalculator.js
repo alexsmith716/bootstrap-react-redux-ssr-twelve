@@ -5,11 +5,13 @@
 const CELSIUS_CHANGE = 'redux-example/temperatureCalculator/CELSIUS_CHANGE';
 const FAHRENHEIT_CHANGE = 'redux-example/temperatureCalculator/FAHRENHEIT_CHANGE';
 
-import initialState from '../initial-state';
-
+const initialState = {
+    temperature: '',
+    scale: 'c',
+};
 
 // Reducer
-export default function reducer(state = initialState.temperatureCalculator, action) {
+export default function reducer(state = initialState, action) {
 
   switch (action.type) {
 

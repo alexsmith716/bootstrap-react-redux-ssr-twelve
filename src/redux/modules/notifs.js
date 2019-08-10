@@ -5,7 +5,7 @@ const NOTIF_DISMISS = 'redux-example/notifs/NOTIF_DISMISS';
 const NOTIF_CLEAR = 'redux-example/notifs/NOTIF_CLEAR';
 const NOTIF_CLEAR_ALL = 'redux-example/notifs/NOTIF_CLEAR_ALL';
 
-import initialState from '../initial-state';
+const initialState = {};
 
 // Reducer
 // -------------------

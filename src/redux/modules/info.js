@@ -6,11 +6,14 @@ const LOAD_FAIL = 'redux-example/info/LOAD_FAIL';
 
 import { mockAPI, getRandomInt, getSomeAsyncData } from '../../utils/mockAPI';
 
-import initialState from '../initial-state';
+const initialState = {
+  loaded: false,
+  data: null,
+};
 
 // Reducer
 // -------------------
-export default function reducer(state = initialState.info, action = {}) {
+export default function reducer(state = initialState, action = {}) {
 
   switch (action.type) {
 
