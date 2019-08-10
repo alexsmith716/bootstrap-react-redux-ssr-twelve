@@ -10,11 +10,24 @@ const HANDLE_FILTER_TEXT_CHANGE = 'redux-example/filterableTable/HANDLE_FILTER_T
 const HANDLE_IN_STOCK_CHANGE = 'redux-example/filterableTable/HANDLE_IN_STOCK_CHANGE';
 const HANDLE_DROPDOWN_CHANGE = 'redux-example/filterableTable/HANDLE_DROPDOWN_CHANGE';
 
-import initialState from '../initial-state';
+const initialState = {
+  filterText: '',
+  inStockOnly: false,
+  loaded: false,
+  dropDownOptionSelected: '',
+  error: false,
+  errorResponse: {
+    message: '',
+    documentation_url: '',
+  },
+  isLoading: false,
+  fetchedData: null,
+  didInvalidate: false,
+};
 
 // Reducer
 // -------------------
-export default function reducer(state = initialState.filterableTable, action = {}) {
+export default function reducer(state = initialState, action = {}) {
 
   switch (action.type) {
 

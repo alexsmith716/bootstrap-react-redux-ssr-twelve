@@ -13,8 +13,6 @@ import lineChart from './modules/lineChart';
 import info from './modules/info';
 // import online from './modules/online';
 
-export { default as initialState } from './initial-state';
-
 // state shape
 export default function rootReducer() {
   return {

@@ -264,7 +264,7 @@ export function postRequestConcatExportASYNC(req) {
 
   timeElapsedModule1.setStartTime();
 
-  const promise = postRequestConcatResolveRejectPromise(req, 'reject', 1600);
+  const promise = postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
   console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE: ', promise);
 
   // not passing value as next result here / not chaining

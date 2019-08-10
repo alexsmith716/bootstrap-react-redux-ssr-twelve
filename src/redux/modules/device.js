@@ -1,14 +1,14 @@
-// isolate concerns within a Redux application (modules)
-// https://github.com/erikras/ducks-modular-redux
-
 // Actions
+// -------------------
 
+const initialState = {
+  userAgent: null,
+  isBot: null,
+};
 
 // Reducer
-import initialState from '../initial-state';
-
-
-export default function reducer(state = initialState.device, action) {
+// -------------------
+export default function reducer(state = initialState, action) {
 
   switch (action.type) {
 
@@ -18,4 +18,5 @@ export default function reducer(state = initialState.device, action) {
   }
 }
 
-// Action Creators
+// Actions (action creators)
+// -------------------
