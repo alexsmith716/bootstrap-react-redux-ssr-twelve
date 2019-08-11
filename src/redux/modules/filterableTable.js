@@ -11,18 +11,20 @@ const HANDLE_IN_STOCK_CHANGE = 'redux-example/filterableTable/HANDLE_IN_STOCK_CH
 const HANDLE_DROPDOWN_CHANGE = 'redux-example/filterableTable/HANDLE_DROPDOWN_CHANGE';
 
 const initialState = {
-  filterText: '',
-  inStockOnly: false,
   loaded: false,
-  dropDownOptionSelected: '',
-  error: false,
-  errorResponse: {
-    message: '',
-    documentation_url: '',
-  },
-  isLoading: false,
-  fetchedData: null,
-  didInvalidate: false,
+  data: null,
+  // filterText: '',
+  // inStockOnly: false,
+  // loaded: false,
+  // dropDownOptionSelected: '',
+  // error: false,
+  // errorResponse: {
+  //   message: '',
+  //   documentation_url: '',
+  // },
+  // isLoading: false,
+  // fetchedData: null,
+  // didInvalidate: false,
 };
 
 // Reducer
