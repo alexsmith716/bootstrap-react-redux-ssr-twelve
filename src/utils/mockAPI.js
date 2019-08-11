@@ -98,6 +98,9 @@ function startResolvedRejectedPromise(v, delay) {
   });
 };
 
+// setTimeout() is the asynchronous 'task' and it executes in 'delay' seconds
+// after setTimeout() delay, 'resolve/reject' function is then 'called' through 'if/else'
+// calling 'resolve/reject' function returns the results of the 'task' as a value
 function postRequestConcatResolveRejectPromise(dataObj, r, delay) {
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -278,6 +281,7 @@ export function postRequestConcatExportASYNC(req) {
   //   return result;
   // });
 
+  // pending promise now fulfilled or rejected
   // chaining - returned handler value is result of next chained handler
   // a sequence of asynchronous tasks done one after another
   const thenProm = promise
