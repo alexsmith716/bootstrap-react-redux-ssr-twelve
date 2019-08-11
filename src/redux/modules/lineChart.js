@@ -158,16 +158,28 @@ export function addNewDataFunc(req) {
         result.message += ' P5,'
         return result;
       })
-      .then(result => {
-        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > PROMISE.THEN3:', result);
-        result.message += ' P6.'
-        return result;
-      })
-      .catch(error => {
-        console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > CATCH:ERROR:', error);
-        return Promise.reject(error);
-        throw error;
-      })
+      .then(
+        result => {
+          console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > FULFILLMENT HANDLER THEN3:', result);
+          result.message += ' P6.'
+          return result;
+        }, 
+        error => {
+          console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > REJECTION HANDLER!:', error);
+          return Promise.reject(error);
+          throw error;
+        }
+      )
+      // .then(result => {
+      //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > PROMISE.THEN3:', result);
+      //   result.message += ' P6.'
+      //   return result;
+      // })
+      // .catch(error => {
+      //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > CATCH:ERROR:', error);
+      //   return Promise.reject(error);
+      //   throw error;
+      // })
   };
 }
 
