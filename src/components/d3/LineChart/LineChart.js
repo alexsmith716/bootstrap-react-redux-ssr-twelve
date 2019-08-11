@@ -109,7 +109,7 @@ class LineChart extends Component {
   // not called for the initial render
   // component has been updated, so do something
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { loaded, error, errorResponse, data } = this.props;
+    const { loading, loaded, error, errorResponse, data } = this.props;
     const containerTarget = this.containerRef.current;
     // console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > containerTarget: ', containerTarget);
 
@@ -122,24 +122,25 @@ class LineChart extends Component {
     }
 
     // LOAD_SUCCESS
-    if (!error && loaded) {
+    if (loaded && !loading) {
       console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_SUCCESS: ');
 
       console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_SUCCESS > data: ', data);
       console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() > LOAD_SUCCESS > prevProps.data: ', prevProps.data);
 
       if (data === prevProps.data) {
-        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > 11111111111111');
-        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > containerTarget1: ', containerTarget);
+        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > 11111111111111');
+        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > containerTarget1: ', containerTarget);
       }
 
       if (data !== prevProps.data) {
-        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > 22222222222222');
+        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > 22222222222222');
         // const element = containerTarget.querySelector('svg');
         // element.parentNode.removeChild(element);
-        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > LOAD_SUCCESS > containerTarget2: ', containerTarget);
-        drawVisualization(data, containerTarget);
+        console.log('>>>>>>>>>>>>>>>> LineChart > componentDidUpdate() @@@@@@@@@@@@@@ > containerTarget2: ', containerTarget);
       }
+
+      drawVisualization(data, containerTarget);
     }
   }
 
@@ -224,10 +225,6 @@ class LineChart extends Component {
     console.log('>>>>>>>>>>>>>>>> LineChart > render() <<<<<<<<<<<<<<<<< loaded: ', {loaded});
     console.log('>>>>>>>>>>>>>>>> LineChart > render() <<<<<<<<<<<<<<<<< loading: ', {loading});
 
-    // <div class="svg-container LineChart__lineChart--dEEuc2Nzc">
-    //  <svg class="svg-content" preserveaspectratio="xMinYMin meet" viewbox="-20 -20 400 400"></svg>
-    // </div>
-
     return (
 
       <div className="row justify-content-md-center">
@@ -248,9 +245,15 @@ class LineChart extends Component {
 
               {/* (>>>>>>>>>>>>>>>>>>>>>> ERROR >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
-              {error && (
+              {error &&
+                !loading && (
 
-                  <div className="alert alert-danger text-center" role="alert">RENDERING ERROR<br/><span>{`Message: ${errorResponse.message}`}</span><br/><span>{`Url: ${errorResponse.documentation_url}`}</span></div>
+                  <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                    <div className="text-center">RENDERING ERROR<br/><span>{`Message: ${errorResponse.message}`}</span></div>
+                    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
 
                 )}
 
