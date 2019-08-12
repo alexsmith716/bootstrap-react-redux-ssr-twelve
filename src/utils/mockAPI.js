@@ -206,17 +206,17 @@ function doSomePromiseAll() {
   timeoutArrayFast.push(startResolvedPromise(300));
   timeoutArrayFast.push('FooooooBerrrrrrrrr');
 
-  const pAl = Promise.all(timeoutArrayLong);
+  const pAlong = Promise.all(timeoutArrayLong);
 
-  pAl
+  pAlong
     .then(values => {
       console.log('###### mockAPI > doSomePromiseAll > timeoutArrayLong1-0: ', values[0]);
       console.log('###### mockAPI > doSomePromiseAll > timeoutArrayLong1-1: ', values[1]);
     })
 
-  const pAf = Promise.all(timeoutArrayFast);
+  const pAfast = Promise.all(timeoutArrayFast);
 
-  pAf
+  pAfast
     .then(values => {
       console.log('###### mockAPI > doSomePromiseAll > timeoutArrayFast1-0: ', values[0]);
       console.log('###### mockAPI > doSomePromiseAll > timeoutArrayFast1-1: ', values[1]);
@@ -251,7 +251,7 @@ export function postRequestConcatExportASYNC(req) {
 
   timeElapsedModule1.setStartTime();
 
-  doSomePromiseAll();
+  // doSomePromiseAll();
 
   const promise = postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
   console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE: ', promise);

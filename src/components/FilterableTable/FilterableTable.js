@@ -2,190 +2,218 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'multireducer';
 import { connect } from 'react-redux';
+
 import Loading from '../Loading/Loading';
 import SearchBar from './components/SearchBar';
 import Tables from './components/Tables';
 import DropdownSelect from '../DropdownSelect/DropdownSelect';
-// actionCreators
 import * as filterableTableActions from '../../redux/modules/filterableTable';
 // import { selectedOption } from '../../redux/modules/filterableTable';
 import enumerateObjectValues from '../../utils/enumerateObjectValues';
-import promiseGenerator from '../../utils/promiseGenerator';
 
-// should > render > didupdate
-
-// UI bindings
-// @connect({mapStateToProps, mapDispatchToProps})
-// connect the view to the action creators
-// connect() Returns:
-// The return of connect() is a wrapper function
-// The return of connect() takes your component and returns a wrapper component with the additional props it injects
-// ....................................
-//    export default connect(
-//      mapStateToProps,
-//      mapDispatchToProps
-//    )(FilterableTable)
-// ....................................
 @connect(
   (state, { as }) => ({
     dropDownOptionSelected: state.filterableTableCollection[as].dropDownOptionSelected,
+    loading: state.filterableTableCollection[as].loading,
+    loaded: state.filterableTableCollection[as].loaded,
+    data: state.filterableTableCollection[as].data,
     error: state.filterableTableCollection[as].error,
     errorResponse: state.filterableTableCollection[as].errorResponse,
-    isLoading: state.filterableTableCollection[as].isLoading,
-    fetchedData: state.filterableTableCollection[as].fetchedData,
-    // optionsArray: state.filterableTableCollection[as].optionsArray,
-    // description: state.filterableTableCollection[as].description,
     filterText: state.filterableTableCollection[as].filterText,
     inStockOnly: state.filterableTableCollection[as].inStockOnly,
   }),
-  // (dispatch, { as }) => bindActionCreators(filterableTableActions, dispatch, as)
   (dispatch, { as }) => bindActionCreators({ ...filterableTableActions }, dispatch, as)
 )
 
 class FilterableTable extends Component {
 
   static propTypes = {
-    dropDownOptionSelected: PropTypes.string,
-    error: PropTypes.bool,
-    errorResponse: PropTypes.object,
-    isLoading: PropTypes.bool,
-    // fetchedData: PropTypes. .isRequired,
-    // optionsArray: PropTypes.array.isRequired,
-    // description: PropTypes.string,
-    filterText: PropTypes.string,
-    inStockOnly: PropTypes.bool,
-    selectedOption: PropTypes.func.isRequired,
-    load: PropTypes.func.isRequired,
+    // dropDownOptionSelected: PropTypes.string,
+    // error: PropTypes.bool,
+    // errorResponse: PropTypes.object,
+    // loading: PropTypes.bool,
+    // // data: PropTypes. .isRequired,
+    // // optionsArray: PropTypes.array.isRequired,
+    // // description: PropTypes.string,
+    // filterText: PropTypes.string,
+    // inStockOnly: PropTypes.bool,
+    // selectedOption: PropTypes.func.isRequired,
+    // load: PropTypes.func.isRequired,
   };
 
-  // static defaultProps = {};
+  // ==============================================================================================
 
-  // handleFilterTextChange(filterText) {
-  //   this.setState({ filterText: filterText });
-  // };
 
-  // handleInStockChange(inStockOnly) {
-  //   this.setState({ inStockOnly: inStockOnly })
-  // };
+  // MOUNTING (instance of a component is being created and inserted into the DOM)
+  // ----------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
-  handleFilterTextChange(filterText) {
-    // this.setState({ filterText: filterText });
+  // constructor()
+
+  // static getDerivedStateFromProps(props, state)
+
+  // render()
+
+  componentDidMount() {
+    const { data } = this.props;
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidMount() > data1: ', data);
+    if (data === null) {
+      console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidMount() > data2');
+    } else {
+      console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidMount() > data3');
+    }
   }
 
-  handleInStockChange(inStockOnly) {
-    // this.setState({ inStockOnly: inStockOnly })
+  // ==============================================================================================
+
+
+  // UPDATING (update was caused by changes to props or state. component is being re-rendered.)
+  // ----------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------
+
+  // derive state:
+  // enables a component to update its internal state as the result of changes in props
+  // invoked right before calling the render method, both on the initial mount and on subsequent updates
+  // invoked after a component is instantiated as well as before it is re-rendered
+  // --------------------------------------------------------------------------------
+  static getDerivedStateFromProps(props, state) {
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > getDerivedStateFromProps() <<<<<<<<<<<<<<<<<<<<<<');
+    return null;
+  };
+
+  // invoked before rendering when new props or state are being received (default: true)
+  // let react know if a component's output is not affected by the current change in state or props
+  // evaluate "true" ? re-render
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > shouldComponentUpdate()?? > nextProps: ', nextProps);
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > shouldComponentUpdate()?? > nextState: ', nextState);
+    return nextProps;
+  };
+
+  // render()
+
+  // there may be delays between “render” phase lifecycles (like render) 
+  //  and “commit” phase lifecycles (like getSnapshotBeforeUpdate and componentDidUpdate)
+
+  // invoked before most recently rendered output is committed to the DOM
+  // enables capturing information from the DOM (e.g. scroll position) before it is changed
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    return null;
   }
+
+  // invoked immediately after updating
+  // not called for the initial render
+  // component has been updated, so do something
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { loading, loaded, error, errorResponse, data, load, dropDownOptionSelected } = this.props;
+
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > description: ', this.props.description);
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > dropDownOptionSelected: ', dropDownOptionSelected);
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > DATA: ', data);
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > prevProps.DATA: ', prevProps.data);
+
+    if (data === prevProps.data) {
+      console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() @@@@@@@@@@@@@@ > 11111111111111');
+    }
+
+    if (data !== prevProps.data) {
+      console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() @@@@@@@@@@@@@@ > 22222222222222');
+    }
+
+    // LOAD_FAIL
+    if (error) {
+      console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > LOAD_FAIL > error: ', error);
+      console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > LOAD_FAIL > errorResponse: ', errorResponse);
+    }
+
+    if (!error && loading) {
+      console.log('11111111111111111111 ####################################### 11111111111111111111');
+      load({ request: dropDownOptionSelected });
+    }
+
+    if (loaded && !loading) {
+      console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > LOAD_SUCCESS: ');
+    }
+  }
+
+  // ==============================================================================================
+
+
+  // UNMOUNTING (component is being removed from the DOM)
+  // ----------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------
+
+  componentWillUnmount() {
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentWillUnmount() <<<<<<<<<<<<<<<<<<<<<<');
+  }
+
+  // ==============================================================================================
+
+
+  // ERROR HANDLING (error during render, in a lifecycle, in the constructor of any child component)
+  // ----------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------
+
+  // invoked after an error has been thrown by a descendant component
+  // receives the error thrown as param and returns a value to update state
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    // return { hasError: true };
+    return;
+  }
+
+  // invoked after an error has been thrown by a descendant component
+  // used for things like logging errors
+  componentDidCatch(error, info) {
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidCatch() > info.componentStack: ', info.componentStack);
+  }
+
+  // ==============================================================================================
 
   handleDropdownChange = (e) => {
     const { selectedOption } = this.props;
+
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > handleDropdownChange() > selectedOption: ', selectedOption);
+
     // e.preventDefault();
+
     selectedOption({
       selected: e.target.value
     });
   };
 
-  // ============================================================
-
-  componentDidMount() {
-    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidMount() > props.description: ', this.props.description);
-    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidMount() > this.props.dropDownOptionSelected: ', this.props.dropDownOptionSelected);
-    // this._loadAsyncData(this.props.id);
-  };
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // if (this.state.externalData === null) {
-    //   this._loadAsyncData(this.props.id);
-    // }
-
-    const { error, errorResponse, isLoading, fetchedData, dropDownOptionSelected, load } = this.props;
-
-    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() <<<<<<<<<<<<<<: ', this.props.description);
-    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > this.props.dropDownOptionSelected: ', dropDownOptionSelected);
-
-    if (fetchedData === null && !error && isLoading) {
-      console.log('11111111111111111111 ####################################### 11111111111111111111');
-      load({ request: dropDownOptionSelected });
-    }
-
-    // loading LOAD_FAIL
-    if (error && !isLoading) {
-      console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > SELECTED_OPTION LOAD LOAD_FAIL: ', errorResponse.message);
-    }
-
-    // loading LOAD_SUCCESS
-    if (!error && !isLoading && fetchedData !== null) {
-
-      const result = promiseGenerator();
-      let p  = result.next().value;
-
-      p.then(r => {
-        console.log('>>>>>>>>>>>>>>>> FilterableTable > promiseGenerator() > result.next().value: ', p);
-        console.log('>>>>>>>>>>>>>>>> FilterableTable > promiseGenerator() > resolve: ', r);
-        return result.next(r)
-      });
-
-      return enumerateObjectValues(fetchedData)
-        .then(response => {
-          console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > SELECTED_OPTION LOAD LOAD_SUCCESS > enumerateObjectValues > returned: ', response);
-        })
-        .catch(error => {
-          console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > SELECTED_OPTION LOAD LOAD_SUCCESS > enumerateObjectValues > ERROR: ');
-        })
-    }
-  };
-
-  componentWillUnmount() {
-    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentWillUnmount() <<<<<<<<<<<<<<');
-  };
-
-  shouldComponentUpdate(nextProps, nextState) {
-    // invoked before rendering when new props or state are being received
-    console.log('>>>>>>>>>>>>>>>> FilterableTable > shouldComponentUpdate() > nextProps: ', nextProps);
-    console.log('>>>>>>>>>>>>>>>> FilterableTable > shouldComponentUpdate() > nextState: ', nextState);
-    return nextProps;
-  };
-
-  // static getDerivedStateFromProps(props, state) {
-  //   console.log('>>>>>>>>>>>>>>>> FilterableTable > getDerivedStateFromProps() <<<<<<<<<<<<<<<<<<<<<<');
-  //   return null;
-  // };
-
-  componentDidCatch(error, info) {
-    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidCatch() > info.componentStack: ', info.componentStack);
-  };
-
-  // ============================================================
+  // ================================================================================
 
   render() {
 
     const styles = require('./scss/FilterableTable.scss');
 
-    const { error, errorResponse, isLoading, dropDownOptionSelected, fetchedData } = this.props;
+    const { loading, loaded, data, error, errorResponse,  dropDownOptionSelected }  = this.props;
     const { optionsArray, description, filterText, inStockOnly } = this.props;
 
     const loadingText = 'Fetching Requested Data ...';
     // const errorText = {`${errorResponse.message} /\n ${errorResponse.message}`};
     let items = null;
 
-    let arrayLike = fetchedData && fetchedData.length > 0
+    let arrayLike = data && data.length > 0
       ? arrayLike = true
       : arrayLike = null;
 
     console.log('>>>>>>>>>>>>>>>> FilterableTable > render() > externalData > ARRAYLIKE ??? ', arrayLike, '!');
     console.log('>>>>>>>>>>>>>>>> FilterableTable > render() > dropDownOptionSelected: ', dropDownOptionSelected);
-    console.log('>>>>>>>>>>>>>>>> FilterableTable > render() > fetchedData: ', fetchedData);
-    console.log('>>>>>>>>>>>>>>>> FilterableTable > render() > isLoading: ', isLoading);
-    // console.log('>>>>>>>>>>>>>>>> FilterableTable > render() > Object.entries()::::::: ', Object.entries(fetchedData));
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > render() > data: ', data);
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > render() > loading: ', loading);
+    // console.log('>>>>>>>>>>>>>>>> FilterableTable > render() > Object.entries()::::::: ', Object.entries(data));
 
     // return (
     //   <div>{`${dropDownOptionSelected}`}</div>
     // )
 
-    if (fetchedData) {
+    if (data) {
 
       if (arrayLike) {
 
-        items = Array.from(fetchedData).map((item, index) => {
+        items = Array.from(data).map((item, index) => {
 
           let fromItem = item;
           let fromIndex = index;
@@ -197,7 +225,7 @@ class FilterableTable extends Component {
             <div key={index}>
               {ok}
 
-              {fromIndex !== fetchedData.length-1 && (
+              {fromIndex !== data.length-1 && (
                 <div key={index}>---------</div>
               )}
             </div>
@@ -206,13 +234,13 @@ class FilterableTable extends Component {
 
       } else {
 
-        items = Object.keys(fetchedData).map((item, index) => {
-          // console.log('>>>>>>>>>>>>>>>> FilterableTable > render() > Object.keys(): index: ', index, ' item: ', item,' fetchedData[item]: ', fetchedData[item]);
-          return <div key={index}>{`${index}: ${item}: "${fetchedData[item]}"`}</div>;
+        items = Object.keys(data).map((item, index) => {
+          // console.log('>>>>>>>>>>>>>>>> FilterableTable > render() > Object.keys(): index: ', index, ' item: ', item,' data[item]: ', data[item]);
+          return <div key={index}>{`${index}: ${item}: "${data[item]}"`}</div>;
         });
 
-        // items = Object.keys(fetchedData).map((item, index) => (
-        //   <div key={index}>{`${index}: ${item}: "${fetchedData[item]}"`}</div>
+        // items = Object.keys(data).map((item, index) => (
+        //   <div key={index}>{`${index}: ${item}: "${data[item]}"`}</div>
         // ));
 
       }
@@ -243,9 +271,7 @@ class FilterableTable extends Component {
 
         {/* (>>>>>>>>>>>>>>>>>>>>>> LOADING >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
-        {dropDownOptionSelected !== '' &&
-          !error &&
-          isLoading && (
+        {loading && (
 
             <div>
               <br/>
@@ -262,7 +288,7 @@ class FilterableTable extends Component {
         {/* (>>>>>>>>>>>>>>>>>>>>>> ERROR >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
         {error &&
-          !isLoading && (
+          !loading && (
 
             <div>
               <br/>
@@ -282,10 +308,9 @@ class FilterableTable extends Component {
 
         {/* (>>>>>>>>>>>>>>>>>>>>>> EXTERNAL DATA LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
-        {fetchedData !== null &&
-          !isLoading &&
-          dropDownOptionSelected !== '' &&
-          items !== null && (
+        {items !== null &&
+          loaded &&
+          !loading && (
 
             <div>
               <br/>
@@ -301,10 +326,9 @@ class FilterableTable extends Component {
 
         {/* (>>>>>>>>>>>>>>>>>>>>>> LOCAL DATA LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
-        {fetchedData !== null &&
-          !isLoading &&
-          dropDownOptionSelected !== '' &&
-          items === null && (
+        {items === null &&
+          loaded &&
+          !loading && (
 
             <div>
               <br/>
@@ -327,7 +351,7 @@ class FilterableTable extends Component {
                   <div>
 
                     <Tables 
-                      tablesData={ fetchedData } 
+                      tablesData={ data } 
                       filterText={ filterText }
                       inStockOnly={ inStockOnly }
                     />

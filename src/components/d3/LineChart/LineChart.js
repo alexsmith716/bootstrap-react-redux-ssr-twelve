@@ -180,8 +180,9 @@ class LineChart extends Component {
 
 
   handleUpdate = (e) => {
-    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > data: ', data);
     const { data, addNewDataFunc } = this.props;
+
+    console.log('>>>>>>>>>>>>>>>> LineChart > handleUpdate() > data: ', data);
 
     e.preventDefault();
 

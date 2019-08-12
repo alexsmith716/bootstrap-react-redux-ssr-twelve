@@ -170,11 +170,6 @@ export function addNewDataFunc(req) {
           throw error;
         }
       )
-      // .then(result => {
-      //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > PROMISE.THEN3:', result);
-      //   result.message += ' P6.'
-      //   return result;
-      // })
       // .catch(error => {
       //   console.log('>>>>>>>>>>>>>>>> ########## lineChart ########## > redux > Action > addNewDataFunc() > CATCH:ERROR:', error);
       //   return Promise.reject(error);
