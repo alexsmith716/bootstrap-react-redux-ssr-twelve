@@ -241,6 +241,40 @@ async function doSomeAsyncSyncLikeOperations() {
   console.log('###### mockAPI > doSomeAsyncSyncLikeOperations > timeElapsedModule2.getStartTime(): ', timeElapsedModule2.getStartTime());
 }
 
+// ------------------------------------------------------------------------
+
+function doSomePromiseAll() {
+
+  const timeoutArrayLong = [];
+  timeoutArrayLong.push(startResolvedPromise(2500));
+  timeoutArrayLong.push(startResolvedPromise(22250));
+
+  // non-promise iterable values are ignored, but counted in the returned promise array
+  const timeoutArrayFast = [];
+  timeoutArrayFast.push(startResolvedPromise(100));
+  timeoutArrayFast.push(9999999);
+  timeoutArrayFast.push(startResolvedPromise(300));
+  timeoutArrayFast.push('FooooooBerrrrrrrrr');
+
+  const pAl = Promise.all(timeoutArrayLong);
+
+  pAl
+    .then(values => {
+      console.log('###### mockAPI > doSomePromiseAll > timeoutArrayLong1-0: ', values[0]);
+      console.log('###### mockAPI > doSomePromiseAll > timeoutArrayLong1-1: ', values[1]);
+    })
+
+  const pAf = Promise.all(timeoutArrayFast);
+
+  pAf
+    .then(values => {
+      console.log('###### mockAPI > doSomePromiseAll > timeoutArrayFast1-0: ', values[0]);
+      console.log('###### mockAPI > doSomePromiseAll > timeoutArrayFast1-1: ', values[1]);
+      console.log('###### mockAPI > doSomePromiseAll > timeoutArrayFast1-2: ', values[2]);
+      console.log('###### mockAPI > doSomePromiseAll > timeoutArrayFast1-3: ', values[3]);
+    })
+}
+
 // =========================================================================
 // =========================================================================
 
@@ -267,7 +301,9 @@ export function postRequestConcatExportASYNC(req) {
 
   timeElapsedModule1.setStartTime();
 
-  const promise = postRequestConcatResolveRejectPromise(req, 'reject', 1600);
+  doSomePromiseAll();
+
+  const promise = postRequestConcatResolveRejectPromise(req, 'resolve', 1600);
   console.log('###### mockAPI > postRequestConcatExportASYNC > postRequestConcatResolveRejectPromise(1600) PROMISE: ', promise);
 
   // not passing value as next result here / not chaining
