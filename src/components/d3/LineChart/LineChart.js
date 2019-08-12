@@ -245,6 +245,7 @@ class LineChart extends Component {
                 )}
 
               {/* (>>>>>>>>>>>>>>>>>>>>>> ERROR >>>>>>>>>>>>>>>>>>>>>>>>) */}
+              {/* (>>>>>>>>>>>>>>>>>>>>>> test '!loaded' vs 'loaded' >>>>>>>>>>>>>>>>>>>>>>>>) */}
 
               {error &&
                 !loading && (

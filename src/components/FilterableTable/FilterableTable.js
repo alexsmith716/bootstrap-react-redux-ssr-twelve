@@ -111,6 +111,10 @@ class FilterableTable extends Component {
     console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > dropDownOptionSelected: ', dropDownOptionSelected);
     console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > DATA: ', data);
     console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > prevProps.DATA: ', prevProps.data);
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > error: ', error);
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > errorResponse: ', errorResponse);
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > loading: ', loading);
+    console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > loaded: ', loaded);
 
     if (data === prevProps.data) {
       console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() @@@@@@@@@@@@@@ > 11111111111111');
@@ -126,7 +130,7 @@ class FilterableTable extends Component {
       console.log('>>>>>>>>>>>>>>>> FilterableTable > componentDidUpdate() > LOAD_FAIL > errorResponse: ', errorResponse);
     }
 
-    if (!error && loading) {
+    if (loading) {
       console.log('11111111111111111111 ####################################### 11111111111111111111');
       load({ request: dropDownOptionSelected });
     }
