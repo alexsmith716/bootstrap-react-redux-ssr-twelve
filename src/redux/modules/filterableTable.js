@@ -15,7 +15,6 @@ const initialState = {
   data: null,
   // filterText: '',
   // inStockOnly: false,
-  // loaded: false,
   // dropDownOptionSelected: '',
   // error: false,
   // errorResponse: {
@@ -23,7 +22,6 @@ const initialState = {
   //   documentation_url: '',
   // },
   // loading: false,
-  // data: null,
   // didInvalidate: false,
 };
 
@@ -56,9 +54,10 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         loaded: true,
+        error: false,
+        errorResponse: {message:'', documentation_url:''},
         filterText: '',
         inStockOnly: null,
-        errorResponse: {message:'', documentation_url:''},
         data: action.result,
       };
 
@@ -69,7 +68,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         loaded: false,
         error: true,
-        errorResponse: action.result,
+        errorResponse: {message: action.error.message, documentation_url: action.error.documentation_url},
       };
 
     default:
