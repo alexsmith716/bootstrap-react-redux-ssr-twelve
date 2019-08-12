@@ -33,11 +33,9 @@ https://developers.google.com/web/fundamentals/codelabs/offline/
 =============================================================
 =============================================================
 
-Aware of Errors:
+Aware of Error:
 
-error "eslint-config-airbnb#eslint@^4.19.1 || ^5.3.0" doesn't satisfy found match of "eslint@6.0.1"
 error "redux-devtools#react-redux@^4.0.0 || ^5.0.0 || ^6.0.0" doesn't satisfy found match of "react-redux@7.1.0"
-error "eslint-config-airbnb#eslint-config-airbnb-base#eslint@^4.19.1 || ^5.3.0" doesn't satisfy found match of "eslint@6.0.1"
 
 =============================================================
 =============================================================
