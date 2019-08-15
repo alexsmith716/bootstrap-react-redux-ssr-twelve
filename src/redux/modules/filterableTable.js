@@ -13,15 +13,6 @@ const HANDLE_DROPDOWN_CHANGE = 'redux-example/filterableTable/HANDLE_DROPDOWN_CH
 const initialState = {
   loaded: false,
   data: null,
-  // filterText: '',
-  // inStockOnly: false,
-  // dropDownOptionSelected: '',
-  // error: false,
-  // errorResponse: {
-  //   message: '',
-  //   documentation_url: '',
-  // },
-  // loading: false,
   // didInvalidate: false,
 };
 

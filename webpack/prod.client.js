@@ -3,14 +3,14 @@ const webpack = require('webpack');
 // const config = require('../config/config');
 
 const WebpackBar = require('webpackbar');
-const WebpackAssetsManifest = require('webpack-assets-manifest');
+// const WebpackAssetsManifest = require('webpack-assets-manifest');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 // Extract CSS from chunks into multiple stylesheets + HMR 
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-// const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
+// const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const { GenerateSW, InjectManifest } = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -18,6 +18,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const rootPath = path.resolve(__dirname, '..');
 const assetsPath = path.resolve(rootPath, './build/dist');
+const pathAssetsPath = path.dirname(assetsPath);
+
 const publicPath = '/dist/';
 const data = Object.create(null);
 
@@ -279,7 +281,7 @@ module.exports = {
   plugins: [
 
     new WebpackBar({ name: 'Client' }),
-    new WebpackAssetsManifest({ publicPath }),
+    // new WebpackAssetsManifest({ publicPath }),
     // new webpack.ProgressPlugin(handler),
 
     new ExtractCssChunks({
@@ -308,35 +310,6 @@ module.exports = {
       filename: 'index.html',
       template: 'src/pwa.js'
     }),
-
-    new SWPrecacheWebpackPlugin({
-      cacheId: 'bootstrap-react-redux-ssr-twelve',
-      filename: 'service-worker.js',
-      maximumFileSizeToCacheInBytes: 8388608,
-
-      staticFileGlobs: [
-        `${path.dirname(assetsPath)}/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff,woff2}`,
-        `${path.dirname(assetsPath)}/**/manifest.json`,
-      ],
-
-      stripPrefix: path.dirname(assetsPath),
-
-      directoryIndex: '/dist/',
-      verbose: true,
-      // clientsClaim: true,
-      // skipWaiting: false,
-      navigateFallback: '/dist/index.html'
-    }),
-
-    // new GenerateSW({
-    //   exclude: [/\.(?:png|jpg|jpeg|svg)$/],
-    //   skipWaiting: true,
-    //   clientsClaim: true,
-    //   runtimeCaching: [],
-    //   navigateFallback: '/dist/index.html',
-    //   navigateFallbackWhitelist: [/^(?!\/__).*/],
-    //   cacheId: ,
-    // }),
 
     // https://webpack.js.org/plugins/provide-plugin/
     // Use modules without having to use import/require
@@ -377,5 +350,68 @@ module.exports = {
     //   emitHandler: undefined,
     //   verbose: true
     // }),
+
+    // generates a service worker
+    // service worker will cache webpack's bundles' emitted assets
+    // pass serviceWorker configuration options to webpack
+    // precache the static assests
+
+    // https://github.com/GoogleChrome/workbox/issues/1113
+    // https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin
+
+    // Cache additional, non-webpack assets:
+    // https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#cache_additional_non-webpack_assets
+
+    // new InjectManifest({
+    // new GenerateSW({
+    //   cacheId: 'bootstrap-react-redux-ssr-twelve',
+
+    //   swDest: 'service-worker.js',
+    //   maximumFileSizeToCacheInBytes: 8388608,
+
+    //   // instructs the latest service worker to take control of all clients as soon as it's activated
+    //   clientsClaim: true,
+    //   // instructs the latest service worker to activate as soon as it enters the waiting phase
+    //   skipWaiting: true,
+
+    //   importWorkboxFrom: 'local',
+
+    //   // importsDirectory:
+
+    //   // base directory to match 'globPatterns' against, relative to current working directory
+    //   globDirectory: '',
+
+    //   // Files matching against any of these patterns will be included in the precache manifest. 
+    //   globPatterns: [
+    //     `${path.dirname(assetsPath)}/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff,woff2}`,
+    //     `${path.dirname(assetsPath)}/**/manifest.json`,
+    //   ],
+
+    //   // modifyURLPrefix: {
+    //   //   pathAssetsPath: ''
+    //   // },
+
+    //   directoryIndex: '/dist/',
+    //   navigateFallback: '/dist/index.html'
+    // }),
+
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'bootstrap-react-redux-ssr-twelve',
+      filename: 'service-worker.js',
+      maximumFileSizeToCacheInBytes: 8388608,
+
+      staticFileGlobs: [
+        `${path.dirname(assetsPath)}/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff,woff2}`,
+        `${path.dirname(assetsPath)}/**/manifest.json`,
+      ],
+
+      stripPrefix: path.dirname(assetsPath),
+
+      directoryIndex: '/dist/',
+      verbose: true,
+      // clientsClaim: true,
+      // skipWaiting: false,
+      navigateFallback: '/dist/index.html'
+    }),
   ],
 };
