@@ -8,8 +8,7 @@ import SearchBar from './components/SearchBar';
 import Tables from './components/Tables';
 import DropdownSelect from '../DropdownSelect/DropdownSelect';
 import * as filterableTableActions from '../../redux/modules/filterableTable';
-// import { selectedOption } from '../../redux/modules/filterableTable';
-import enumerateObjectValues from '../../utils/enumerateObjectValues';
+// import enumerateObjectValues from '../../utils/enumerateObjectValues';
 
 @connect(
   (state, { as }) => ({
